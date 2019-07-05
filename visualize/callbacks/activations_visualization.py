@@ -26,7 +26,7 @@ class ActivationsVisualizationCallback(Callback):
         activations_model = tf.keras.models.Model(self.model.inputs, outputs=outputs)
         activations_model.compile(optimizer='adam', loss='categorical_crossentropy')
 
-        predictions = activations_model.predict(self.validation_data['x'])
+        predictions = activations_model.predict(self.validation_data[0])
         grid = filter_display(predictions)
 
         im = Image.fromarray((np.clip(grid, 0, 1)*255).astype('uint8'))

@@ -21,7 +21,7 @@ def test_should_call_activations_visualization_callback(random_data):
     output_dir = os.path.join('tests', 'test_logs')
     callbacks = [
         ActivationsVisualizationCallback(
-            validation_data={'x': x},
+            validation_data=(x, None),
             layers_name=['activation_1'],
             output_dir=output_dir
         )
