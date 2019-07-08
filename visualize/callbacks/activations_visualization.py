@@ -10,6 +10,9 @@ from visualize.utils.display import filter_display
 
 
 class ActivationsVisualizationCallback(Callback):
+
+    """ Draw activations of a specific layer for a given input """
+
     def __init__(self, validation_data, layers_name, output_dir=Path('./logs/activations_visualizations')):
         super(ActivationsVisualizationCallback, self).__init__()
         self.validation_data = validation_data
