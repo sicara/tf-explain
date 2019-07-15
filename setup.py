@@ -16,6 +16,7 @@ setup(name='Mentat',
                     'pytest-timeout',
                     'pytest-mock',
                     'pytest-cov'],
+          'examples': ['opencv-python'],
       },
       packages=find_packages()
 )
