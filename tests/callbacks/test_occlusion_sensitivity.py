@@ -5,10 +5,10 @@ from pathlib import Path
 import numpy as np
 import tensorflow as tf
 
-from visualize.callbacks.occlusion_sensitivity import OcclusionSensitivityCallback
+from mentat.callbacks.occlusion_sensitivity import OcclusionSensitivityCallback
 
 
-def test_should_call_activations_visualization_callback(random_data):
+def test_should_call_occlusion_sensitivity_callback(random_data):
     x, y = random_data
     model = tf.keras.Sequential([
         tf.keras.layers.Conv2D(16, (3, 3), activation=None, name='conv_1', input_shape=list(x.shape[1:])),
@@ -37,7 +37,7 @@ def test_should_call_activations_visualization_callback(random_data):
 
 
 def test_should_get_sensitivity_map(random_data, mocker):
-    mocker.patch('visualize.callbacks.occlusion_sensitivity.OcclusionSensitivityCallback.get_confidence_for_random_patch', return_value=0.6)
+    mocker.patch('mentat.callbacks.occlusion_sensitivity.OcclusionSensitivityCallback.get_confidence_for_random_patch', return_value=0.6)
 
     x, y = random_data
 

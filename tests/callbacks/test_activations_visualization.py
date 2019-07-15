@@ -4,7 +4,7 @@ from pathlib import Path
 
 import tensorflow as tf
 
-from visualize.callbacks.activations_visualization import ActivationsVisualizationCallback
+from mentat.callbacks.activations_visualization import ActivationsVisualizationCallback
 
 
 def test_should_call_activations_visualization_callback(random_data):
