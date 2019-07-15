@@ -43,7 +43,7 @@ class OcclusionSensitivityCallback(Callback):
                     top_left_y=top_left_y,
                     patch_size=patch_size,
                 )
-                print(confidence, flush=True)
+
                 sensitivity_map[
                     top_left_y:top_left_y + patch_size,
                     top_left_x:top_left_x + patch_size,
