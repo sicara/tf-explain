@@ -6,7 +6,9 @@ Interpretability of Deep Learning Models with Tensorflow 2.0
 
 > Visualize how a given input comes out of a specific activation layer
 
-![Activations Visualisation](./docs/assets/activations_visualisation.png "Activations Visualisation")
+<p align="center">
+    <img src="./docs/assets/activations_visualisation.png" width="500" />
+</p>
 
 
 ## Roadmap
