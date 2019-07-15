@@ -54,7 +54,7 @@ jobs:
 
 workflows:
   version: 2
-  totem:
+  mentat:
     jobs:
       - install
       - tests:

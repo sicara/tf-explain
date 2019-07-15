@@ -5,8 +5,8 @@ Interpretability of Deep Learning Models with Tensorflow 2.0
 
 ## Roadmap
 
-- [ ] Activation Visualizations
+- [x] Activation Visualizations
 - [ ] Convolutional Kernel Visualizations
-- [ ] Occlusion Sensitivity Maps
-- [ ] Class Activation Maps
+- [x] Occlusion Sensitivity Maps
+- [ ] Saliency Maps
 - [ ] Grad-CAM
