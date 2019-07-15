@@ -1,3 +1,4 @@
+""" Module for image operations """
 import numpy as np
 
 

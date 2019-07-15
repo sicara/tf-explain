@@ -1,6 +1,6 @@
 import numpy as np
 
-from visualize.utils.image import apply_grey_patch
+from mentat.utils.image import apply_grey_patch
 
 
 def test_should_apply_grey_patch_on_image():

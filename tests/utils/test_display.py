@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from visualize.utils.display import grid_display
+from mentat.utils.display import grid_display
 
 
 def test_should_raise_warning_if_no_perfect_square():

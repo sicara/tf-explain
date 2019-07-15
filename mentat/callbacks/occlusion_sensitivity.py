@@ -5,12 +5,13 @@ import numpy as np
 from PIL import Image
 from tensorflow.keras.callbacks import Callback
 
-from visualize.utils.display import grid_display
-from visualize.utils.image import apply_grey_patch
+from mentat.utils.display import grid_display
+from mentat.utils.image import apply_grey_patch
 
 
 class OcclusionSensitivityCallback(Callback):
-    def __init__(self, validation_data, patch_size, class_index, output_dir=Path('./logs/occlusion_sensitivity')):
+    def __init__(self, validation_data, patch_size, class_index,
+                 output_dir=Path('./logs/occlusion_sensitivity')):
         super(OcclusionSensitivityCallback, self).__init__()
         self.validation_data = validation_data
         self.patch_size = patch_size
@@ -26,8 +27,8 @@ class OcclusionSensitivityCallback(Callback):
 
         grid = grid_display(sensitivity_maps)
 
-        im = Image.fromarray((np.clip(grid, 0, 1) * 255).astype('uint8'))
-        im.save(Path(self.output_dir) / f'{epoch}.png')
+        grid_as_image = Image.fromarray((np.clip(grid, 0, 1) * 255).astype('uint8'))
+        grid_as_image.save(Path(self.output_dir) / f'{epoch}.png')
 
     @staticmethod
     def get_sensitivity_map(model, image, class_index, patch_size):
@@ -52,20 +53,21 @@ class OcclusionSensitivityCallback(Callback):
         return sensitivity_map
 
     @staticmethod
-    def get_confidence_for_random_patch(model, image, class_index, top_left_x, top_left_y, patch_size):
+    def get_confidence_for_random_patch(model, image, class_index,
+                                        top_left_x, top_left_y, patch_size):
         """
         Get class confidence for input image with a patch applied.
 
         Args:
-            model:
-            image:
-            class_index:
-            top_left_x:
-            top_left_y:
-            patch_size:
+            model (tensorflow.keras.Model): Tensorflow Model
+            image (numpy.ndarray): Image to predict
+            class_index (int): Target class
+            top_left_x (int): Coordinate x for grey patch
+            top_left_y (int): Coordinate y for grey patch
+            patch_size (int): Size of grey patch to apply on image
 
         Returns:
-
+            float: Confidence for prediction of patched image.
         """
         patch = apply_grey_patch(image, top_left_x, top_left_y, patch_size)
         predicted_classes = model.predict(np.array([patch]))[0]

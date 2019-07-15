@@ -1,3 +1,4 @@
+""" Module for display related operations. """
 import math
 import warnings
 
@@ -17,10 +18,8 @@ def grid_display(array):
     grid_size = int(math.sqrt(len(array)))
 
     if grid_size != math.sqrt(len(array)):
-        warnings.warn('Elements to display are not a perfect square. Last elements will be truncated.')
-
-    for i in range(grid_size):
-        line = np.concatenate(array[i*grid_size: (i+1)*grid_size], axis=1)
+        warnings.warn('Elements to display are not a perfect square. '
+                      'Last elements will be truncated.')
 
     grid = np.concatenate([
         np.concatenate(array[index*grid_size: (index+1)*grid_size], axis=1)
