@@ -10,3 +10,18 @@ def random_data():
     y = tf.keras.utils.to_categorical(np.random.randint(2, size=batch_size)).astype('uint8')
 
     return x, y
+
+
+@pytest.fixture()
+def convolutional_model(random_data):
+    x, y = random_data
+    model = tf.keras.Sequential([
+        tf.keras.layers.Conv2D(16, (3, 3), activation=None, name='conv_1', input_shape=list(x.shape[1:])),
+        tf.keras.layers.ReLU(name='activation_1'),
+        tf.keras.layers.Flatten(),
+        tf.keras.layers.Dense(2, activation='softmax'),
+    ])
+
+    model.compile(optimizer='adam', loss='categorical_crossentropy')
+
+    return model

@@ -8,16 +8,9 @@ import tensorflow as tf
 from mentat.callbacks.occlusion_sensitivity import OcclusionSensitivityCallback
 
 
-def test_should_call_occlusion_sensitivity_callback(random_data):
+def test_should_call_occlusion_sensitivity_callback(random_data, convolutional_model):
     x, y = random_data
-    model = tf.keras.Sequential([
-        tf.keras.layers.Conv2D(16, (3, 3), activation=None, name='conv_1', input_shape=list(x.shape[1:])),
-        tf.keras.layers.ReLU(name='activation_1'),
-        tf.keras.layers.Flatten(),
-        tf.keras.layers.Dense(2, activation='softmax'),
-    ])
-
-    model.compile(optimizer='adam', loss='categorical_crossentropy')
+    convolutional_model.compile(optimizer='adam', loss='categorical_crossentropy')
 
     output_dir = os.path.join('tests', 'test_logs')
     callbacks = [
@@ -29,7 +22,7 @@ def test_should_call_occlusion_sensitivity_callback(random_data):
         )
     ]
 
-    model.fit(x, y, batch_size=2, epochs=2, callbacks=callbacks)
+    convolutional_model.fit(x, y, batch_size=2, epochs=2, callbacks=callbacks)
 
     assert len(os.listdir(Path(output_dir))) == 2
 
@@ -48,7 +41,7 @@ def test_should_get_sensitivity_map(random_data, mocker):
             class_index=0,
             output_dir=output_dir,
     )
-    # callback.get_confidence_for_random_patch = mocker.MagicMock(return_value=0.6)
+
     output = callback.get_sensitivity_map(
         model=None,
         image=x[0],
