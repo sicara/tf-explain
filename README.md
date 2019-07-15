@@ -2,7 +2,11 @@
 
 Interpretability of Deep Learning Models with Tensorflow 2.0
 
-## Activations Visualization
+## Examples
+
+Here is a list of all available callbacks. All those examples are generated with the `examples` scripts.
+
+### Activations Visualization
 
 > Visualize how a given input comes out of a specific activation layer
 
@@ -11,7 +15,7 @@ Interpretability of Deep Learning Models with Tensorflow 2.0
 </p>
 
 
-## Occlusion Sensitivity
+### Occlusion Sensitivity
 
 > Visualize how parts of the image affects neural network's confidence
 
