@@ -17,10 +17,21 @@ Here is a list of all available callbacks. All those examples are generated with
 
 ### Occlusion Sensitivity
 
-> Visualize how parts of the image affects neural network's confidence
+> Visualize how parts of the image affects neural network's confidence by occluding parts iteratively
 
 <p align="center">
     <img src="./docs/assets/occlusion_sensitivity.png" width="200" />
+</p>
+
+### Grad CAM
+
+> Visualize how parts of the image affects neural network's output by looking into the activation maps
+
+From [Grad-CAM: Visual Explanations from Deep Networks
+via Gradient-based Localization](https://arxiv.org/abs/1610.02391)
+
+<p align="center">
+    <img src="./docs/assets/grad_cam.png" width="200" />
 </p>
 
 
