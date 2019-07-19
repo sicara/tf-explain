@@ -37,8 +37,5 @@ via Gradient-based Localization](https://arxiv.org/abs/1610.02391)
 
 ## Roadmap
 
-- [x] Activations Visualization
-- [ ] Convolutional Kernel Visualizations
-- [x] Occlusion Sensitivity Maps
-- [ ] Saliency Maps
-- [ ] Grad-CAM
+- [ ] Improve computational time for callbacks (occlusion, gradcam)
+- [ ] Add other method (SmoothGrad for instance)
