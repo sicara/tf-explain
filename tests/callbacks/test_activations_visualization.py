@@ -2,8 +2,6 @@ import os
 import shutil
 from pathlib import Path
 
-import tensorflow as tf
-
 from mentat.callbacks.activations_visualization import ActivationsVisualizationCallback
 
 
