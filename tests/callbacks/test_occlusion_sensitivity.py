@@ -3,7 +3,6 @@ import shutil
 from pathlib import Path
 
 import numpy as np
-import tensorflow as tf
 
 from mentat.callbacks.occlusion_sensitivity import OcclusionSensitivityCallback
 
