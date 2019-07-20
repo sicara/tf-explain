@@ -37,6 +37,4 @@ via Gradient-based Localization](https://arxiv.org/abs/1610.02391)
 
 ## Roadmap
 
-- [ ] Improve performance for callbacks (occlusion, gradcam)
-- [ ] Add other method (SmoothGrad for instance)
-- [ ] Make all heatmap visualizations centralized and uniform
+Next features are listed as issues with the `roadmap` label.
