@@ -6,6 +6,8 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras.callbacks import Callback
 
+from mentat.utils.display import heatmap_display
+
 
 class GradCAMCallback(Callback):
 
@@ -29,7 +31,7 @@ class GradCAMCallback(Callback):
         """ Draw activations outputs at each epoch end. """
         images, _ = self.validation_data
 
-        output, guided_grads = self.get_gradients_and_filters(
+        output, guided_grads = GradCAMCallback.get_gradients_and_filters(
             self.model,
             images,
             self.layer_name,
@@ -38,7 +40,7 @@ class GradCAMCallback(Callback):
 
         cam = GradCAMCallback.generate_ponderated_output(output, guided_grads)
 
-        heatmap = GradCAMCallback.generate_grad_cam_heatmap(cam, images[0], images[0].shape[0:2])
+        heatmap = heatmap_display(cam.numpy(), images[0])
 
         cv2.imwrite(str(Path(self.output_dir) / f'{epoch}.png'), heatmap)
 
