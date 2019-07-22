@@ -7,6 +7,15 @@
 
 __Mentat__ implements interpretability methods as Tensorflow 2.0 callbacks to __ease neural network's understanding__.
 
+## Installation
+
+__Mentat__ is not available yet on Pypi. To install it, clone it locally:
+
+```bash
+virtualenv venv -p python3.6
+git clone https://www.github.com/sicara/mentat
+pip install -e .
+```
 
 ## Available Methods
 
