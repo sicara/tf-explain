@@ -1,4 +1,4 @@
-# Visualize
+# Mentat
 
 [![Build Status](https://api.travis-ci.com/sicara/mentat.svg?branch=master)](https://travis-ci.org/sicara/mentat)
 ![Python Versions](https://img.shields.io/badge/python-3.6%20|%203.7-%23EBBD68.svg)
