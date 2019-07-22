@@ -5,15 +5,34 @@
 ![Tensorflow Versions](https://img.shields.io/badge/tensorflow-2.0.0--beta1-blue.svg)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/python/black)
 
-Interpretability of Deep Learning Models with Tensorflow 2.0
+__Mentat__ implements interpretability methods as Tensorflow 2.0 callbacks to __ease neural network's understanding__.
 
-## Examples
 
-Here is a list of all available callbacks. All those examples are generated with the `examples` scripts.
+## Available Methods
+
+1. [Activations Visualization](#activations-visualization)
+2. [Occlusion Sensitivity](#occlusion-sensitivity)
+3. [Grad CAM (Class Activation Maps)](#grad-cam)
 
 ### Activations Visualization
 
 > Visualize how a given input comes out of a specific activation layer
+
+```python
+from mentat.callbacks.activations_visualization import ActivationsVisualizationCallback
+
+model = [...]
+
+callbacks = [
+    ActivationsVisualizationCallback(
+        validation_data=(x_val, y_val),
+        layers_name=["activation_1"],
+        output_dir=output_dir,
+    ),
+]
+
+model.fit(x_train, y_train, batch_size=2, epochs=2, callbacks=callbacks)
+```
 
 <p align="center">
     <img src="./docs/assets/activations_visualisation.png" width="500" />
@@ -23,6 +42,24 @@ Here is a list of all available callbacks. All those examples are generated with
 ### Occlusion Sensitivity
 
 > Visualize how parts of the image affects neural network's confidence by occluding parts iteratively
+
+```python
+from mentat.callbacks.occlusion_sensitivity import OcclusionSensitivityCallback
+
+model = [...]
+
+callbacks = [
+    OcclusionSensitivityCallback(
+        validation_data=(x_val, y_val),
+        patch_size=4,
+        class_index=0,
+        output_dir=output_dir,
+    ),
+]
+
+model.fit(x_train, y_train, batch_size=2, epochs=2, callbacks=callbacks)
+```
+
 
 <p align="center">
     <img src="./docs/assets/occlusion_sensitivity.png" width="200" />
@@ -34,6 +71,24 @@ Here is a list of all available callbacks. All those examples are generated with
 
 From [Grad-CAM: Visual Explanations from Deep Networks
 via Gradient-based Localization](https://arxiv.org/abs/1610.02391)
+
+```python
+from mentat.callbacks.grad_cam import GradCAMCallback
+
+model = [...]
+
+callbacks = [
+    GradCAMCallback(
+        validation_data=(x_val, y_val),
+        layer_name="activation_1",
+        class_index=0,
+        output_dir=output_dir,
+    )
+]
+
+model.fit(x_train, y_train, batch_size=2, epochs=2, callbacks=callbacks)
+```
+
 
 <p align="center">
     <img src="./docs/assets/grad_cam.png" width="200" />
