@@ -1,6 +1,6 @@
 # Mentat
 
-[![Build Status](https://api.travis-ci.com/sicara/mentat.svg?branch=master)](https://travis-ci.org/sicara/mentat)
+[![Build Status](https://api.travis-ci.org/sicara/mentat.svg?branch=master)](https://travis-ci.org/sicara/mentat)
 ![Python Versions](https://img.shields.io/badge/python-3.6%20|%203.7-%23EBBD68.svg)
 ![Tensorflow Versions](https://img.shields.io/badge/tensorflow-2.0.0--beta1-blue.svg)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/python/black)
