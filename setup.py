@@ -14,7 +14,6 @@ setup(name='Mentat',
       extras_require={
           'tests': ['pylint',
                     'pytest',
-                    'pytest-timeout',
                     'pytest-mock',
                     'pytest-cov'],
           'examples': ['opencv-python'],
