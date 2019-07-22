@@ -5,15 +5,17 @@ from pathlib import Path
 from mentat.callbacks.activations_visualization import ActivationsVisualizationCallback
 
 
-def test_should_call_activations_visualization_callback(random_data, convolutional_model):
+def test_should_call_activations_visualization_callback(
+    random_data, convolutional_model
+):
     x, y = random_data
 
-    output_dir = os.path.join('tests', 'test_logs')
+    output_dir = os.path.join("tests", "test_logs")
     callbacks = [
         ActivationsVisualizationCallback(
             validation_data=(x, None),
-            layers_name=['activation_1'],
-            output_dir=output_dir
+            layers_name=["activation_1"],
+            output_dir=output_dir,
         )
     ]
 

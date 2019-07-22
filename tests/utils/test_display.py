@@ -14,26 +14,20 @@ def test_should_raise_warning_if_no_perfect_square():
 
 
 def test_should_reshape_input_array_as_a_grid():
-    array = np.array([
-        np.ones((4, 4)),
-        np.ones((4, 4)),
-        np.zeros((4, 4)),
-        np.zeros((4, 4)),
-    ])
+    array = np.array(
+        [np.ones((4, 4)), np.ones((4, 4)), np.zeros((4, 4)), np.zeros((4, 4))]
+    )
 
     grid = grid_display(array)
 
-    expected_grid = np.concatenate([
-        np.ones((4, 8)),
-        np.zeros((4, 8))
-    ], axis=0)
+    expected_grid = np.concatenate([np.ones((4, 8)), np.zeros((4, 8))], axis=0)
 
     np.testing.assert_array_equal(grid, expected_grid)
 
 
 def test_should_display_heatmap(mocker):
-    mock_addweighted = mocker.patch('mentat.utils.display.cv2.addWeighted')
-    mock_addweighted.return_value=mocker.sentinel.heatmap
+    mock_addweighted = mocker.patch("mentat.utils.display.cv2.addWeighted")
+    mock_addweighted.return_value = mocker.sentinel.heatmap
 
     heatmap = np.random.random((3, 3, 3))
     original_image = np.zeros((10, 10, 3))
