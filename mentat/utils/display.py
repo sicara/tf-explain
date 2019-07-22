@@ -19,13 +19,18 @@ def grid_display(array):
     grid_size = int(math.sqrt(len(array)))
 
     if grid_size != math.sqrt(len(array)):
-        warnings.warn('Elements to display are not a perfect square. '
-                      'Last elements will be truncated.')
+        warnings.warn(
+            "Elements to display are not a perfect square. "
+            "Last elements will be truncated."
+        )
 
-    grid = np.concatenate([
-        np.concatenate(array[index*grid_size: (index+1)*grid_size], axis=1)
-        for index in range(grid_size)
-    ], axis=0)
+    grid = np.concatenate(
+        [
+            np.concatenate(array[index * grid_size : (index + 1) * grid_size], axis=1)
+            for index in range(grid_size)
+        ],
+        axis=0,
+    )
 
     return grid
 
@@ -61,8 +66,11 @@ def heatmap_display(heatmap, original_image):
     heatmap = cv2.applyColorMap(np.uint8(255 * map), cv2.COLORMAP_JET)
 
     output = cv2.addWeighted(
-        cv2.cvtColor(original_image.astype('uint8'), cv2.COLOR_RGB2BGR),
-        0.7, heatmap, 1, 0,
+        cv2.cvtColor(original_image.astype("uint8"), cv2.COLOR_RGB2BGR),
+        0.7,
+        heatmap,
+        1,
+        0,
     )
 
     return output

@@ -10,8 +10,13 @@ from mentat.utils.image import apply_grey_patch
 
 
 class OcclusionSensitivityCallback(Callback):
-    def __init__(self, validation_data, patch_size, class_index,
-                 output_dir=Path('./logs/occlusion_sensitivity')):
+    def __init__(
+        self,
+        validation_data,
+        patch_size,
+        class_index,
+        output_dir=Path("./logs/occlusion_sensitivity"),
+    ):
         super(OcclusionSensitivityCallback, self).__init__()
         self.validation_data = validation_data
         self.patch_size = patch_size
@@ -20,15 +25,19 @@ class OcclusionSensitivityCallback(Callback):
         os.makedirs(self.output_dir, exist_ok=True)
 
     def on_epoch_end(self, epoch, logs=None):
-        sensitivity_maps = np.array([
-            self.get_sensitivity_map(self.model, image, self.class_index, self.patch_size)
-            for image in self.validation_data[0]
-        ])
+        sensitivity_maps = np.array(
+            [
+                self.get_sensitivity_map(
+                    self.model, image, self.class_index, self.patch_size
+                )
+                for image in self.validation_data[0]
+            ]
+        )
 
         grid = grid_display(sensitivity_maps)
 
-        grid_as_image = Image.fromarray((np.clip(grid, 0, 1) * 255).astype('uint8'))
-        grid_as_image.save(Path(self.output_dir) / f'{epoch}.png')
+        grid_as_image = Image.fromarray((np.clip(grid, 0, 1) * 255).astype("uint8"))
+        grid_as_image.save(Path(self.output_dir) / f"{epoch}.png")
 
     @staticmethod
     def get_sensitivity_map(model, image, class_index, patch_size):
@@ -46,15 +55,16 @@ class OcclusionSensitivityCallback(Callback):
                 )
 
                 sensitivity_map[
-                    top_left_y:top_left_y + patch_size,
-                    top_left_x:top_left_x + patch_size,
-                ] = 1 - confidence
+                    top_left_y : top_left_y + patch_size,
+                    top_left_x : top_left_x + patch_size,
+                ] = (1 - confidence)
 
         return sensitivity_map
 
     @staticmethod
-    def get_confidence_for_random_patch(model, image, class_index,
-                                        top_left_x, top_left_y, patch_size):
+    def get_confidence_for_random_patch(
+        model, image, class_index, top_left_x, top_left_y, patch_size
+    ):
         """
         Get class confidence for input image with a patch applied.
 
@@ -74,4 +84,3 @@ class OcclusionSensitivityCallback(Callback):
         confidence = predicted_classes[class_index]
 
         return confidence
-
