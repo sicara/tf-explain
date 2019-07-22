@@ -9,9 +9,9 @@ from mentat.callbacks.occlusion_sensitivity import OcclusionSensitivityCallback
 
 def test_should_call_occlusion_sensitivity_callback(random_data, convolutional_model):
     x, y = random_data
-    convolutional_model.compile(optimizer='adam', loss='categorical_crossentropy')
+    convolutional_model.compile(optimizer="adam", loss="categorical_crossentropy")
 
-    output_dir = os.path.join('tests', 'test_logs')
+    output_dir = os.path.join("tests", "test_logs")
     callbacks = [
         OcclusionSensitivityCallback(
             validation_data=(x, None),
@@ -29,23 +29,20 @@ def test_should_call_occlusion_sensitivity_callback(random_data, convolutional_m
 
 
 def test_should_get_sensitivity_map(random_data, mocker):
-    mocker.patch('mentat.callbacks.occlusion_sensitivity.OcclusionSensitivityCallback.get_confidence_for_random_patch', return_value=0.6)
+    mocker.patch(
+        "mentat.callbacks.occlusion_sensitivity.OcclusionSensitivityCallback.get_confidence_for_random_patch",
+        return_value=0.6,
+    )
 
     x, y = random_data
 
-    output_dir = os.path.join('tests', 'test_logs')
+    output_dir = os.path.join("tests", "test_logs")
     callback = OcclusionSensitivityCallback(
-            validation_data=(x, None),
-            patch_size=4,
-            class_index=0,
-            output_dir=output_dir,
+        validation_data=(x, None), patch_size=4, class_index=0, output_dir=output_dir
     )
 
     output = callback.get_sensitivity_map(
-        model=None,
-        image=x[0],
-        class_index=None,
-        patch_size=4,
+        model=None, image=x[0], class_index=None, patch_size=4
     )
 
     expected_output = 0.4 * np.ones((x[0].shape[0], x[0].shape[1]))

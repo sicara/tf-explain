@@ -3,11 +3,13 @@ import pytest
 import tensorflow as tf
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope="session")
 def random_data():
     batch_size = 4
     x = np.random.random((batch_size, 28, 28, 3))
-    y = tf.keras.utils.to_categorical(np.random.randint(2, size=batch_size)).astype('uint8')
+    y = tf.keras.utils.to_categorical(np.random.randint(2, size=batch_size)).astype(
+        "uint8"
+    )
 
     return x, y
 
@@ -15,13 +17,21 @@ def random_data():
 @pytest.fixture()
 def convolutional_model(random_data):
     x, y = random_data
-    model = tf.keras.Sequential([
-        tf.keras.layers.Conv2D(16, (3, 3), activation=None, name='conv_1', input_shape=list(x.shape[1:])),
-        tf.keras.layers.ReLU(name='activation_1'),
-        tf.keras.layers.Flatten(),
-        tf.keras.layers.Dense(2, activation='softmax'),
-    ])
+    model = tf.keras.Sequential(
+        [
+            tf.keras.layers.Conv2D(
+                16,
+                (3, 3),
+                activation=None,
+                name="conv_1",
+                input_shape=list(x.shape[1:]),
+            ),
+            tf.keras.layers.ReLU(name="activation_1"),
+            tf.keras.layers.Flatten(),
+            tf.keras.layers.Dense(2, activation="softmax"),
+        ]
+    )
 
-    model.compile(optimizer='adam', loss='categorical_crossentropy')
+    model.compile(optimizer="adam", loss="categorical_crossentropy")
 
     return model
