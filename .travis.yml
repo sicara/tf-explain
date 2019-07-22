@@ -1,8 +1,12 @@
 language: python
-python:
-  - "3.6"
+matrix:
+  include:
+    - python: 3.6
+      env: TOXENV=py36
+    - python: 3.7
+      env: TOXENV=py37
 install:
   - pip install tensorflow==2.0.0-beta1
   - pip install -e ".[tests]"
 script:
-  - make test
+  - tox -e $TOXENV
