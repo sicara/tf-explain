@@ -7,9 +7,9 @@ import tensorflow as tf
 def random_data():
     batch_size = 4
     x = np.random.random((batch_size, 28, 28, 3))
-    y = tf.keras.utils.to_categorical(np.random.randint(2, size=batch_size)).astype(
-        "uint8"
-    )
+    y = tf.keras.utils.to_categorical(
+        np.random.randint(2, size=batch_size), num_classes=2
+    ).astype("uint8")
 
     return x, y
 
