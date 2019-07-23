@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 import tensorflow as tf
 
-from tf_explain.callbacks.occlusion_sensitivity import OcclusionSensitivityCallback
+from tf_explain.core.occlusion_sensitivity import OcclusionSensitivity
 
 
 IMAGE_PATH = './cat.jpg'
@@ -18,7 +18,7 @@ if __name__ == '__main__':
     model.summary()
 
     tabby_cat_class_index = 281
-    sensitivity_map = OcclusionSensitivityCallback.get_sensitivity_map(model, img, tabby_cat_class_index, 10)
+    sensitivity_map = OcclusionSensitivity.get_sensitivity_map(model, img, tabby_cat_class_index, 10)
 
     sensitivity_map = (sensitivity_map - np.min(sensitivity_map)) / (np.max(sensitivity_map) - np.min(sensitivity_map))
     sensitivity_jet_map = cv2.applyColorMap(

@@ -8,16 +8,20 @@ def test_should_get_sensitivity_map(random_data, mocker):
         "tf_explain.core.occlusion_sensitivity.OcclusionSensitivity.get_confidence_for_random_patch",
         return_value=0.6,
     )
-
-    x, y = random_data
-
-    callback = OcclusionSensitivity()
-
-    output = callback.get_sensitivity_map(
-        model=None, image=x[0], class_index=None, patch_size=4
+    mocker.patch(
+        "tf_explain.core.occlusion_sensitivity.cv2.resize", side_effect=lambda x, _: x
     )
 
-    expected_output = 0.4 * np.ones((x[0].shape[0], x[0].shape[1]))
+    x, y = random_data
+    patch_size = 4
+
+    output = OcclusionSensitivity.get_sensitivity_map(
+        model=None, image=x[0], class_index=None, patch_size=patch_size
+    )
+
+    expected_output = 0.4 * np.ones(
+        (x[0].shape[0] // patch_size, x[0].shape[1] // patch_size)
+    )
 
     np.testing.assert_almost_equal(output, expected_output)
 

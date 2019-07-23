@@ -1,5 +1,7 @@
+import math
 from pathlib import Path
 
+import cv2
 import numpy as np
 from PIL import Image
 
@@ -31,10 +33,15 @@ class OcclusionSensitivity:
 
     @staticmethod
     def get_sensitivity_map(model, image, class_index, patch_size):
-        sensitivity_map = np.zeros((image.shape[0], image.shape[1]))
+        sensitivity_map = np.zeros(
+            (
+                math.ceil(image.shape[0] / patch_size),
+                math.ceil(image.shape[1] / patch_size),
+            )
+        )
 
-        for top_left_x in range(0, image.shape[0], patch_size):
-            for top_left_y in range(0, image.shape[1], patch_size):
+        for index_x, top_left_x in enumerate(range(0, image.shape[0], patch_size)):
+            for index_y, top_left_y in enumerate(range(0, image.shape[1], patch_size)):
                 confidence = OcclusionSensitivity.get_confidence_for_random_patch(
                     model=model,
                     image=image,
@@ -44,12 +51,9 @@ class OcclusionSensitivity:
                     patch_size=patch_size,
                 )
 
-                sensitivity_map[
-                    top_left_y : top_left_y + patch_size,
-                    top_left_x : top_left_x + patch_size,
-                ] = (1 - confidence)
+                sensitivity_map[index_y, index_x] = 1 - confidence
 
-        return sensitivity_map
+        return cv2.resize(sensitivity_map, image.shape[0:2])
 
     @staticmethod
     def get_confidence_for_random_patch(
