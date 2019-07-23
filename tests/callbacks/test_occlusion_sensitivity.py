@@ -1,4 +1,3 @@
-import os
 import shutil
 from pathlib import Path
 
@@ -9,7 +8,7 @@ def test_should_call_occlusion_sensitivity_callback(random_data, convolutional_m
     x, y = random_data
     convolutional_model.compile(optimizer="adam", loss="categorical_crossentropy")
 
-    output_dir = os.path.join("tests", "test_logs")
+    output_dir = Path("tests") / "test_logs"
     callbacks = [
         OcclusionSensitivityCallback(
             validation_data=(x, None),
@@ -21,6 +20,6 @@ def test_should_call_occlusion_sensitivity_callback(random_data, convolutional_m
 
     convolutional_model.fit(x, y, batch_size=2, epochs=2, callbacks=callbacks)
 
-    assert len(os.listdir(Path(output_dir))) == 2
+    assert len(list(output_dir.glob("*"))) == 2
 
     shutil.rmtree(output_dir)

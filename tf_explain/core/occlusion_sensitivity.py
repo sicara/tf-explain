@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 
 import numpy as np
@@ -77,7 +76,7 @@ class OcclusionSensitivity:
         return confidence
 
     def save(self, grid, output_dir, output_name):
-        os.makedirs(output_dir, exist_ok=True)
+        Path.mkdir(Path(output_dir), parents=True, exist_ok=True)
 
         grid_as_image = Image.fromarray((np.clip(grid, 0, 1) * 255).astype("uint8"))
         grid_as_image.save(Path(output_dir) / output_name)

@@ -1,5 +1,3 @@
-import os
-
 import numpy as np
 
 from tf_explain.core.occlusion_sensitivity import OcclusionSensitivity

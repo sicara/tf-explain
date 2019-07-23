@@ -1,4 +1,3 @@
-import os
 import shutil
 from pathlib import Path
 
@@ -12,7 +11,7 @@ def test_should_call_activations_visualization_callback(
 ):
     x, y = random_data
 
-    output_dir = os.path.join("tests", "test_logs")
+    output_dir = Path("tests") / "test_logs"
     callbacks = [
         ActivationsVisualizationCallback(
             validation_data=(x, None),
@@ -23,6 +22,6 @@ def test_should_call_activations_visualization_callback(
 
     convolutional_model.fit(x, y, batch_size=2, epochs=2, callbacks=callbacks)
 
-    assert len(os.listdir(Path(output_dir))) == 2
+    assert len(list(output_dir.glob("*"))) == 2
 
     shutil.rmtree(output_dir)
