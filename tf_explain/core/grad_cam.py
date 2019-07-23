@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 
 import numpy as np
@@ -26,7 +25,7 @@ class GradCAM:
 
         cam = GradCAM.generate_ponderated_output(output, guided_grads)
 
-        heatmap = heatmap_display(cam.numpy(), images[0])
+        heatmap = heatmap_display(cam, images[0])
 
         return heatmap
 
@@ -86,10 +85,10 @@ class GradCAM:
         for i, w in enumerate(weights):
             cam += w * output[:, :, i]
 
-        return cam
+        return cam.numpy()
 
     def save(self, grid, output_dir, output_name):
-        os.makedirs(output_dir, exist_ok=True)
+        Path.mkdir(Path(output_dir), parents=True, exist_ok=True)
 
         grid_as_image = Image.fromarray((np.clip(grid, 0, 1) * 255).astype("uint8"))
         grid_as_image.save(Path(output_dir) / output_name)

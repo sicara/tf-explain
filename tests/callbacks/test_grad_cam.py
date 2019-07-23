@@ -1,26 +1,34 @@
-import os
 import shutil
-from pathlib import Path
 
 from tf_explain.callbacks.grad_cam import GradCAMCallback
 
 
-def test_should_call_grad_cam_callback(random_data, convolutional_model):
-    x, y = random_data
-    convolutional_model.compile(optimizer="adam", loss="categorical_crossentropy")
+def test_should_call_activations_visualization_callback(
+    random_data, convolutional_model, output_dir, mocker
+):
+    mock_explainer = mocker.MagicMock()
+    mock_explainer.explain = mocker.MagicMock(return_value=mocker.sentinel.grid)
+    mock_explainer.save = mocker.MagicMock()
+    mocker.patch("tf_explain.callbacks.grad_cam.GradCAM", return_value=mock_explainer)
 
-    output_dir = os.path.join("tests", "test_logs")
+    images, labels = random_data
+
     callbacks = [
         GradCAMCallback(
-            validation_data=(x, None),
-            layer_name="activation_1",
+            validation_data=random_data,
             class_index=0,
+            layer_name=["activation_1"],
             output_dir=output_dir,
         )
     ]
 
-    convolutional_model.fit(x, y, batch_size=2, epochs=2, callbacks=callbacks)
+    convolutional_model.fit(images, labels, batch_size=2, epochs=1, callbacks=callbacks)
 
-    assert len(os.listdir(Path(output_dir))) == 2
+    mock_explainer.explain.assert_called_once_with(
+        random_data, convolutional_model, ["activation_1"], 0
+    )
+    mock_explainer.save.assert_called_once_with(
+        mocker.sentinel.grid, output_dir, "0.png"
+    )
 
     shutil.rmtree(output_dir)

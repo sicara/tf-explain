@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 
 from tensorflow.keras.callbacks import Callback
@@ -20,7 +19,7 @@ class ActivationsVisualizationCallback(Callback):
         self.validation_data = validation_data
         self.layers_name = layers_name
         self.output_dir = output_dir
-        os.makedirs(self.output_dir, exist_ok=True)
+        Path.mkdir(Path(self.output_dir), parents=True, exist_ok=True)
 
     def on_epoch_end(self, epoch, logs=None):
         """ Draw activations outputs at each epoch end. """

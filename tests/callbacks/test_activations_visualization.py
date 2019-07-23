@@ -1,6 +1,4 @@
-import os
 import shutil
-from pathlib import Path
 
 from tf_explain.callbacks.activations_visualization import (
     ActivationsVisualizationCallback,
@@ -8,21 +6,33 @@ from tf_explain.callbacks.activations_visualization import (
 
 
 def test_should_call_activations_visualization_callback(
-    random_data, convolutional_model
+    random_data, convolutional_model, output_dir, mocker
 ):
-    x, y = random_data
+    mock_explainer = mocker.MagicMock()
+    mock_explainer.explain = mocker.MagicMock(return_value=mocker.sentinel.grid)
+    mock_explainer.save = mocker.MagicMock()
+    mocker.patch(
+        "tf_explain.callbacks.activations_visualization.ExtractActivations",
+        return_value=mock_explainer,
+    )
 
-    output_dir = os.path.join("tests", "test_logs")
+    images, labels = random_data
+
     callbacks = [
         ActivationsVisualizationCallback(
-            validation_data=(x, None),
+            validation_data=random_data,
             layers_name=["activation_1"],
             output_dir=output_dir,
         )
     ]
 
-    convolutional_model.fit(x, y, batch_size=2, epochs=2, callbacks=callbacks)
+    convolutional_model.fit(images, labels, batch_size=2, epochs=1, callbacks=callbacks)
 
-    assert len(os.listdir(Path(output_dir))) == 2
+    mock_explainer.explain.assert_called_once_with(
+        random_data, convolutional_model, ["activation_1"]
+    )
+    mock_explainer.save.assert_called_once_with(
+        mocker.sentinel.grid, output_dir, "0.png"
+    )
 
     shutil.rmtree(output_dir)

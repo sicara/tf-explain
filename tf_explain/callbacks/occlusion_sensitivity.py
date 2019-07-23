@@ -1,12 +1,8 @@
-import os
 from pathlib import Path
 
-import numpy as np
-from PIL import Image
 from tensorflow.keras.callbacks import Callback
 
 from tf_explain.core.occlusion_sensitivity import OcclusionSensitivity
-from tf_explain.utils.display import grid_display
 
 
 class OcclusionSensitivityCallback(Callback):
@@ -22,7 +18,7 @@ class OcclusionSensitivityCallback(Callback):
         self.patch_size = patch_size
         self.class_index = class_index
         self.output_dir = output_dir
-        os.makedirs(self.output_dir, exist_ok=True)
+        Path.mkdir(Path(self.output_dir), parents=True, exist_ok=True)
 
     def on_epoch_end(self, epoch, logs=None):
         explainer = OcclusionSensitivity()
