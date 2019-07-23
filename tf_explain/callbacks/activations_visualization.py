@@ -6,7 +6,7 @@ import tensorflow as tf
 from PIL import Image
 from tensorflow.keras.callbacks import Callback
 
-from mentat.utils.display import filter_display
+from tf_explain.utils.display import filter_display
 
 
 class ActivationsVisualizationCallback(Callback):

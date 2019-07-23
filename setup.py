@@ -2,12 +2,12 @@ from setuptools import setup
 from setuptools import find_packages
 
 
-setup(name='Mentat',
+setup(name='tf-explain',
       version='0.0.1',
       description='Interpretability Callbacks for Tensorflow 2.0',
       author='Raphaël Meudec',
       author_email='raphaelm@sicara.com',
-      url='https://github.com/sicara/mentat',
+      url='https://github.com/sicara/tf-explain',
       license='MIT',
       install_requires=['opencv-python>=4.1.0.25',
                         'pillow>=6.1.0'],

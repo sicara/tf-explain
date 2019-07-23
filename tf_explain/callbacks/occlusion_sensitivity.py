@@ -5,8 +5,8 @@ import numpy as np
 from PIL import Image
 from tensorflow.keras.callbacks import Callback
 
-from mentat.utils.display import grid_display
-from mentat.utils.image import apply_grey_patch
+from tf_explain.utils.display import grid_display
+from tf_explain.utils.image import apply_grey_patch
 
 
 class OcclusionSensitivityCallback(Callback):

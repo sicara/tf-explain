@@ -1,19 +1,19 @@
-# Mentat
+# tf-explain
 
-[![Build Status](https://api.travis-ci.org/sicara/mentat.svg?branch=master)](https://travis-ci.org/sicara/mentat)
+[![Build Status](https://api.travis-ci.org/sicara/tf-explain.svg?branch=master)](https://travis-ci.org/sicara/tf-explain)
 ![Python Versions](https://img.shields.io/badge/python-3.6%20|%203.7-%23EBBD68.svg)
 ![Tensorflow Versions](https://img.shields.io/badge/tensorflow-2.0.0--beta1-blue.svg)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/python/black)
 
-__Mentat__ implements interpretability methods as Tensorflow 2.0 callbacks to __ease neural network's understanding__.
+__tf-explain__ implements interpretability methods as Tensorflow 2.0 callbacks to __ease neural network's understanding__.
 
 ## Installation
 
-__Mentat__ is not available yet on Pypi. To install it, clone it locally:
+__tf-explain__ is not available yet on Pypi. To install it, clone it locally:
 
 ```bash
 virtualenv venv -p python3.6
-git clone https://www.github.com/sicara/mentat
+git clone https://www.github.com/sicara/tf-explain
 pip install -e .
 ```
 
@@ -28,7 +28,7 @@ pip install -e .
 > Visualize how a given input comes out of a specific activation layer
 
 ```python
-from mentat.callbacks.activations_visualization import ActivationsVisualizationCallback
+from tf_explain.callbacks.activations_visualization import ActivationsVisualizationCallback
 
 model = [...]
 
@@ -53,7 +53,7 @@ model.fit(x_train, y_train, batch_size=2, epochs=2, callbacks=callbacks)
 > Visualize how parts of the image affects neural network's confidence by occluding parts iteratively
 
 ```python
-from mentat.callbacks.occlusion_sensitivity import OcclusionSensitivityCallback
+from tf_explain.callbacks.occlusion_sensitivity import OcclusionSensitivityCallback
 
 model = [...]
 
@@ -82,7 +82,7 @@ From [Grad-CAM: Visual Explanations from Deep Networks
 via Gradient-based Localization](https://arxiv.org/abs/1610.02391)
 
 ```python
-from mentat.callbacks.grad_cam import GradCAMCallback
+from tf_explain.callbacks.grad_cam import GradCAMCallback
 
 model = [...]
 

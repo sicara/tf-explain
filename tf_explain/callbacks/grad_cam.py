@@ -6,7 +6,7 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras.callbacks import Callback
 
-from mentat.utils.display import heatmap_display
+from tf_explain.utils.display import heatmap_display
 
 
 class GradCAMCallback(Callback):

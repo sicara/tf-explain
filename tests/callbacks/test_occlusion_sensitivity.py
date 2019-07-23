@@ -4,7 +4,7 @@ from pathlib import Path
 
 import numpy as np
 
-from mentat.callbacks.occlusion_sensitivity import OcclusionSensitivityCallback
+from tf_explain.callbacks.occlusion_sensitivity import OcclusionSensitivityCallback
 
 
 def test_should_call_occlusion_sensitivity_callback(random_data, convolutional_model):
@@ -30,7 +30,7 @@ def test_should_call_occlusion_sensitivity_callback(random_data, convolutional_m
 
 def test_should_get_sensitivity_map(random_data, mocker):
     mocker.patch(
-        "mentat.callbacks.occlusion_sensitivity.OcclusionSensitivityCallback.get_confidence_for_random_patch",
+        "tf_explain.callbacks.occlusion_sensitivity.OcclusionSensitivityCallback.get_confidence_for_random_patch",
         return_value=0.6,
     )
 
