@@ -13,10 +13,7 @@ class ExtractActivations:
     """ Draw activations of a specific layer for a given input """
 
     def explain(self, validation_data, model, layers_name):
-        outputs = [
-            layer.output for layer in model.layers
-            if layer.name in layers_name
-        ]
+        outputs = [layer.output for layer in model.layers if layer.name in layers_name]
 
         activations_model = tf.keras.models.Model(model.inputs, outputs=outputs)
         activations_model.compile(optimizer="sgd", loss="categorical_crossentropy")
