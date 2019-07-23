@@ -1,25 +1,37 @@
 import shutil
-from pathlib import Path
 
 from tf_explain.callbacks.occlusion_sensitivity import OcclusionSensitivityCallback
 
 
-def test_should_call_occlusion_sensitivity_callback(random_data, convolutional_model):
-    x, y = random_data
-    convolutional_model.compile(optimizer="adam", loss="categorical_crossentropy")
+def test_should_call_occlusion_sensitivity_callback(
+    random_data, convolutional_model, output_dir, mocker
+):
+    mock_explainer = mocker.MagicMock()
+    mock_explainer.explain = mocker.MagicMock(return_value=mocker.sentinel.grid)
+    mock_explainer.save = mocker.MagicMock()
+    mocker.patch(
+        "tf_explain.callbacks.occlusion_sensitivity.OcclusionSensitivity",
+        return_value=mock_explainer,
+    )
 
-    output_dir = Path("tests") / "test_logs"
+    images, labels = random_data
+
     callbacks = [
         OcclusionSensitivityCallback(
-            validation_data=(x, None),
-            patch_size=4,
+            validation_data=random_data,
             class_index=0,
+            patch_size=10,
             output_dir=output_dir,
         )
     ]
 
-    convolutional_model.fit(x, y, batch_size=2, epochs=2, callbacks=callbacks)
+    convolutional_model.fit(images, labels, batch_size=2, epochs=1, callbacks=callbacks)
 
-    assert len(list(output_dir.glob("*"))) == 2
+    mock_explainer.explain.assert_called_once_with(
+        random_data, convolutional_model, 0, 10
+    )
+    mock_explainer.save.assert_called_once_with(
+        mocker.sentinel.grid, output_dir, "0.png"
+    )
 
     shutil.rmtree(output_dir)

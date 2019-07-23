@@ -25,7 +25,7 @@ class GradCAM:
 
         cam = GradCAM.generate_ponderated_output(output, guided_grads)
 
-        heatmap = heatmap_display(cam.numpy(), images[0])
+        heatmap = heatmap_display(cam, images[0])
 
         return heatmap
 
@@ -85,7 +85,7 @@ class GradCAM:
         for i, w in enumerate(weights):
             cam += w * output[:, :, i]
 
-        return cam
+        return cam.numpy()
 
     def save(self, grid, output_dir, output_name):
         Path.mkdir(Path(output_dir), parents=True, exist_ok=True)
