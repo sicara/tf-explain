@@ -27,4 +27,4 @@ if __name__ == '__main__':
     grid = filter_display(predictions)
 
     im = Image.fromarray((np.clip(grid, 0, 1) * 255).astype('uint8'))
-    im.save(Path('../tests/test_logs') / f'1.png')
+    im.save(Path('1.png'))
