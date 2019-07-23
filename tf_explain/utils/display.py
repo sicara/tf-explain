@@ -73,4 +73,4 @@ def heatmap_display(heatmap, original_image):
         0,
     )
 
-    return output
+    return cv2.cvtColor(output, cv2.COLOR_BGR2RGB)

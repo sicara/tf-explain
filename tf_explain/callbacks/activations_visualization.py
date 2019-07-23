@@ -1,12 +1,9 @@
 import os
 from pathlib import Path
 
-import numpy as np
-import tensorflow as tf
-from PIL import Image
 from tensorflow.keras.callbacks import Callback
 
-from tf_explain.utils.display import filter_display
+from tf_explain.core.activations import ExtractActivations
 
 
 class ActivationsVisualizationCallback(Callback):
@@ -27,17 +24,6 @@ class ActivationsVisualizationCallback(Callback):
 
     def on_epoch_end(self, epoch, logs=None):
         """ Draw activations outputs at each epoch end. """
-        outputs = [
-            layer.output
-            for layer in self.model.layers
-            if layer.name in self.layers_name
-        ]
-
-        activations_model = tf.keras.models.Model(self.model.inputs, outputs=outputs)
-        activations_model.compile(optimizer="adam", loss="categorical_crossentropy")
-
-        predictions = activations_model.predict(self.validation_data[0])
-        grid = filter_display(predictions)
-
-        grid_as_image = Image.fromarray((np.clip(grid, 0, 1) * 255).astype("uint8"))
-        grid_as_image.save(Path(self.output_dir) / f"{epoch}.png")
+        explainer = ExtractActivations()
+        grid = explainer.explain(self.validation_data, self.model, self.layers_name)
+        explainer.save(grid, self.output_dir, f"{epoch}.png")
