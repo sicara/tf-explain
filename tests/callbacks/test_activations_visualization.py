@@ -2,7 +2,9 @@ import os
 import shutil
 from pathlib import Path
 
-from tf_explain.callbacks.activations_visualization import ActivationsVisualizationCallback
+from tf_explain.callbacks.activations_visualization import (
+    ActivationsVisualizationCallback,
+)
 
 
 def test_should_call_activations_visualization_callback(
