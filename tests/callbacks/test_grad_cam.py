@@ -9,10 +9,7 @@ def test_should_call_activations_visualization_callback(
     mock_explainer = mocker.MagicMock()
     mock_explainer.explain = mocker.MagicMock(return_value=mocker.sentinel.grid)
     mock_explainer.save = mocker.MagicMock()
-    mocker.patch(
-        "tf_explain.callbacks.grad_cam.GradCAM",
-        return_value=mock_explainer,
-    )
+    mocker.patch("tf_explain.callbacks.grad_cam.GradCAM", return_value=mock_explainer)
 
     images, labels = random_data
 
