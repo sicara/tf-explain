@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import numpy as np
 import pytest
 import tensorflow as tf
@@ -35,3 +37,8 @@ def convolutional_model(random_data):
     model.compile(optimizer="adam", loss="categorical_crossentropy")
 
     return model
+
+
+@pytest.fixture()
+def output_dir():
+    return Path(__file__).parent / "tests_outputs"
