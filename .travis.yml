@@ -11,4 +11,4 @@ install:
   - pip install -e ".[tests]"
 script:
   - tox -e $TOXENV
-  - black mentat tests --check
+  - black tf_explain tests --check

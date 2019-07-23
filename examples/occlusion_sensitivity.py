@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 import tensorflow as tf
 
-from mentat.callbacks.occlusion_sensitivity import OcclusionSensitivityCallback
+from tf_explain.callbacks.occlusion_sensitivity import OcclusionSensitivityCallback
 
 
 IMAGE_PATH = './cat.jpg'

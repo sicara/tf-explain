@@ -3,7 +3,7 @@ from pathlib import Path
 import numpy as np
 import tensorflow as tf
 from PIL import Image
-from mentat.utils.display import filter_display
+from tf_explain.utils.display import filter_display
 
 layers_name = ['activation_6']
 IMAGE_PATH = './cat.jpg'

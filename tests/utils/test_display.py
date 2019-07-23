@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from mentat.utils.display import grid_display, heatmap_display
+from tf_explain.utils.display import grid_display, heatmap_display
 
 
 def test_should_raise_warning_if_no_perfect_square():
@@ -26,7 +26,7 @@ def test_should_reshape_input_array_as_a_grid():
 
 
 def test_should_display_heatmap(mocker):
-    mock_addweighted = mocker.patch("mentat.utils.display.cv2.addWeighted")
+    mock_addweighted = mocker.patch("tf_explain.utils.display.cv2.addWeighted")
     mock_addweighted.return_value = mocker.sentinel.heatmap
 
     heatmap = np.random.random((3, 3, 3))

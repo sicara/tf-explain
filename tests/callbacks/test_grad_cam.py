@@ -4,7 +4,7 @@ from pathlib import Path
 
 import numpy as np
 
-from mentat.callbacks.grad_cam import GradCAMCallback
+from tf_explain.callbacks.grad_cam import GradCAMCallback
 
 
 def test_should_call_grad_cam_callback(random_data, convolutional_model):
@@ -30,7 +30,7 @@ def test_should_call_grad_cam_callback(random_data, convolutional_model):
 
 #
 # def test_should_get_sensitivity_map(random_data, mocker):
-#     mocker.patch('mentat.callbacks.occlusion_sensitivity.OcclusionSensitivityCallback.get_confidence_for_random_patch', return_value=0.6)
+#     mocker.patch('tf_explain.callbacks.occlusion_sensitivity.OcclusionSensitivityCallback.get_confidence_for_random_patch', return_value=0.6)
 #
 #     x, y = random_data
 #
