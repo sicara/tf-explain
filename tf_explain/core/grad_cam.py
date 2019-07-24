@@ -1,8 +1,8 @@
 from pathlib import Path
 
+import cv2
 import numpy as np
 import tensorflow as tf
-from PIL import Image
 
 from tf_explain.utils.display import grid_display, heatmap_display
 
@@ -97,5 +97,6 @@ class GradCAM:
     def save(self, grid, output_dir, output_name):
         Path.mkdir(Path(output_dir), parents=True, exist_ok=True)
 
-        grid_as_image = Image.fromarray((np.clip(grid, 0, 1) * 255).astype("uint8"))
-        grid_as_image.save(Path(output_dir) / output_name)
+        cv2.imwrite(
+            str(Path(output_dir) / output_name), cv2.cvtColor(grid, cv2.COLOR_RGB2BGR)
+        )

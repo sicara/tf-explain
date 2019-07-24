@@ -17,7 +17,7 @@ if __name__ == '__main__':
     explainer = OcclusionSensitivity()
     # Compute Occlusion Sensitivity for patch_size 20
     grid = explainer.explain(data, model, tabby_cat_class_index, 20)
-    explainer.save(grid, '.', 'unique.png')
+    explainer.save(grid, '.', 'occlusion_sensitivity_20.png')
     # Compute Occlusion Sensitivity for patch_size 10
     grid = explainer.explain(data, model, tabby_cat_class_index, 10)
-    explainer.save(grid, '.', 'multiple.png')
+    explainer.save(grid, '.', 'occlusion_sensitivity_10.png')
