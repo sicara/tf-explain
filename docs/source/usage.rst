@@ -1,65 +1,49 @@
+Usage
+#####
 
-Available Methods
-#################
+tf-explain implements methods you can use at different levels:
 
-Activations Visualization
-*************************
+* either on a loaded model with the core API
+* either at training time with callbacks
 
-Visualize how a given input comes out of a specific activation layer
-::
-    from tf_explain.callbacks.activations_visualization import ActivationsVisualizationCallback
-
-    model = [...]
-
-    callbacks = [
-        ActivationsVisualizationCallback(
-            validation_data=(x_val, y_val),
-            layers_name=["activation_1"],
-            output_dir=output_dir,
-        ),
-    ]
-
-    model.fit(x_train, y_train, batch_size=2, epochs=2, callbacks=callbacks)
-
-.. image:: ../assets/activations_visualisation.png
-   :alt: Activations Visualization
-   :width: 400px
-   :align: center
+This section introduces both usages.
 
 
-Occlusion Sensitivity
-*********************
-
-Visualize how parts of the image affects neural network's confidence by occluding parts iteratively
-::
-    from tf_explain.callbacks.occlusion_sensitivity import OcclusionSensitivityCallback
-
-    model = [...]
-
-    callbacks = [
-        OcclusionSensitivityCallback(
-            validation_data=(x_val, y_val),
-            patch_size=4,
-            class_index=0,
-            output_dir=output_dir,
-        ),
-    ]
-
-    model.fit(x_train, y_train, batch_size=2, epochs=2, callbacks=callbacks)
-
-.. image:: ../assets/occlusion_sensitivity.png
-   :alt: Occlusion Sensitivity
-   :width: 200px
-   :align: center
-
-
-Grad CAM
+Core API
 ********
 
-Visualize how parts of the image affects neural network's output by looking into the activation maps
+All methods implemented in tf-explain keep the same interface:
 
-From `Grad-CAM: Visual Explanations from Deep Networks
-via Gradient-based Localization <https://arxiv.org/abs/1610.02391>`_
+* a :code:`explain` method which outputs the explaination (for instance, a heatmap)
+* a :code:`save` method compatible with its output
+
+Usage of the core API should be the following:
+::
+    # Import explainer
+    from tf_explain.core.grad_cam import GradCAM
+
+    # Instantiation of the explainer
+    explainer = GradCAM()
+
+    # Call to explain() method
+    output = explainer.explain(*explainer_args)
+
+    # Save output
+    explainer.save(output, output_dir, output_name)
+
+Recurrent arguments contained in :code:`explainer_args` are typically the data to use
+for the explanation, the model to inspect. Refer to each method docstring to know which
+elements are needed.
+
+All methods are kept inside :code:`tf_explain.core`.
+
+Callbacks
+*********
+
+To use those methods during trainings and inspect evolutions over the epochs, each one of them
+has its corresponding :code:`tf.keras.Callback`.
+
+Callback usage is coherent with Keras Callbacks:
 ::
     from tf_explain.callbacks.grad_cam import GradCAMCallback
 
@@ -75,8 +59,3 @@ via Gradient-based Localization <https://arxiv.org/abs/1610.02391>`_
     ]
 
     model.fit(x_train, y_train, batch_size=2, epochs=2, callbacks=callbacks)
-
-.. image:: ../assets/grad_cam.png
-   :alt: GradCAM
-   :width: 200px
-   :align: center
