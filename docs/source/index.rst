@@ -1,8 +1,113 @@
-.. tf-explain documentation master file, created by
-   sphinx-quickstart on Wed Jul 24 09:26:44 2019.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
+**************************************
 Welcome to tf-explain's documentation!
-======================================
+**************************************
 
+**tf-explain** implements interpretability methods as Tensorflow 2.0 callbacks to **ease neural network's understanding**.
+
+Installation
+############
+
+**tf-explain** is not available yet on Pypi. To install it, clone it locally:
+
+```bash
+virtualenv venv -p python3.6
+git clone https://www.github.com/sicara/tf-explain
+pip install -e .
+```
+
+Available Methods
+#################
+
+
+1. [Activations Visualization](#activations-visualization)
+2. [Occlusion Sensitivity](#occlusion-sensitivity)
+3. [Grad CAM (Class Activation Maps)](#grad-cam)
+
+Activations Visualization
+*************************
+
+> Visualize how a given input comes out of a specific activation layer
+
+```python
+from tf_explain.callbacks.activations_visualization import ActivationsVisualizationCallback
+
+model = [...]
+
+callbacks = [
+    ActivationsVisualizationCallback(
+        validation_data=(x_val, y_val),
+        layers_name=["activation_1"],
+        output_dir=output_dir,
+    ),
+]
+
+model.fit(x_train, y_train, batch_size=2, epochs=2, callbacks=callbacks)
+```
+
+<p align="center">
+    <img src="./docs/assets/activations_visualisation.png" width="400" />
+</p>
+
+
+Occlusion Sensitivity
+*********************
+
+> Visualize how parts of the image affects neural network's confidence by occluding parts iteratively
+
+```python
+from tf_explain.callbacks.occlusion_sensitivity import OcclusionSensitivityCallback
+
+model = [...]
+
+callbacks = [
+    OcclusionSensitivityCallback(
+        validation_data=(x_val, y_val),
+        patch_size=4,
+        class_index=0,
+        output_dir=output_dir,
+    ),
+]
+
+model.fit(x_train, y_train, batch_size=2, epochs=2, callbacks=callbacks)
+```
+
+<div align="center">
+    <img src="./docs/assets/occlusion_sensitivity.png" width="200" />
+    <p style="color: grey; font-size:small; width:350px;">Occlusion Sensitivity for Tabby class (stripes differentiate tabby cat from other ImageNet cat classes)</p>
+</div>
+
+Grad CAM
+********
+
+> Visualize how parts of the image affects neural network's output by looking into the activation maps
+
+From [Grad-CAM: Visual Explanations from Deep Networks
+via Gradient-based Localization](https://arxiv.org/abs/1610.02391)
+
+```python
+from tf_explain.callbacks.grad_cam import GradCAMCallback
+
+model = [...]
+
+callbacks = [
+    GradCAMCallback(
+        validation_data=(x_val, y_val),
+        layer_name="activation_1",
+        class_index=0,
+        output_dir=output_dir,
+    )
+]
+
+model.fit(x_train, y_train, batch_size=2, epochs=2, callbacks=callbacks)
+```
+
+
+<p align="center">
+    <img src="./docs/assets/grad_cam.png" width="200" />
+</p>
+
+
+Roadmap
+#######
+
+Next features are listed as issues with the `roadmap` label.
