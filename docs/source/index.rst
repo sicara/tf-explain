@@ -1,8 +1,33 @@
-.. tf-explain documentation master file, created by
-   sphinx-quickstart on Wed Jul 24 09:26:44 2019.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+**********
+tf-explain
+**********
 
-Welcome to tf-explain's documentation!
-======================================
+.. image:: https://api.travis-ci.org/sicara/tf-explain.svg?branch=master
+   :target: https://travis-ci.org/sicara/tf-explain
+   :alt: Build Status
 
+.. image:: https://img.shields.io/badge/python-3.6%20|%203.7-%23EBBD68.svg
+   :alt: Python Versions
+
+.. image:: https://img.shields.io/badge/tensorflow-2.0.0--beta1-blue.svg
+   :target: https://www.tensorflow.org/
+   :alt: Tensorflow Versions
+
+`tf-explain <https://www.github.com/sicara/tf-explain>`_ offers interpretability methods for Tensorflow 2.0 to
+ease neural network's understanding. With either its core API or its tf.keras callbacks, you can get a feedback on
+the training of your models.
+
+.. toctree::
+   :maxdepth: 2
+
+   overview
+   usage
+   contribute
+   changes
+
+
+
+Roadmap
+#######
+
+Next features are listed as issues with the `roadmap` label.
