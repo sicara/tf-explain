@@ -70,11 +70,10 @@ callbacks = [
 model.fit(x_train, y_train, batch_size=2, epochs=2, callbacks=callbacks)
 ```
 
-
-<p align="center">
+<div align="center">
     <img src="./docs/assets/occlusion_sensitivity.png" width="200" />
-    <p>Occlusion Sensitivity for Tabby class (stripes differentiate tabby cat from other ImageNet cat classes)</p>
-</p>
+    <p style="color: grey; font-size:small; width:350px;">Occlusion Sensitivity for Tabby class (stripes differentiate tabby cat from other ImageNet cat classes)</p>
+</div>
 
 ### Grad CAM
 
