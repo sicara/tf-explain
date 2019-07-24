@@ -22,6 +22,7 @@ the training of your models.
 
    overview
    usage
+   methods
    contribute
    changes
 
@@ -30,4 +31,4 @@ the training of your models.
 Roadmap
 #######
 
-Next features are listed as issues with the `roadmap` label.
+Next features are listed as issues with the :code:`roadmap` label.
