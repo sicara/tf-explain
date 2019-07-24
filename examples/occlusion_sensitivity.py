@@ -1,11 +1,6 @@
-from pathlib import Path
-
-import cv2
-import numpy as np
 import tensorflow as tf
 
 from tf_explain.core.occlusion_sensitivity import OcclusionSensitivity
-
 
 IMAGE_PATH = './cat.jpg'
 
@@ -16,15 +11,13 @@ if __name__ == '__main__':
     img = tf.keras.preprocessing.image.img_to_array(img)
 
     model.summary()
+    data = ([img], None)
 
     tabby_cat_class_index = 281
-    sensitivity_map = OcclusionSensitivity().get_sensitivity_map(model, img, tabby_cat_class_index, 10)
-
-    sensitivity_map = (sensitivity_map - np.min(sensitivity_map)) / (np.max(sensitivity_map) - np.min(sensitivity_map))
-    sensitivity_jet_map = cv2.applyColorMap(
-        cv2.cvtColor((sensitivity_map * 255).astype('uint8'), cv2.COLOR_GRAY2BGR),
-        cv2.COLORMAP_JET,
-    )
-
-    heatmap_image = cv2.addWeighted(cv2.cvtColor(img.astype('uint8'), cv2.COLOR_RGB2BGR), 0.5, sensitivity_jet_map, 1, 0)
-    cv2.imwrite(str(Path('../') / 'occlusion.png'), heatmap_image)
+    explainer = OcclusionSensitivity()
+    # Compute Occlusion Sensitivity for patch_size 20
+    grid = explainer.explain(data, model, tabby_cat_class_index, 20)
+    explainer.save(grid, '.', 'occlusion_sensitivity_20.png')
+    # Compute Occlusion Sensitivity for patch_size 10
+    grid = explainer.explain(data, model, tabby_cat_class_index, 10)
+    explainer.save(grid, '.', 'occlusion_sensitivity_10.png')
