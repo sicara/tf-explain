@@ -11,10 +11,13 @@ class ExtractActivations:
 
     """ Draw activations of a specific layer for a given input """
 
+    def __init__(self, batch_size=None):
+        self.batch_size = batch_size
+
     def explain(self, validation_data, model, layers_name):
         activations_model = self.generate_activations_graph(model, layers_name)
 
-        predictions = activations_model.predict(validation_data[0])
+        predictions = activations_model.predict(validation_data[0], batch_size=self.batch_size)
         grid = filter_display(predictions)
 
         return grid
