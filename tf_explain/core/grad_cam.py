@@ -4,7 +4,7 @@ import numpy as np
 import tensorflow as tf
 from PIL import Image
 
-from tf_explain.utils.display import heatmap_display
+from tf_explain.utils.display import grid_display, heatmap_display
 
 
 class GradCAM:
@@ -19,15 +19,17 @@ class GradCAM:
     def explain(self, validation_data, model, layer_name, class_index):
         images, _ = validation_data
 
-        output, guided_grads = GradCAM.get_gradients_and_filters(
+        outputs, guided_grads = GradCAM.get_gradients_and_filters(
             model, images, layer_name, class_index
         )
 
-        cam = GradCAM.generate_ponderated_output(output, guided_grads)
+        cams = GradCAM.generate_ponderated_output(outputs, guided_grads)
 
-        heatmap = heatmap_display(cam, images[0])
+        heatmaps = np.array([heatmap_display(cam, image) for cam, image in zip(cams, images)])
 
-        return heatmap
+        grid = grid_display(heatmaps)
+
+        return grid
 
     @staticmethod
     def get_gradients_and_filters(model, images, layer_name, class_index):
@@ -48,21 +50,20 @@ class GradCAM:
         )
 
         with tf.GradientTape() as tape:
-            inputs = np.array([images[0]]).astype("float32")
+            inputs = np.array(images).astype("float32")
             conv_outputs, predictions = grad_model(inputs)
             loss = predictions[:, class_index]
 
-        output = conv_outputs[0]
-        grads = tape.gradient(loss, conv_outputs)[0]
+        grads = tape.gradient(loss, conv_outputs)
 
         guided_grads = (
-            tf.cast(output > 0, "float32") * tf.cast(grads > 0, "float32") * grads
+            tf.cast(conv_outputs > 0, "float32") * tf.cast(grads > 0, "float32") * grads
         )
 
-        return output, guided_grads
+        return conv_outputs, guided_grads
 
     @staticmethod
-    def generate_ponderated_output(output, grads):
+    def generate_ponderated_output(outputs, grads):
         """
         Apply Grad CAM algorithm scheme.
 
@@ -78,14 +79,18 @@ class GradCAM:
         Returns:
 
         """
-        weights = tf.reduce_mean(grads, axis=(0, 1))
 
-        cam = np.ones(output.shape[0:2], dtype=np.float32)
+        maps = []
+        for output, grad in zip(outputs, grads):
+            weights = tf.reduce_mean(grad, axis=(0, 1))
+            cam = np.ones(output.shape[0:2], dtype=np.float32)
 
-        for i, w in enumerate(weights):
-            cam += w * output[:, :, i]
+            for i, w in enumerate(weights):
+                cam += w * output[:, :, i]
 
-        return cam.numpy()
+            maps.append(cam.numpy())
+
+        return maps
 
     def save(self, grid, output_dir, output_name):
         Path.mkdir(Path(output_dir), parents=True, exist_ok=True)
