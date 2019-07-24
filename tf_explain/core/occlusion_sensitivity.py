@@ -5,7 +5,7 @@ import cv2
 import numpy as np
 from PIL import Image
 
-from tf_explain.utils.display import grid_display
+from tf_explain.utils.display import grid_display, heatmap_display
 from tf_explain.utils.image import apply_grey_patch
 
 
@@ -30,7 +30,14 @@ class OcclusionSensitivity:
             ]
         )
 
-        grid = grid_display(sensitivity_maps)
+        heatmaps = np.array(
+            [
+                heatmap_display(heatmap, image)
+                for heatmap, image in zip(sensitivity_maps, images)
+            ]
+        )
+
+        grid = grid_display(heatmaps)
 
         return grid
 
@@ -66,5 +73,6 @@ class OcclusionSensitivity:
     def save(self, grid, output_dir, output_name):
         Path.mkdir(Path(output_dir), parents=True, exist_ok=True)
 
-        grid_as_image = Image.fromarray((np.clip(grid, 0, 1) * 255).astype("uint8"))
-        grid_as_image.save(Path(output_dir) / output_name)
+        cv2.imwrite(
+            str(Path(output_dir) / output_name), cv2.cvtColor(grid, cv2.COLOR_RGB2BGR)
+        )

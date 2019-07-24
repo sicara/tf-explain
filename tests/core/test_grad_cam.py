@@ -27,7 +27,9 @@ def test_should_produce_gradients_and_filters(convolutional_model, random_data):
         convolutional_model, images, layer_name, 0
     )
 
-    assert output.shape == [len(images)] + list(convolutional_model.get_layer(layer_name).output.shape[1:])
+    assert output.shape == [len(images)] + list(
+        convolutional_model.get_layer(layer_name).output.shape[1:]
+    )
     assert grads.shape == output.shape
 
 
@@ -44,7 +46,8 @@ def test_should_explain_output(mocker):
     )
     mock_generate_output.return_value = [mocker.sentinel.cam_1, mocker.sentinel.cam_2]
     mocker.patch(
-        "tf_explain.core.grad_cam.heatmap_display", side_effect=[mocker.sentinel.heatmap_1, mocker.sentinel.heatmap_2]
+        "tf_explain.core.grad_cam.heatmap_display",
+        side_effect=[mocker.sentinel.heatmap_1, mocker.sentinel.heatmap_2],
     )
     mocker.patch("tf_explain.core.grad_cam.grid_display", side_effect=lambda x: x)
 
@@ -57,7 +60,9 @@ def test_should_explain_output(mocker):
         mocker.sentinel.class_index,
     )
 
-    for heatmap, expected_heatmap in zip(grid, [mocker.sentinel.heatmap_1, mocker.sentinel.heatmap_2]):
+    for heatmap, expected_heatmap in zip(
+        grid, [mocker.sentinel.heatmap_1, mocker.sentinel.heatmap_2]
+    ):
         assert heatmap == expected_heatmap
 
     mock_get_gradients.assert_called_once_with(
@@ -67,5 +72,6 @@ def test_should_explain_output(mocker):
         mocker.sentinel.class_index,
     )
     mock_generate_output.assert_called_once_with(
-        [mocker.sentinel.conv_output_1, mocker.sentinel.conv_output_2], [mocker.sentinel.guided_grads_1, mocker.sentinel.guided_grads_2]
+        [mocker.sentinel.conv_output_1, mocker.sentinel.conv_output_2],
+        [mocker.sentinel.guided_grads_1, mocker.sentinel.guided_grads_2],
     )

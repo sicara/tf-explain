@@ -17,7 +17,9 @@ class ExtractActivations:
     def explain(self, validation_data, model, layers_name):
         activations_model = self.generate_activations_graph(model, layers_name)
 
-        predictions = activations_model.predict(validation_data[0], batch_size=self.batch_size)
+        predictions = activations_model.predict(
+            validation_data[0], batch_size=self.batch_size
+        )
         grid = filter_display(predictions)
 
         return grid

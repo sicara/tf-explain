@@ -1,6 +1,5 @@
 """ Module for display related operations. """
 import math
-import warnings
 
 import cv2
 import numpy as np
@@ -16,13 +15,15 @@ def grid_display(array):
     Returns:
         numpy.ndarray: 3D Tensor as concatenation of input images on a grid
     """
-    grid_size = int(math.sqrt(len(array)))
+    grid_size = math.ceil(math.sqrt(len(array)))
 
-    if grid_size != math.sqrt(len(array)):
-        warnings.warn(
-            "Elements to display are not a perfect square. "
-            "Last elements will be truncated."
-        )
+    # We fill the array with np.zeros elements to obtain a perfect square
+    number_of_missing_elements = grid_size ** 2 - len(array)
+    array = np.append(
+        array,
+        np.zeros((number_of_missing_elements, *array[0].shape)).astype(array.dtype),
+        axis=0,
+    )
 
     grid = np.concatenate(
         [
@@ -63,7 +64,9 @@ def heatmap_display(heatmap, original_image):
 
     map = (map - np.min(map)) / (map.max() - map.min())
 
-    heatmap = cv2.applyColorMap(np.uint8(255 * map), cv2.COLORMAP_JET)
+    heatmap = cv2.applyColorMap(
+        cv2.cvtColor((map * 255).astype("uint8"), cv2.COLOR_GRAY2BGR), cv2.COLORMAP_JET
+    )
 
     output = cv2.addWeighted(
         cv2.cvtColor(original_image.astype("uint8"), cv2.COLOR_RGB2BGR),
