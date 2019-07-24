@@ -21,6 +21,8 @@ project = 'tf-explain'
 copyright = '2019, Sicara'
 author = 'Sicara'
 
+master_doc = 'index'
+
 
 # -- General configuration ---------------------------------------------------
 
