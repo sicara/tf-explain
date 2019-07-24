@@ -35,4 +35,7 @@ class ExtractActivations:
     def save(self, grid, output_dir, output_name):
         Path.mkdir(Path(output_dir), parents=True, exist_ok=True)
 
-        cv2.imwrite(str(Path(output_dir) / output_name), (np.clip(grid, 0, 1)*255).astype("uint8"))
+        cv2.imwrite(
+            str(Path(output_dir) / output_name),
+            (np.clip(grid, 0, 1) * 255).astype("uint8"),
+        )
