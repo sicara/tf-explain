@@ -1,9 +1,7 @@
-from pathlib import Path
-
 import numpy as np
 import tensorflow as tf
-from PIL import Image
-from tf_explain.utils.display import filter_display
+
+from tf_explain.core.activations import ExtractActivations
 
 layers_name = ['activation_6']
 IMAGE_PATH = './cat.jpg'
@@ -15,16 +13,9 @@ if __name__ == '__main__':
     img = tf.keras.preprocessing.image.img_to_array(img)
 
     model.summary()
-    outputs = [
-        layer.output for layer in model.layers
-        if layer.name in layers_name
-    ]
+    data = (np.array([img]), None)
 
-    activations_model = tf.keras.models.Model(model.inputs, outputs=outputs)
-    activations_model.compile(optimizer='adam', loss='categorical_crossentropy')
-
-    predictions = activations_model.predict(np.array([img]))
-    grid = filter_display(predictions)
-
-    im = Image.fromarray((np.clip(grid, 0, 1) * 255).astype('uint8'))
-    im.save(Path('1.png'))
+    explainer = ExtractActivations()
+    # Compute Activations of layer activation_1
+    grid = explainer.explain(data, model, ['activation_6'])
+    explainer.save(grid, '.', 'activations.png')

@@ -3,7 +3,6 @@ from pathlib import Path
 
 import cv2
 import numpy as np
-from PIL import Image
 
 from tf_explain.utils.display import grid_display, heatmap_display
 from tf_explain.utils.image import apply_grey_patch
