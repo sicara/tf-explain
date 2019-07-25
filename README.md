@@ -10,6 +10,8 @@
 __tf-explain__ implements interpretability methods as Tensorflow 2.0 callbacks to __ease neural network's understanding__.  
 See [Introducing tf-explain, Interpretability for Tensorflow 2.0](https://blog.sicara.com/tf-explain-interpretability-tensorflow-2-9438b5846e35)
 
+__Documentation__: https://tf-explain.readthedocs.io
+
 ## Installation
 
 __tf-explain__ is available on PyPi as an alpha release. To install it:
