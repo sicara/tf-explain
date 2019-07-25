@@ -4,7 +4,7 @@ from .occlusion_sensitivity import OcclusionSensitivityCallback
 
 
 __all__ = [
-    'ActivationsVisualizationCallback',
-    'GradCAMCallback',
-    'OcclusionSensitivityCallback',
+    "ActivationsVisualizationCallback",
+    "GradCAMCallback",
+    "OcclusionSensitivityCallback",
 ]
