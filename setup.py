@@ -1,10 +1,15 @@
 from setuptools import setup
 from setuptools import find_packages
 
+with open('README.md', 'r') as f:
+    long_description = f.read()
+
 
 setup(name='tf-explain',
       version='0.0.1',
       description='Interpretability Callbacks for Tensorflow 2.0',
+      long_description=long_description,
+      long_description_content_type="text/markdown",
       author='Raphaël Meudec',
       author_email='raphaelm@sicara.com',
       url='https://github.com/sicara/tf-explain',
