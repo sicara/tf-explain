@@ -18,7 +18,6 @@ setup(name='tf-explain',
                     'pytest-mock>=1.10.4',
                     'pytest-cov>=2.7.1',
                     'tox>=3.13.2'],
-          'examples': ['opencv-python'],
       },
       packages=find_packages()
 )
