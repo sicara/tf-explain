@@ -34,6 +34,7 @@ class GradCAM:
         return grid
 
     @staticmethod
+    @tf.function
     def get_gradients_and_filters(model, images, layer_name, class_index):
         """
         Generate guided gradients and convolutional outputs with an inference
@@ -52,7 +53,7 @@ class GradCAM:
         )
 
         with tf.GradientTape() as tape:
-            inputs = np.array(images).astype("float32")
+            inputs = tf.cast(images, tf.float32)
             conv_outputs, predictions = grad_model(inputs)
             loss = predictions[:, class_index]
 
@@ -82,17 +83,21 @@ class GradCAM:
 
         """
 
-        maps = []
-        for output, grad in zip(outputs, grads):
-            weights = tf.reduce_mean(grad, axis=(0, 1))
-            cam = np.ones(output.shape[0:2], dtype=np.float32)
-
-            for i, w in enumerate(weights):
-                cam += w * output[:, :, i]
-
-            maps.append(cam.numpy())
+        maps = [
+            GradCAM.ponderate_output(output, grad)
+            for output, grad in zip(outputs, grads)
+        ]
 
         return maps
+
+    @staticmethod
+    def ponderate_output(output, grad):
+        weights = tf.reduce_mean(grad, axis=(0, 1))
+
+        # Perform ponderated sum : w_i * output[:, :, i]
+        cam = tf.reduce_sum(tf.multiply(weights, output), axis=-1)
+
+        return cam
 
     def save(self, grid, output_dir, output_name):
         Path.mkdir(Path(output_dir), parents=True, exist_ok=True)

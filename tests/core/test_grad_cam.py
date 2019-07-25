@@ -3,21 +3,38 @@ import numpy as np
 from tf_explain.core.grad_cam import GradCAM
 
 
-def test_should_generate_ponderated_output():
-    grads = np.concatenate(
+def test_should_generate_ponderated_output(mocker):
+    mocker.patch(
+        "tf_explain.core.grad_cam.GradCAM.ponderate_output",
+        side_effect=[mocker.sentinel.ponderated_1, mocker.sentinel.ponderated_2],
+    )
+
+    expected_output = [mocker.sentinel.ponderated_1, mocker.sentinel.ponderated_2]
+
+    outputs = [mocker.sentinel.output_1, mocker.sentinel.output_2]
+    grads = [mocker.sentinel.grads_1, mocker.sentinel.grads_2]
+
+    output = GradCAM.generate_ponderated_output(outputs, grads)
+
+    for real, expected in zip(output, expected_output):
+        assert real == expected
+
+
+def test_should_ponderate_output():
+    grad = np.concatenate(
         [np.ones((3, 3, 1)), 2 * np.ones((3, 3, 1)), 3 * np.ones((3, 3, 1))], axis=-1
     )
 
-    outputs = np.concatenate(
+    output = np.concatenate(
         [np.ones((3, 3, 1)), 2 * np.ones((3, 3, 1)), 4 * np.ones((3, 3, 1))], axis=-1
     )
 
-    cam = GradCAM.generate_ponderated_output([outputs], [grads])
+    ponderated_output = GradCAM.ponderate_output(output, grad)
 
     ponderated_sum = 1 * 1 + 2 * 2 + 3 * 4
-    expected_output = [(ponderated_sum + 1) * np.ones((3, 3))]
+    expected_output = ponderated_sum * np.ones((3, 3))
 
-    np.testing.assert_almost_equal(expected_output, cam)
+    np.testing.assert_almost_equal(expected_output, ponderated_output)
 
 
 def test_should_produce_gradients_and_filters(convolutional_model, random_data):
