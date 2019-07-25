@@ -61,6 +61,8 @@ def test_should_explain_output(mocker):
     mock_generate_output = mocker.patch(
         "tf_explain.core.grad_cam.GradCAM.generate_ponderated_output"
     )
+    mocker.sentinel.cam_1.numpy = lambda: mocker.sentinel.cam_1
+    mocker.sentinel.cam_2.numpy = lambda: mocker.sentinel.cam_2
     mock_generate_output.return_value = [mocker.sentinel.cam_1, mocker.sentinel.cam_2]
     mocker.patch(
         "tf_explain.core.grad_cam.heatmap_display",

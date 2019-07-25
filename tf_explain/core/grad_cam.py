@@ -26,7 +26,7 @@ class GradCAM:
         cams = GradCAM.generate_ponderated_output(outputs, guided_grads)
 
         heatmaps = np.array(
-            [heatmap_display(cam, image) for cam, image in zip(cams, images)]
+            [heatmap_display(cam.numpy(), image) for cam, image in zip(cams, images)]
         )
 
         grid = grid_display(heatmaps)
