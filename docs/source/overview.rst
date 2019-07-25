@@ -5,10 +5,9 @@ Overview
 Installation
 ************
 
-tf-explain is not available yet on Pypi. To install it, clone it locally:
+tf-explain is available on Pypi as an alpha releast. To install it:
 ::
-    git clone https://www.github.com/sicara/tf-explain
-    pip install -e .
+    pip install tf-explain
 
 
 Tensorflow Compatibility
