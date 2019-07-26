@@ -28,7 +28,7 @@ class GradCAMCallback(Callback):
         self.validation_data = validation_data
         self.layer_name = layer_name
         self.class_index = class_index
-        self.output_dir = Path(output_dir) / datetime.now().strftime("%Y%m%d-%H%M%S")
+        self.output_dir = Path(output_dir) / datetime.now().strftime("%Y%m%d-%H%M%S.%f")
         Path.mkdir(Path(self.output_dir), parents=True, exist_ok=True)
 
     def on_epoch_end(self, epoch, logs=None):

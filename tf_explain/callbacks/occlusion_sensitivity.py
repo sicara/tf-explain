@@ -20,7 +20,7 @@ class OcclusionSensitivityCallback(Callback):
         self.validation_data = validation_data
         self.patch_size = patch_size
         self.class_index = class_index
-        self.output_dir = Path(output_dir) / datetime.now().strftime("%Y%m%d-%H%M%S")
+        self.output_dir = Path(output_dir) / datetime.now().strftime("%Y%m%d-%H%M%S.%f")
         Path.mkdir(self.output_dir, parents=True, exist_ok=True)
 
     def on_epoch_end(self, epoch, logs=None):

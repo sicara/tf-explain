@@ -21,7 +21,7 @@ class ActivationsVisualizationCallback(Callback):
         super(ActivationsVisualizationCallback, self).__init__()
         self.validation_data = validation_data
         self.layers_name = layers_name
-        self.output_dir = Path(output_dir) / datetime.now().strftime("%Y%m%d-%H%M%S")
+        self.output_dir = Path(output_dir) / datetime.now().strftime("%Y%m%d-%H%M%S.%f")
         Path.mkdir(Path(self.output_dir), parents=True, exist_ok=True)
 
     def on_epoch_end(self, epoch, logs=None):
