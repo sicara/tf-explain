@@ -55,9 +55,10 @@ validation_class_fours = (np.array([
 ][0:5]), None)
 
 # Instantiate callbacks
+# class_index value should match the validation_data selected above
 callbacks = [
-    tf_explain.callbacks.GradCAMCallback(validation_class_zero, 'grad_cam_target', 0),
-    tf_explain.callbacks.GradCAMCallback(validation_class_fours, 'grad_cam_target', 1),
+    tf_explain.callbacks.GradCAMCallback(validation_class_zero, 'grad_cam_target', class_index=0),
+    tf_explain.callbacks.GradCAMCallback(validation_class_fours, 'grad_cam_target', class_index=4),
     tf_explain.callbacks.ActivationsVisualizationCallback(validation_class_zero, 'grad_cam_target')
 ]
 
