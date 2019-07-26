@@ -115,6 +115,13 @@ model.fit(x_train, y_train, batch_size=2, epochs=2, callbacks=callbacks)
 </p>
 
 
+## Visualizing the results
+
+When you use the callbacks, the output files are created in the `logs` directory.
+
+You can see them in tensorboard with the following command: `tensorboard --logdir logs`
+
+
 ## Roadmap
 
 Next features are listed as issues with the `roadmap` label.
