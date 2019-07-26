@@ -5,7 +5,7 @@ Overview
 Installation
 ************
 
-tf-explain is available on Pypi as an alpha releast. To install it:
+tf-explain is available on Pypi as an alpha release. To install it:
 ::
     pip install tf-explain
 
