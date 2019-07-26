@@ -22,7 +22,9 @@ class ExtractActivations:
         )
         grid = filter_display(predictions)
 
-        return grid
+        grid = (grid - grid.min()) / (grid.max() - grid.min())
+
+        return (np.clip(grid, 0, 1) * 255).astype("uint8")
 
     @staticmethod
     def generate_activations_graph(model, layers_name):
@@ -37,5 +39,5 @@ class ExtractActivations:
 
         cv2.imwrite(
             str(Path(output_dir) / output_name),
-            (np.clip(grid, 0, 1) * 255).astype("uint8"),
+            grid,
         )
