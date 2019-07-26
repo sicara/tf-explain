@@ -3,7 +3,7 @@ import shutil
 from tf_explain.callbacks.grad_cam import GradCAMCallback
 
 
-def test_should_call_activations_visualization_callback(
+def test_should_call_grad_cam_callback(
     random_data, convolutional_model, output_dir, mocker
 ):
     mock_explainer = mocker.MagicMock()

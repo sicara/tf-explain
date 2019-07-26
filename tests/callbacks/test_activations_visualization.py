@@ -1,5 +1,6 @@
 import shutil
 
+import numpy as np
 from tf_explain.callbacks.activations_visualization import (
     ActivationsVisualizationCallback,
 )
@@ -9,12 +10,12 @@ def test_should_call_activations_visualization_callback(
     random_data, convolutional_model, output_dir, mocker
 ):
     mock_explainer = mocker.MagicMock()
-    mock_explainer.explain = mocker.MagicMock(return_value=mocker.sentinel.grid)
-    mock_explainer.save = mocker.MagicMock()
+    mock_explainer.explain = mocker.MagicMock(return_value=0)
     mocker.patch(
         "tf_explain.callbacks.activations_visualization.ExtractActivations",
         return_value=mock_explainer,
     )
+    mock_image_summary = mocker.patch("tf_explain.callbacks.occlusion_sensitivity.tf.summary.image")
 
     images, labels = random_data
 
@@ -31,8 +32,5 @@ def test_should_call_activations_visualization_callback(
     mock_explainer.explain.assert_called_once_with(
         random_data, convolutional_model, ["activation_1"]
     )
-    mock_explainer.save.assert_called_once_with(
-        mocker.sentinel.grid, output_dir, "0.png"
-    )
-
+    mock_image_summary.assert_called_once_with("Activations Visualization", np.array([[0]]), step=0)
     shutil.rmtree(output_dir)
