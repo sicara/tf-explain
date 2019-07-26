@@ -23,6 +23,8 @@ setup(name='tf-explain',
                     'pytest-mock>=1.10.4',
                     'pytest-cov>=2.7.1',
                     'tox>=3.13.2'],
+          'publish': ['bumpversion>=0.5.3',
+                      'twine>=1.13.0']
       },
       packages=find_packages()
 )
