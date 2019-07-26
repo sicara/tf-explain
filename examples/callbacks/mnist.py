@@ -48,16 +48,17 @@ validation_class_zero = (np.array([
     if np.all(label == np.array([1] + [0] * 9))
 ][0:5]), None)
 # Select a subset of the validation data to examine
-# Here, we choose 5 elements with label "0" == [1, 0, 0, .., 0]
-validation_class_fives = (np.array([
+# Here, we choose 5 elements with label "4" == [0, 0, 0, 0, 1, 0, 0, 0, 0, 0]
+validation_class_fours = (np.array([
     el for el, label in zip(test_images, test_labels)
     if np.all(label == np.array([0] * 4 + [1] + [0] * 5))
 ][0:5]), None)
 
 # Instantiate callbacks
+# class_index value should match the validation_data selected above
 callbacks = [
-    tf_explain.callbacks.GradCAMCallback(validation_class_zero, 'grad_cam_target', 0),
-    tf_explain.callbacks.GradCAMCallback(validation_class_fives, 'grad_cam_target', 1),
+    tf_explain.callbacks.GradCAMCallback(validation_class_zero, 'grad_cam_target', class_index=0),
+    tf_explain.callbacks.GradCAMCallback(validation_class_fours, 'grad_cam_target', class_index=4),
     tf_explain.callbacks.ActivationsVisualizationCallback(validation_class_zero, 'grad_cam_target')
 ]
 
