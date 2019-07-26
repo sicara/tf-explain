@@ -15,7 +15,9 @@ def test_should_call_activations_visualization_callback(
         "tf_explain.callbacks.activations_visualization.ExtractActivations",
         return_value=mock_explainer,
     )
-    mock_image_summary = mocker.patch("tf_explain.callbacks.occlusion_sensitivity.tf.summary.image")
+    mock_image_summary = mocker.patch(
+        "tf_explain.callbacks.occlusion_sensitivity.tf.summary.image"
+    )
 
     images, labels = random_data
 
@@ -32,5 +34,7 @@ def test_should_call_activations_visualization_callback(
     mock_explainer.explain.assert_called_once_with(
         random_data, convolutional_model, ["activation_1"]
     )
-    mock_image_summary.assert_called_once_with("Activations Visualization", np.array([[0]]), step=0)
+    mock_image_summary.assert_called_once_with(
+        "Activations Visualization", np.array([[0]]), step=0
+    )
     shutil.rmtree(output_dir)
