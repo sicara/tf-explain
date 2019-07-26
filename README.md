@@ -11,7 +11,7 @@ __tf-explain__ implements interpretability methods as Tensorflow 2.0 callbacks t
 
 ## Installation
 
-__tf-explain__ is available on Pypi as an alpha release. To install it:
+__tf-explain__ is available on PyPi as an alpha release. To install it:
 
 ```bash
 virtualenv venv -p python3.6
