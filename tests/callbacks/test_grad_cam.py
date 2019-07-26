@@ -10,9 +10,7 @@ def test_should_call_grad_cam_callback(
     mock_explainer = mocker.MagicMock()
     mock_explainer.explain = mocker.MagicMock(return_value=0)
     mocker.patch("tf_explain.callbacks.grad_cam.GradCAM", return_value=mock_explainer)
-    mock_image_summary = mocker.patch(
-        "tf_explain.callbacks.grad_cam.tf.summary.image"
-    )
+    mock_image_summary = mocker.patch("tf_explain.callbacks.grad_cam.tf.summary.image")
 
     images, labels = random_data
 
@@ -30,8 +28,6 @@ def test_should_call_grad_cam_callback(
     mock_explainer.explain.assert_called_once_with(
         random_data, convolutional_model, ["activation_1"], 0
     )
-    mock_image_summary.assert_called_once_with(
-        "Grad CAM", np.array([0]), step=0
-    )
+    mock_image_summary.assert_called_once_with("Grad CAM", np.array([0]), step=0)
 
     shutil.rmtree(output_dir)
