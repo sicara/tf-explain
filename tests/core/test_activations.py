@@ -14,20 +14,14 @@ def test_should_generate_subgraph(convolutional_model):
 
 
 def test_should_extract_activations(random_data, convolutional_model, mocker):
-    non_normalized_grid = np.array([
-        [1, 2],
-        [1, 2],
-    ])
+    non_normalized_grid = np.array([[1, 2], [1, 2]])
     mocker.patch(
         "tf_explain.core.activations.filter_display", return_value=non_normalized_grid
     )
     explainer = ExtractActivations()
     grid = explainer.explain(random_data, convolutional_model, ["activation_1"])
 
-    expected_output = np.array([
-        [0, 255],
-        [0, 255],
-    ]).astype("uint8")
+    expected_output = np.array([[0, 255], [0, 255]]).astype("uint8")
 
     np.testing.assert_array_equal(grid, expected_output)
 
