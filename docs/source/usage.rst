@@ -3,8 +3,8 @@ Usage
 
 tf-explain implements methods you can use at different levels:
 
-* either on a loaded model with the core API
-* either at training time with callbacks
+* either on a loaded model with the core API (which saves outputs to disk)
+* either at training time with callbacks (which integrates into Tensorboard)
 
 This section introduces both usages.
 
@@ -59,3 +59,5 @@ Callback usage is coherent with Keras Callbacks:
     ]
 
     model.fit(x_train, y_train, batch_size=2, epochs=2, callbacks=callbacks)
+
+Then, launch `Tensorboard <https://www.tensorflow.org/tensorboard/>`_ and visualize the outputs in the Images section.
