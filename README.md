@@ -1,5 +1,6 @@
 # tf-explain
 
+[![Pypi Version](https://img.shields.io/pypi/v/tf-explain.svg)](https://pypi.org/project/tf-explain/)
 [![Build Status](https://api.travis-ci.org/sicara/tf-explain.svg?branch=master)](https://travis-ci.org/sicara/tf-explain)
 [![Documentation Status](https://readthedocs.org/projects/tf-explain/badge/?version=latest)](https://tf-explain.readthedocs.io/en/latest/?badge=latest)
 ![Python Versions](https://img.shields.io/badge/python-3.6%20|%203.7-%23EBBD68.svg)
