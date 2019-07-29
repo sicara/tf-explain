@@ -11,10 +11,9 @@ from tf_explain.core.smoothgrad import SmoothGrad
 class SmoothGradCallback(Callback):
 
     """
-    Perform Grad CAM algorithm for a given input
+    Perform SmoothGrad algorithm for a given input
 
-    Paper: [Grad-CAM: Visual Explanations from Deep Networks
-            via Gradient-based Localization](https://arxiv.org/abs/1610.02391)
+    Paper: [SmoothGrad: removing noise by adding noise](https://arxiv.org/abs/1706.03825)
     """
 
     def __init__(
