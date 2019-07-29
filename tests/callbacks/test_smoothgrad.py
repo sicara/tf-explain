@@ -31,6 +31,6 @@ def test_should_call_grad_cam_callback(
     mock_explainer.explain.assert_called_once_with(
         random_data, convolutional_model, 0, 3, 1.2
     )
-    mock_image_summary.assert_called_once_with("Grad CAM", np.array([0]), step=0)
+    mock_image_summary.assert_called_once_with("SmoothGrad", np.array([0]), step=0)
 
     shutil.rmtree(output_dir)
