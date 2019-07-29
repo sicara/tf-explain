@@ -61,6 +61,7 @@ class SmoothGrad:
     def save(self, grid, output_dir, output_name):
         Path.mkdir(Path(output_dir), parents=True, exist_ok=True)
 
-        cv2.imwrite(
-            str(Path(output_dir) / output_name), cv2.cvtColor(grid, cv2.COLOR_RGB2BGR)
-        )
+        grid = np.sum(np.abs(grid), axis=-1)
+        grid = ((grid - grid.min()) / (grid.max() - grid.min()) * 255).astype("uint8")
+
+        cv2.imwrite(str(Path(output_dir) / output_name), grid)
