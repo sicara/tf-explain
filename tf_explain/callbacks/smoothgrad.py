@@ -32,6 +32,8 @@ class SmoothGradCallback(Callback):
         self.output_dir = Path(output_dir) / datetime.now().strftime("%Y%m%d-%H%M%S.%f")
         Path.mkdir(Path(self.output_dir), parents=True, exist_ok=True)
 
+        self.file_writer = tf.summary.create_file_writer(str(self.output_dir))
+
     def on_epoch_end(self, epoch, logs=None):
         """ Draw activations outputs at each epoch end. """
         explainer = SmoothGrad()
@@ -43,9 +45,6 @@ class SmoothGradCallback(Callback):
             self.noise,
         )
 
-        # Creates a file writer for the log directory.
-        file_writer = tf.summary.create_file_writer(str(self.output_dir))
-
         # Using the file writer, log the reshaped image.
-        with file_writer.as_default():
+        with self.file_writer.as_default():
             tf.summary.image("SmoothGrad", np.expand_dims([grid], axis=-1), step=epoch)
