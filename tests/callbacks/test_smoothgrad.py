@@ -9,7 +9,9 @@ def test_should_call_grad_cam_callback(
 ):
     mock_explainer = mocker.MagicMock()
     mock_explainer.explain = mocker.MagicMock(return_value=0)
-    mocker.patch("tf_explain.callbacks.smoothgrad.SmoothGrad", return_value=mock_explainer)
+    mocker.patch(
+        "tf_explain.callbacks.smoothgrad.SmoothGrad", return_value=mock_explainer
+    )
     mock_image_summary = mocker.patch("tf_explain.callbacks.grad_cam.tf.summary.image")
 
     images, labels = random_data

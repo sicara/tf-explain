@@ -43,4 +43,4 @@ class GradCAMCallback(Callback):
 
         # Using the file writer, log the reshaped image.
         with file_writer.as_default():
-            tf.summary.image("Grad CAM", np.array([heatmap]), step=0)
+            tf.summary.image("Grad CAM", np.array([heatmap]), step=epoch)
