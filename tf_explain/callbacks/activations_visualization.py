@@ -31,7 +31,6 @@ class ActivationsVisualizationCallback(Callback):
         explainer = ExtractActivations()
         grid = explainer.explain(self.validation_data, self.model, self.layers_name)
 
-
         # Using the file writer, log the reshaped image.
         with self.file_writer.as_default():
             tf.summary.image(

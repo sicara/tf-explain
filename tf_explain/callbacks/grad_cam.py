@@ -18,11 +18,11 @@ class GradCAMCallback(Callback):
     """
 
     def __init__(
-            self,
-            validation_data,
-            layer_name,
-            class_index,
-            output_dir=Path("./logs/grad_cam"),
+        self,
+        validation_data,
+        layer_name,
+        class_index,
+        output_dir=Path("./logs/grad_cam"),
     ):
         super(GradCAMCallback, self).__init__()
         self.validation_data = validation_data
