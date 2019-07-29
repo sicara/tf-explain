@@ -23,15 +23,14 @@ class OcclusionSensitivityCallback(Callback):
         self.output_dir = Path(output_dir) / datetime.now().strftime("%Y%m%d-%H%M%S.%f")
         Path.mkdir(self.output_dir, parents=True, exist_ok=True)
 
+        self.file_writer = tf.summary.create_file_writer(str(self.output_dir))
+
     def on_epoch_end(self, epoch, logs=None):
         explainer = OcclusionSensitivity()
         grid = explainer.explain(
             self.validation_data, self.model, self.class_index, self.patch_size
         )
 
-        # Creates a file writer for the log directory.
-        file_writer = tf.summary.create_file_writer(str(self.output_dir))
-
         # Using the file writer, log the reshaped image.
-        with file_writer.as_default():
+        with self.file_writer.as_default():
             tf.summary.image("Occlusion Sensitivity", np.array([grid]), step=epoch)
