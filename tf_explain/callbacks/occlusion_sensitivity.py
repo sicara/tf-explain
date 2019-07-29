@@ -34,4 +34,4 @@ class OcclusionSensitivityCallback(Callback):
 
         # Using the file writer, log the reshaped image.
         with file_writer.as_default():
-            tf.summary.image("Occlusion Sensitivity", np.array([grid]), step=0)
+            tf.summary.image("Occlusion Sensitivity", np.array([grid]), step=epoch)

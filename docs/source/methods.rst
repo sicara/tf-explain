@@ -79,3 +79,32 @@ via Gradient-based Localization <https://arxiv.org/abs/1610.02391>`_
    :alt: GradCAM
    :width: 200px
    :align: center
+
+
+SmoothGrad
+**********
+
+Visualize stabilized gradients on the inputs towards the decision.
+
+From `SmoothGrad: removing noise by adding noise <https://arxiv.org/abs/1706.03825>`_
+::
+    from tf_explain.callbacks.smoothgrad import SmoothGradCallback
+
+    model = [...]
+
+    callbacks = [
+        SmoothGradCallback(
+            validation_data=(x_val, y_val),
+            class_index=0,
+            num_samples=20,
+            noise=1.,
+            output_dir=output_dir,
+        )
+    ]
+
+    model.fit(x_train, y_train, batch_size=2, epochs=2, callbacks=callbacks)
+
+.. image:: ../assets/smoothgrad.png
+   :alt: SmoothGrad
+   :width: 200px
+   :align: center

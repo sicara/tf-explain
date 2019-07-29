@@ -37,5 +37,5 @@ class ActivationsVisualizationCallback(Callback):
             tf.summary.image(
                 "Activations Visualization",
                 np.array([np.expand_dims(grid, axis=-1)]),
-                step=0,
+                step=epoch,
             )

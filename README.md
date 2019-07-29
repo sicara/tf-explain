@@ -33,6 +33,7 @@ pip install tensorflow-gpu==2.0.0-beta1
 1. [Activations Visualization](#activations-visualization)
 2. [Occlusion Sensitivity](#occlusion-sensitivity)
 3. [Grad CAM (Class Activation Maps)](#grad-cam)
+4. [SmoothGrad](#smoothgrad)
 
 ### Activations Visualization
 
@@ -113,6 +114,35 @@ model.fit(x_train, y_train, batch_size=2, epochs=2, callbacks=callbacks)
 <p align="center">
     <img src="./docs/assets/grad_cam.png" width="200" />
 </p>
+
+### SmoothGrad
+
+> Visualize stabilized gradients on the inputs towards the decision
+
+From [SmoothGrad: removing noise by adding noise](https://arxiv.org/abs/1706.03825)
+
+```python
+from tf_explain.callbacks.smoothgrad import SmoothGradCallback
+
+model = [...]
+
+callbacks = [
+    SmoothGradCallback(
+        validation_data=(x_val, y_val),
+        class_index=0,
+        num_samples=20,
+        noise=1.,
+        output_dir=output_dir,
+    )
+]
+
+model.fit(x_train, y_train, batch_size=2, epochs=2, callbacks=callbacks)
+```
+
+<p align="center">
+    <img src="./docs/assets/smoothgrad.png" width="200" />
+</p>
+
 
 
 ## Visualizing the results
