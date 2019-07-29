@@ -59,7 +59,8 @@ validation_class_fours = (np.array([
 callbacks = [
     tf_explain.callbacks.GradCAMCallback(validation_class_zero, 'grad_cam_target', class_index=0),
     tf_explain.callbacks.GradCAMCallback(validation_class_fours, 'grad_cam_target', class_index=4),
-    tf_explain.callbacks.ActivationsVisualizationCallback(validation_class_zero, 'grad_cam_target')
+    tf_explain.callbacks.ActivationsVisualizationCallback(validation_class_zero, 'grad_cam_target'),
+    tf_explain.callbacks.SmoothGradCallback(validation_class_zero, class_index=0, num_samples=15, noise=1.),
 ]
 
 # Start training

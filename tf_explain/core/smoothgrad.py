@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 import tensorflow as tf
 
-from tf_explain.utils.display import grid_display, heatmap_display
+from tf_explain.utils.display import grid_display
 
 
 class SmoothGrad:

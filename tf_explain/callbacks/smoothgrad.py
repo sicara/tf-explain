@@ -22,7 +22,7 @@ class SmoothGradCallback(Callback):
         class_index,
         num_samples=5,
         noise=1.0,
-        output_dir=Path("./logs/grad_cam"),
+        output_dir=Path("./logs/smoothgrad"),
     ):
         super(SmoothGradCallback, self).__init__()
         self.validation_data = validation_data
@@ -48,4 +48,4 @@ class SmoothGradCallback(Callback):
 
         # Using the file writer, log the reshaped image.
         with file_writer.as_default():
-            tf.summary.image("Grad CAM", np.array([grid]), step=epoch)
+            tf.summary.image("SmoothGrad", np.expand_dims([grid], axis=-1), step=epoch)
