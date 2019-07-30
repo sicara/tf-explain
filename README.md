@@ -154,4 +154,10 @@ You can see them in tensorboard with the following command: `tensorboard --logdi
 
 ## Roadmap
 
-Next features are listed as issues with the `roadmap` label.
+- [ ] Subclassing API Support
+- [ ] Additional Methods
+  - [ ] [GradCAM++](https://arxiv.org/abs/1710.11063)
+  - [ ] [Integrated Gradients](https://arxiv.org/abs/1703.01365)
+  - [ ] [Guided SmoothGrad](https://arxiv.org/abs/1706.03825)
+  - [ ] [LRP](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0130140)
+- [ ] Auto-generated API Documentation & Documentation Testing
