@@ -135,7 +135,9 @@ def subclassing_api_model(num_classes):
 
 # TODO: Activate subclassing API model (issue #55)
 @pytest.mark.parametrize("model_builder", [functional_api_model, sequential_api_model])
-def test_all_keras_api(model_builder, mnist_dataset, validation_dataset, num_classes, output_dir):
+def test_all_keras_api(
+    model_builder, mnist_dataset, validation_dataset, num_classes, output_dir
+):
     train_images, train_labels, test_images, test_labels = mnist_dataset
 
     model = model_builder(num_classes)
@@ -146,13 +148,20 @@ def test_all_keras_api(model_builder, mnist_dataset, validation_dataset, num_cla
     # Instantiate callbacks
     callbacks = [
         tf_explain.callbacks.GradCAMCallback(
-            validation_data, "grad_cam_target", class_index=target_class, output_dir=output_dir
+            validation_data,
+            "grad_cam_target",
+            class_index=target_class,
+            output_dir=output_dir,
         ),
         tf_explain.callbacks.ActivationsVisualizationCallback(
             validation_data, "grad_cam_target", output_dir=output_dir
         ),
         tf_explain.callbacks.SmoothGradCallback(
-            validation_data, class_index=target_class, num_samples=15, noise=1.0, output_dir=output_dir
+            validation_data,
+            class_index=target_class,
+            num_samples=15,
+            noise=1.0,
+            output_dir=output_dir,
         ),
     ]
 

@@ -6,14 +6,14 @@ import pytest
 import tensorflow as tf
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope="session")
 def tests_path():
     return Path(__file__).parent.absolute()
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope="session")
 def root_path(tests_path):
-    return tests_path / '..'
+    return tests_path / ".."
 
 
 @pytest.fixture()
