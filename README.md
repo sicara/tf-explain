@@ -72,8 +72,8 @@ model = [...]
 callbacks = [
     OcclusionSensitivityCallback(
         validation_data=(x_val, y_val),
-        patch_size=4,
         class_index=0,
+        patch_size=4,
         output_dir=output_dir,
     ),
 ]
