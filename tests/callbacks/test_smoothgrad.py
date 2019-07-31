@@ -1,10 +1,8 @@
-import shutil
-
 import numpy as np
 from tf_explain.callbacks.smoothgrad import SmoothGradCallback
 
 
-def test_should_call_grad_cam_callback(
+def test_should_call_smoothgrad_callback(
     random_data, convolutional_model, output_dir, mocker
 ):
     mock_explainer = mocker.MagicMock()
@@ -32,5 +30,3 @@ def test_should_call_grad_cam_callback(
         random_data, convolutional_model, 0, 3, 1.2
     )
     mock_image_summary.assert_called_once_with("SmoothGrad", np.array([0]), step=0)
-
-    shutil.rmtree(output_dir)

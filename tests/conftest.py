@@ -1,8 +1,26 @@
+import shutil
 from pathlib import Path
 
 import numpy as np
 import pytest
 import tensorflow as tf
+
+
+@pytest.fixture(scope="session")
+def tests_path():
+    return Path(__file__).parent.absolute()
+
+
+@pytest.fixture(scope="session")
+def root_path(tests_path):
+    return tests_path / ".."
+
+
+@pytest.fixture()
+def output_dir(tests_path):
+    output_dir = tests_path / "output"
+    yield output_dir
+    shutil.rmtree(output_dir)
 
 
 @pytest.fixture(scope="session")
@@ -37,8 +55,3 @@ def convolutional_model(random_data):
     model.compile(optimizer="adam", loss="categorical_crossentropy")
 
     return model
-
-
-@pytest.fixture()
-def output_dir():
-    return Path(__file__).parent / "tests_outputs"
