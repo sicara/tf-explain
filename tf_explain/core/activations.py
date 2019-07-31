@@ -1,3 +1,6 @@
+"""
+Core Module for Activations Visualizations
+"""
 from pathlib import Path
 
 import cv2
@@ -15,6 +18,18 @@ class ExtractActivations:
         self.batch_size = batch_size
 
     def explain(self, validation_data, model, layers_name):
+        """
+        Compute activations at targeted layers.
+
+        Args:
+            validation_data (Tuple[np.ndarray, Optional[np.ndarray]]): Validation data
+                to perform the method on. Tuple containing (x, y).
+            model (tf.keras.Model): tf.keras model to inspect
+            layers_name (List[str]): List of layer names to inspect
+
+        Returns:
+            np.ndarray: Grid of all the activations
+        """
         activations_model = self.generate_activations_graph(model, layers_name)
 
         predictions = activations_model.predict(
@@ -28,6 +43,16 @@ class ExtractActivations:
 
     @staticmethod
     def generate_activations_graph(model, layers_name):
+        """
+        Generate a graph between inputs and targeted layers.
+
+        Args:
+            model (tf.keras.Model): tf.keras model to inspect
+            layers_name (List[str]): List of layer names to inspect
+
+        Returns:
+            tf.keras.Model: Subgraph to the targeted layers
+        """
         outputs = [layer.output for layer in model.layers if layer.name in layers_name]
         activations_model = tf.keras.models.Model(model.inputs, outputs=outputs)
         activations_model.compile(optimizer="sgd", loss="categorical_crossentropy")
@@ -35,6 +60,14 @@ class ExtractActivations:
         return activations_model
 
     def save(self, grid, output_dir, output_name):
+        """
+        Save the output to a specific dir.
+
+        Args:
+            grid (numpy.ndarray): Grid of all the activations
+            output_dir (str): Output directory path
+            output_name (str): Output name
+        """
         Path.mkdir(Path(output_dir), parents=True, exist_ok=True)
 
         cv2.imwrite(str(Path(output_dir) / output_name), grid)
