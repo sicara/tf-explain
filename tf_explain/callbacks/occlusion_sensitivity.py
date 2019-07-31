@@ -15,8 +15,8 @@ class OcclusionSensitivityCallback(Callback):
     def __init__(
         self,
         validation_data,
-        patch_size,
         class_index,
+        patch_size,
         output_dir=Path("./logs/occlusion_sensitivity"),
     ):
         """
@@ -25,14 +25,14 @@ class OcclusionSensitivityCallback(Callback):
         Args:
             validation_data (Tuple[np.ndarray, Optional[np.ndarray]]): Validation data
                 to perform the method on. Tuple containing (x, y).
-            patch_size (int): Size of patch to apply on the image
             class_index (int): Index of targeted class
+            patch_size (int): Size of patch to apply on the image
             output_dir (str): Output directory path
         """
         super(OcclusionSensitivityCallback, self).__init__()
         self.validation_data = validation_data
-        self.patch_size = patch_size
         self.class_index = class_index
+        self.patch_size = patch_size
         self.output_dir = Path(output_dir) / datetime.now().strftime("%Y%m%d-%H%M%S.%f")
         Path.mkdir(self.output_dir, parents=True, exist_ok=True)
 
