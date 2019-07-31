@@ -19,7 +19,11 @@ def grid_display(array, num_rows=None, num_columns=None):
     if num_rows is not None and num_columns is not None:
         total_grid_size = num_rows * num_columns
         if total_grid_size < len(array):
-            warnings.warn(Warning("Given values for num_rows and num_columns doesn't allow to display all images. Values have been overrided to respect at least num_columns"))
+            warnings.warn(
+                Warning(
+                    "Given values for num_rows and num_columns doesn't allow to display all images. Values have been overrided to respect at least num_columns"
+                )
+            )
             num_rows = math.ceil(len(array) / num_columns)
     elif num_rows is not None:
         num_columns = math.ceil(len(array) / num_rows)
@@ -39,7 +43,9 @@ def grid_display(array, num_rows=None, num_columns=None):
 
     grid = np.concatenate(
         [
-            np.concatenate(array[index * num_columns : (index + 1) * num_columns], axis=1)
+            np.concatenate(
+                array[index * num_columns : (index + 1) * num_columns], axis=1
+            )
             for index in range(num_rows)
         ],
         axis=0,
