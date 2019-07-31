@@ -1,3 +1,6 @@
+"""
+Core Module for SmoothGrad Algorithm
+"""
 from pathlib import Path
 
 import cv2
@@ -16,6 +19,20 @@ class SmoothGrad:
     """
 
     def explain(self, validation_data, model, class_index, num_samples=5, noise=1.0):
+        """
+        Compute SmoothGrad for a specific class index
+
+        Args:
+            validation_data (Tuple[np.ndarray, Optional[np.ndarray]]): Validation data
+                to perform the method on. Tuple containing (x, y).
+            model (tf.keras.Model): tf.keras model to inspect
+            class_index (int): Index of targeted class
+            num_samples (int): Number of noisy samples to generate for each input image
+            noise (float): Standard deviation for noise normal distribution
+
+        Returns:
+            np.ndarray: Grid of all the smoothed gradients
+        """
         images, _ = validation_data
 
         noisy_images = SmoothGrad.generate_noisy_images(images, num_samples, noise)
@@ -34,6 +51,17 @@ class SmoothGrad:
 
     @staticmethod
     def generate_noisy_images(images, num_samples, noise):
+        """
+        Generate num_samples noisy images with std noise for each image.
+
+        Args:
+            images (numpy.ndarray): 4D-Tensor with shape (batch_size, H, W, 3)
+            num_samples (int): Number of noisy samples to generate for each input image
+            noise (float): Standard deviation for noise normal distribution
+
+        Returns:
+            np.ndarray: 4D-Tensor of noisy images with shape (batch_size*num_samples, H, W, 3)
+        """
         repeated_images = np.repeat(images, num_samples, axis=0)
         noise = np.random.normal(0, noise, repeated_images.shape).astype(np.float32)
 
@@ -42,6 +70,15 @@ class SmoothGrad:
     @staticmethod
     @tf.function
     def transform_to_grayscale(gradients):
+        """
+        Transform gradients over RGB axis to grayscale.
+
+        Args:
+            gradients (tf.Tensor): 4D-Tensor with shape (batch_size, H, W, 3)
+
+        Returns:
+            tf.Tensor: 4D-Tensor of grayscale gradients, with shape (batch_size, H, W, 1)
+        """
         grayscale_grads = tf.reduce_sum(tf.abs(gradients), axis=-1)
         normalized_grads = tf.cast(
             255
@@ -55,6 +92,18 @@ class SmoothGrad:
     @staticmethod
     @tf.function
     def get_averaged_gradients(noisy_images, model, class_index, num_samples):
+        """
+        Compute average of gradients for target class.
+
+        Args:
+            noisy_images (tf.Tensor): 4D-Tensor of noisy images with shape (batch_size*num_samples, H, W, 3)
+            model (tf.keras.Model): tf.keras model to inspect
+            class_index (int): Index of targeted class
+            num_samples (int): Number of noisy samples to generate for each input image
+
+        Returns:
+            tf.Tensor: 4D-Tensor with smoothed gradients, with shape (batch_size, H, W, 1)
+        """
         num_classes = model.output.shape[1]
 
         expected_output = tf.one_hot([class_index] * len(noisy_images), num_classes)
@@ -75,6 +124,14 @@ class SmoothGrad:
         return averaged_grads
 
     def save(self, grid, output_dir, output_name):
+        """
+        Save the output to a specific dir.
+
+        Args:
+            grid (numpy.ndarray): Gtid of all the smoothed gradients
+            output_dir (str): Output directory path
+            output_name (str): Output name
+        """
         Path.mkdir(Path(output_dir), parents=True, exist_ok=True)
 
         cv2.imwrite(str(Path(output_dir) / output_name), grid)
