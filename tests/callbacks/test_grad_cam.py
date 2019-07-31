@@ -1,5 +1,3 @@
-import shutil
-
 import numpy as np
 from tf_explain.callbacks.grad_cam import GradCAMCallback
 
@@ -29,5 +27,3 @@ def test_should_call_grad_cam_callback(
         random_data, convolutional_model, ["activation_1"], 0
     )
     mock_image_summary.assert_called_once_with("Grad CAM", np.array([0]), step=0)
-
-    shutil.rmtree(output_dir)

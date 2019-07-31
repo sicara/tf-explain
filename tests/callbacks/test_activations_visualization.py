@@ -1,5 +1,3 @@
-import shutil
-
 import numpy as np
 from tf_explain.callbacks.activations_visualization import (
     ActivationsVisualizationCallback,
@@ -37,4 +35,3 @@ def test_should_call_activations_visualization_callback(
     mock_image_summary.assert_called_once_with(
         "Activations Visualization", np.array([[0]]), step=0
     )
-    shutil.rmtree(output_dir)

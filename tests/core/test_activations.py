@@ -1,5 +1,3 @@
-import shutil
-
 import numpy as np
 
 from tf_explain.core.activations import ExtractActivations
@@ -34,4 +32,3 @@ def test_should_save_output_grid(output_dir):
 
     assert len(list(output_dir.glob("output.png"))) == 1
 
-    shutil.rmtree(output_dir)
