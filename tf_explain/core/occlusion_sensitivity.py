@@ -1,3 +1,6 @@
+"""
+Core Module for Occlusion Sensitivity
+"""
 import math
 from pathlib import Path
 
@@ -11,16 +14,26 @@ from tf_explain.utils.image import apply_grey_patch
 class OcclusionSensitivity:
 
     """
-    Perform Grad CAM algorithm for a given input
-
-    Paper: [Grad-CAM: Visual Explanations from Deep Networks
-            via Gradient-based Localization](https://arxiv.org/abs/1610.02391)
+    Perform Occlusion Sensitivity for a given input
     """
 
     def __init__(self, batch_size=None):
         self.batch_size = batch_size
 
     def explain(self, validation_data, model, class_index, patch_size):
+        """
+        Compute Occlusion Sensitivity maps for a specific class index.
+
+        Args:
+            validation_data (Tuple[np.ndarray, Optional[np.ndarray]]): Validation data
+                to perform the method on. Tuple containing (x, y).
+            model (tf.keras.Model): tf.keras model to inspect
+            class_index (int): Index of targeted class
+            patch_size (int): Size of patch to apply on the image
+
+        Returns:
+            np.ndarray: Grid of all the sensitivity maps with shape (batch_size, H, W, 3)
+        """
         images, _ = validation_data
         sensitivity_maps = np.array(
             [
@@ -41,6 +54,18 @@ class OcclusionSensitivity:
         return grid
 
     def get_sensitivity_map(self, model, image, class_index, patch_size):
+        """
+        Compute sensitivity map on a given image for a specific class index.
+
+        Args:
+            model (tf.keras.Model): tf.keras model to inspect
+            image:
+            class_index (int): Index of targeted class
+            patch_size (int): Size of patch to apply on the image
+
+        Returns:
+            np.ndarray: Sensitivity map with shape (H, W, 3)
+        """
         sensitivity_map = np.zeros(
             (
                 math.ceil(image.shape[0] / patch_size),
@@ -70,6 +95,14 @@ class OcclusionSensitivity:
         return cv2.resize(sensitivity_map, image.shape[0:2])
 
     def save(self, grid, output_dir, output_name):
+        """
+        Save the output to a specific dir.
+
+        Args:
+            grid (numpy.ndarray): Grid of all heatmaps
+            output_dir (str): Output directory path
+            output_name (str): Output name
+        """
         Path.mkdir(Path(output_dir), parents=True, exist_ok=True)
 
         cv2.imwrite(

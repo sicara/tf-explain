@@ -1,3 +1,6 @@
+"""
+Core Module for Grad CAM Algorithm
+"""
 from pathlib import Path
 
 import cv2
@@ -17,6 +20,19 @@ class GradCAM:
     """
 
     def explain(self, validation_data, model, layer_name, class_index):
+        """
+        Compute GradCAM for a specific class index.
+
+        Args:
+            validation_data (Tuple[np.ndarray, Optional[np.ndarray]]): Validation data
+                to perform the method on. Tuple containing (x, y).
+            model (tf.keras.Model): tf.keras model to inspect
+            layer_name (str): Targeted layer for GradCAM
+            class_index (int): Index of targeted class
+
+        Returns:
+            numpy.ndarray: Grid of all the GradCAM
+        """
         images, _ = validation_data
 
         outputs, guided_grads = GradCAM.get_gradients_and_filters(
@@ -37,16 +53,16 @@ class GradCAM:
     @tf.function
     def get_gradients_and_filters(model, images, layer_name, class_index):
         """
-        Generate guided gradients and convolutional outputs with an inference
+        Generate guided gradients and convolutional outputs with an inference.
 
         Args:
-            model:
-            images:
-            layer_name:
-            class_index:
+            model (tf.keras.Model): tf.keras model to inspect
+            images (numpy.ndarray): 4D-Tensor with shape (batch_size, H, W, 3)
+            layer_name (str): Targeted layer for GradCAM
+            class_index (int): Index of targeted class
 
         Returns:
-
+            Tuple[tf.Tensor, tf.Tensor]: (Target layer outputs, Guided gradients)
         """
         grad_model = tf.keras.models.Model(
             [model.inputs], [model.get_layer(layer_name).output, model.output]
@@ -76,11 +92,13 @@ class GradCAM:
           - we build a ponderated sum of the convolutional outputs based on those averaged weights
 
         Args:
-            output:
-            grads:
+            output (tf.Tensor): Target layer outputs, with shape (batch_size, Hl, Wl, Nf),
+                where Hl and Wl are the target layer output height and width, and Nf the
+                number of filters.
+            grads (tf.Tensor): Guided gradients with shape (batch_size, Hl, Wl, Nf)
 
         Returns:
-
+            List[tf.Tensor]: List of ponderated output of shape (batch_size, Hl, Wl, 1)
         """
 
         maps = [
@@ -92,6 +110,18 @@ class GradCAM:
 
     @staticmethod
     def ponderate_output(output, grad):
+        """
+        Perform the ponderation of filters output with respect to average of gradients values.
+
+        Args:
+            output (tf.Tensor): Target layer outputs, with shape (Hl, Wl, Nf),
+                where Hl and Wl are the target layer output height and width, and Nf the
+                number of filters.
+            grads (tf.Tensor): Guided gradients with shape (Hl, Wl, Nf)
+
+        Returns:
+            tf.Tensor: Ponderated output of shape (Hl, Wl, 1)
+        """
         weights = tf.reduce_mean(grad, axis=(0, 1))
 
         # Perform ponderated sum : w_i * output[:, :, i]
@@ -100,6 +130,14 @@ class GradCAM:
         return cam
 
     def save(self, grid, output_dir, output_name):
+        """
+        Save the output to a specific dir.
+
+        Args:
+            grid (numpy.ndarray): Grid of all the heatmaps
+            output_dir (str): Output directory path
+            output_name (str): Output name
+        """
         Path.mkdir(Path(output_dir), parents=True, exist_ok=True)
 
         cv2.imwrite(
