@@ -1,3 +1,6 @@
+"""
+Callback Module for SmoothGrad
+"""
 from datetime import datetime
 from pathlib import Path
 
@@ -24,6 +27,17 @@ class SmoothGradCallback(Callback):
         noise=1.0,
         output_dir=Path("./logs/smoothgrad"),
     ):
+        """
+        Constructor.
+
+        Args:
+            validation_data (Tuple[np.ndarray, Optional[np.ndarray]]): Validation data
+                to perform the method on. Tuple containing (x, y).
+            class_index (int): Index of targeted class
+            num_samples (int): Number of noisy samples to generate for each input image
+            noise (float): Standard deviation for noise normal distribution
+            output_dir (str): Output directory path
+        """
         super(SmoothGradCallback, self).__init__()
         self.validation_data = validation_data
         self.class_index = class_index
@@ -35,7 +49,13 @@ class SmoothGradCallback(Callback):
         self.file_writer = tf.summary.create_file_writer(str(self.output_dir))
 
     def on_epoch_end(self, epoch, logs=None):
-        """ Draw activations outputs at each epoch end. """
+        """
+        Draw SmoothGrad outputs at each epoch end to Tensorboard.
+
+        Args:
+            epoch (int): Epoch index
+            logs (dict): Additional information on epoch
+        """
         explainer = SmoothGrad()
         grid = explainer.explain(
             self.validation_data,
