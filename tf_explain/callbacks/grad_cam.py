@@ -24,6 +24,16 @@ class GradCAMCallback(Callback):
         class_index,
         output_dir=Path("./logs/grad_cam"),
     ):
+        """
+        Constructor.
+
+        Args:
+            validation_data (Tuple[np.ndarray, Optional[np.ndarray]]): Validation data
+                to perform the method on. Tuple containing (x, y).
+            layer_name (str): Targeted layer for GradCAM
+            class_index (int): Index of targeted class
+            output_dir (str): Output directory path
+        """
         super(GradCAMCallback, self).__init__()
         self.validation_data = validation_data
         self.layer_name = layer_name
@@ -34,7 +44,13 @@ class GradCAMCallback(Callback):
         self.file_writer = tf.summary.create_file_writer(str(self.output_dir))
 
     def on_epoch_end(self, epoch, logs=None):
-        """ Draw activations outputs at each epoch end. """
+        """
+        Draw GradCAM outputs at each epoch end to Tensorboard.
+
+        Args:
+            epoch (int): Epoch index
+            logs (dict): Additional information on epoch
+        """
         explainer = GradCAM()
         heatmap = explainer.explain(
             self.validation_data, self.model, self.layer_name, self.class_index
