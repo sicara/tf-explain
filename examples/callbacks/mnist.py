@@ -27,7 +27,7 @@ test_labels = tf.keras.utils.to_categorical(test_labels, num_classes=NUM_CLASSES
 img_input = tf.keras.Input(INPUT_SHAPE)
 
 x = tf.keras.layers.Conv2D(filters=32, kernel_size=(3, 3), activation='relu')(img_input)
-x = tf.keras.layers.Conv2D(filters=64, kernel_size=(3, 3), activation='relu', name='grad_cam_target')(x)
+x = tf.keras.layers.Conv2D(filters=64, kernel_size=(3, 3), activation='relu', name='target_layer')(x)
 x = tf.keras.layers.MaxPool2D(pool_size=(2, 2))(x)
 
 x = tf.keras.layers.Dropout(0.25)(x)
@@ -57,9 +57,9 @@ validation_class_fours = (np.array([
 # Instantiate callbacks
 # class_index value should match the validation_data selected above
 callbacks = [
-    tf_explain.callbacks.GradCAMCallback(validation_class_zero, 'grad_cam_target', class_index=0),
-    tf_explain.callbacks.GradCAMCallback(validation_class_fours, 'grad_cam_target', class_index=4),
-    tf_explain.callbacks.ActivationsVisualizationCallback(validation_class_zero, 'grad_cam_target'),
+    tf_explain.callbacks.GradCAMCallback(validation_class_zero, 'target_layer', class_index=0),
+    tf_explain.callbacks.GradCAMCallback(validation_class_fours, 'target_layer', class_index=4),
+    tf_explain.callbacks.ActivationsVisualizationCallback(validation_class_zero, layers_name=['target_layer']),
     tf_explain.callbacks.SmoothGradCallback(validation_class_zero, class_index=0, num_samples=15, noise=1.),
 ]
 
