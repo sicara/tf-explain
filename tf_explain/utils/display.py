@@ -69,13 +69,14 @@ def filter_display(array, num_rows=None, num_columns=None):
     )
 
 
-def heatmap_display(heatmap, original_image):
+def heatmap_display(heatmap, original_image, colormap=cv2.COLORMAP_VIRIDIS):
     """
     Apply a heatmap (as an np.ndarray) on top of an original image.
 
     Args:
         heatmap (numpy.ndarray): Array corresponding to the heatmap
         original_image (numpy.ndarray): Image on which we apply the heatmap
+        colormap (int): OpenCV Colormap to use for heatmap visualization
 
     Returns:
         np.ndarray: Original image with heatmap applied
@@ -85,7 +86,7 @@ def heatmap_display(heatmap, original_image):
     map = (map - np.min(map)) / (map.max() - map.min())
 
     heatmap = cv2.applyColorMap(
-        cv2.cvtColor((map * 255).astype("uint8"), cv2.COLOR_GRAY2BGR), cv2.COLORMAP_JET
+        cv2.cvtColor((map * 255).astype("uint8"), cv2.COLOR_GRAY2BGR), colormap
     )
 
     output = cv2.addWeighted(
