@@ -5,8 +5,7 @@ from tf_explain.callbacks.occlusion_sensitivity import OcclusionSensitivityCallb
 def test_should_call_occlusion_sensitivity_callback(
     random_data, convolutional_model, output_dir, mocker
 ):
-    mock_explainer = mocker.MagicMock()
-    mock_explainer.explain = mocker.MagicMock(return_value=0)
+    mock_explainer = mocker.MagicMock(explain=mocker.MagicMock(return_value=0))
     mocker.patch(
         "tf_explain.callbacks.occlusion_sensitivity.OcclusionSensitivity",
         return_value=mock_explainer,
