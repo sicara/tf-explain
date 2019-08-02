@@ -52,18 +52,18 @@ def test_should_produce_gradients_and_filters(convolutional_model, random_data):
 
 def test_should_explain_output(mocker):
     mock_get_gradients = mocker.patch(
-        "tf_explain.core.grad_cam.GradCAM.get_gradients_and_filters"
-    )
-    mock_get_gradients.return_value = (
-        [mocker.sentinel.conv_output_1, mocker.sentinel.conv_output_2],
-        [mocker.sentinel.guided_grads_1, mocker.sentinel.guided_grads_2],
-    )
-    mock_generate_output = mocker.patch(
-        "tf_explain.core.grad_cam.GradCAM.generate_ponderated_output"
+        "tf_explain.core.grad_cam.GradCAM.get_gradients_and_filters",
+        return_value=(
+            [mocker.sentinel.conv_output_1, mocker.sentinel.conv_output_2],
+            [mocker.sentinel.guided_grads_1, mocker.sentinel.guided_grads_2],
+        ),
     )
     mocker.sentinel.cam_1.numpy = lambda: mocker.sentinel.cam_1
     mocker.sentinel.cam_2.numpy = lambda: mocker.sentinel.cam_2
-    mock_generate_output.return_value = [mocker.sentinel.cam_1, mocker.sentinel.cam_2]
+    mock_generate_output = mocker.patch(
+        "tf_explain.core.grad_cam.GradCAM.generate_ponderated_output",
+        return_value=[mocker.sentinel.cam_1, mocker.sentinel.cam_2],
+    )
     mocker.patch(
         "tf_explain.core.grad_cam.heatmap_display",
         side_effect=[mocker.sentinel.heatmap_1, mocker.sentinel.heatmap_2],

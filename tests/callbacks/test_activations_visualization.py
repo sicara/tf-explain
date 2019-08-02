@@ -7,8 +7,7 @@ from tf_explain.callbacks.activations_visualization import (
 def test_should_call_activations_visualization_callback(
     random_data, convolutional_model, output_dir, mocker
 ):
-    mock_explainer = mocker.MagicMock()
-    mock_explainer.explain = mocker.MagicMock(return_value=0)
+    mock_explainer = mocker.MagicMock(explain=mocker.MagicMock(return_value=0))
     mocker.patch(
         "tf_explain.callbacks.activations_visualization.ExtractActivations",
         return_value=mock_explainer,

@@ -19,7 +19,14 @@ class GradCAM:
             via Gradient-based Localization](https://arxiv.org/abs/1610.02391)
     """
 
-    def explain(self, validation_data, model, layer_name, class_index):
+    def explain(
+        self,
+        validation_data,
+        model,
+        layer_name,
+        class_index,
+        colormap=cv2.COLORMAP_VIRIDIS,
+    ):
         """
         Compute GradCAM for a specific class index.
 
@@ -29,6 +36,7 @@ class GradCAM:
             model (tf.keras.Model): tf.keras model to inspect
             layer_name (str): Targeted layer for GradCAM
             class_index (int): Index of targeted class
+            colormap (int): OpenCV Colormap to use for heatmap visualization
 
         Returns:
             numpy.ndarray: Grid of all the GradCAM
@@ -42,7 +50,10 @@ class GradCAM:
         cams = GradCAM.generate_ponderated_output(outputs, guided_grads)
 
         heatmaps = np.array(
-            [heatmap_display(cam.numpy(), image) for cam, image in zip(cams, images)]
+            [
+                heatmap_display(cam.numpy(), image, colormap)
+                for cam, image in zip(cams, images)
+            ]
         )
 
         grid = grid_display(heatmaps)

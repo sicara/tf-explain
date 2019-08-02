@@ -20,7 +20,14 @@ class OcclusionSensitivity:
     def __init__(self, batch_size=None):
         self.batch_size = batch_size
 
-    def explain(self, validation_data, model, class_index, patch_size):
+    def explain(
+        self,
+        validation_data,
+        model,
+        class_index,
+        patch_size,
+        colormap=cv2.COLORMAP_VIRIDIS,
+    ):
         """
         Compute Occlusion Sensitivity maps for a specific class index.
 
@@ -30,6 +37,7 @@ class OcclusionSensitivity:
             model (tf.keras.Model): tf.keras model to inspect
             class_index (int): Index of targeted class
             patch_size (int): Size of patch to apply on the image
+            colormap (int): OpenCV Colormap to use for heatmap visualization
 
         Returns:
             np.ndarray: Grid of all the sensitivity maps with shape (batch_size, H, W, 3)
@@ -44,7 +52,7 @@ class OcclusionSensitivity:
 
         heatmaps = np.array(
             [
-                heatmap_display(heatmap, image)
+                heatmap_display(heatmap, image, colormap)
                 for heatmap, image in zip(sensitivity_maps, images)
             ]
         )
