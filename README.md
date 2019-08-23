@@ -35,6 +35,7 @@ pip install tensorflow-gpu==2.0.0-beta1
 2. [Occlusion Sensitivity](#occlusion-sensitivity)
 3. [Grad CAM (Class Activation Maps)](#grad-cam)
 4. [SmoothGrad](#smoothgrad)
+5. [Integrated Gradients](#integrated-gradients)
 
 ### Activations Visualization
 
@@ -144,13 +145,39 @@ model.fit(x_train, y_train, batch_size=2, epochs=2, callbacks=callbacks)
     <img src="./docs/assets/smoothgrad.png" width="200" />
 </p>
 
+### Integrated Gradients
+
+> Visualize an average of the gradients along the construction of the input towards the decision
+
+From [Axiomatic Attribution for Deep Networks](https://arxiv.org/pdf/1703.01365.pdf)
+
+```python
+from tf_explain.callbacks.integrated_gradients import IntegratedGradientsCallback
+
+model = [...]
+
+callbacks = [
+    IntegratedGradientsCallback(
+        validation_data=(x_val, y_val),
+        class_index=0,
+        n_steps=20,
+        output_dir=output_dir,
+    )
+]
+
+model.fit(x_train, y_train, batch_size=2, epochs=2, callbacks=callbacks)
+```
+
+<p align="center">
+    <img src="./docs/assets/integrated_gradients.png" width="200" />
+</p>
 
 
 ## Visualizing the results
 
 When you use the callbacks, the output files are created in the `logs` directory.
 
-You can see them in tensorboard with the following command: `tensorboard --logdir logs`
+You can see them in Tensorboard with the following command: `tensorboard --logdir logs`
 
 
 ## Roadmap
@@ -158,7 +185,7 @@ You can see them in tensorboard with the following command: `tensorboard --logdi
 - [ ] Subclassing API Support
 - [ ] Additional Methods
   - [ ] [GradCAM++](https://arxiv.org/abs/1710.11063)
-  - [ ] [Integrated Gradients](https://arxiv.org/abs/1703.01365)
+  - [x] [Integrated Gradients](https://arxiv.org/abs/1703.01365)
   - [ ] [Guided SmoothGrad](https://arxiv.org/abs/1706.03825)
   - [ ] [LRP](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0130140)
 - [ ] Auto-generated API Documentation & Documentation Testing
