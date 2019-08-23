@@ -108,3 +108,31 @@ From `SmoothGrad: removing noise by adding noise <https://arxiv.org/abs/1706.038
    :alt: SmoothGrad
    :width: 200px
    :align: center
+
+
+Integrated Gradients
+********************
+
+Visualize an average of the gradients along the construction of the input towards the decision.
+
+From `Axiomatic Attribution for Deep Networks <https://arxiv.org/pdf/1703.01365.pdf>`_
+::
+    from tf_explain.callbacks.integrated_gradients import IntegratedGradientsCallback
+
+    model = [...]
+
+    callbacks = [
+        IntegratedGradientsCallback(
+            validation_data=(x_val, y_val),
+            class_index=0,
+            n_steps=20,
+            output_dir=output_dir,
+        )
+    ]
+
+    model.fit(x_train, y_train, batch_size=2, epochs=2, callbacks=callbacks)
+
+.. image:: ../assets/integrated_gradients.png
+   :alt: IntegratedGradients
+   :width: 200px
+   :align: center

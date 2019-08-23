@@ -8,6 +8,7 @@ import numpy as np
 import tensorflow as tf
 
 from tf_explain.utils.display import grid_display
+from tf_explain.utils.image import transform_to_normalized_grayscale
 
 
 class SmoothGrad:
@@ -41,8 +42,8 @@ class SmoothGrad:
             noisy_images, model, class_index, num_samples
         )
 
-        grayscale_gradients = SmoothGrad.transform_to_grayscale(
-            smoothed_gradients
+        grayscale_gradients = transform_to_normalized_grayscale(
+            tf.abs(smoothed_gradients)
         ).numpy()
 
         grid = grid_display(grayscale_gradients)
@@ -66,28 +67,6 @@ class SmoothGrad:
         noise = np.random.normal(0, noise, repeated_images.shape).astype(np.float32)
 
         return repeated_images + noise
-
-    @staticmethod
-    @tf.function
-    def transform_to_grayscale(gradients):
-        """
-        Transform gradients over RGB axis to grayscale.
-
-        Args:
-            gradients (tf.Tensor): 4D-Tensor with shape (batch_size, H, W, 3)
-
-        Returns:
-            tf.Tensor: 4D-Tensor of grayscale gradients, with shape (batch_size, H, W, 1)
-        """
-        grayscale_grads = tf.reduce_sum(tf.abs(gradients), axis=-1)
-        normalized_grads = tf.cast(
-            255
-            * (grayscale_grads - tf.reduce_min(grayscale_grads))
-            / (tf.reduce_max(grayscale_grads) - tf.reduce_min(grayscale_grads)),
-            tf.uint8,
-        )
-
-        return normalized_grads
 
     @staticmethod
     @tf.function
