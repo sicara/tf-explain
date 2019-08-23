@@ -110,8 +110,8 @@ From `SmoothGrad: removing noise by adding noise <https://arxiv.org/abs/1706.038
    :align: center
 
 
-SmoothGrad
-**********
+Integrated Gradients
+********************
 
 Visualize an average of the gradients along the construction of the input towards the decision.
 
