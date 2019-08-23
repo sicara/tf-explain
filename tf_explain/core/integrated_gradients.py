@@ -1,5 +1,5 @@
 """
-Core Module for Grad CAM Algorithm
+Core Module for Integrated Gradients Algorithm
 """
 from pathlib import Path
 

@@ -61,6 +61,7 @@ callbacks = [
     tf_explain.callbacks.GradCAMCallback(validation_class_fours, 'target_layer', class_index=4),
     tf_explain.callbacks.ActivationsVisualizationCallback(validation_class_zero, layers_name=['target_layer']),
     tf_explain.callbacks.SmoothGradCallback(validation_class_zero, class_index=0, num_samples=15, noise=1.),
+    tf_explain.callbacks.IntegratedGradientsCallback(validation_class_zero, class_index=0, n_steps=10),
 ]
 
 # Start training

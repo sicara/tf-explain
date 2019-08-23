@@ -1,5 +1,5 @@
 """
-Callback Module for SmoothGrad
+Callback Module for Integrated Gradients
 """
 from datetime import datetime
 from pathlib import Path
