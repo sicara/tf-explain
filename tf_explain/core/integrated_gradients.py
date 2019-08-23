@@ -21,15 +21,17 @@ class IntegratedGradients:
 
     def explain(self, validation_data, model, class_index, n_steps=10):
         """
+        Compute Integrated Gradients for a specific class index
 
         Args:
-            validation_data:
-            model:
-            class_index:
-            n_steps:
+            validation_data (Tuple[np.ndarray, Optional[np.ndarray]]): Validation data
+                to perform the method on. Tuple containing (x, y).
+            model (tf.keras.Model): tf.keras model to inspect
+            class_index (int): Index of targeted class
+            n_steps (int): Number of steps in the path
 
         Returns:
-
+            np.ndarray: Grid of all the integrated gradients
         """
         images, _ = validation_data
 
