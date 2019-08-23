@@ -7,18 +7,18 @@ def test_should_call_integrated_gradients_callback(
 ):
     mock_explainer = mocker.MagicMock(explain=mocker.MagicMock(return_value=0))
     mocker.patch(
-        "tf_explain.callbacks.integrated_gradients.IntegratedGradients", return_value=mock_explainer
+        "tf_explain.callbacks.integrated_gradients.IntegratedGradients",
+        return_value=mock_explainer,
     )
-    mock_image_summary = mocker.patch("tf_explain.callbacks.integrated_gradients.tf.summary.image")
+    mock_image_summary = mocker.patch(
+        "tf_explain.callbacks.integrated_gradients.tf.summary.image"
+    )
 
     images, labels = random_data
 
     callbacks = [
         IntegratedGradientsCallback(
-            validation_data=random_data,
-            class_index=0,
-            output_dir=output_dir,
-            n_steps=3,
+            validation_data=random_data, class_index=0, output_dir=output_dir, n_steps=3
         )
     ]
 
@@ -27,4 +27,6 @@ def test_should_call_integrated_gradients_callback(
     mock_explainer.explain.assert_called_once_with(
         random_data, convolutional_model, 0, 3
     )
-    mock_image_summary.assert_called_once_with("IntegratedGradients", np.array([0]), step=0)
+    mock_image_summary.assert_called_once_with(
+        "IntegratedGradients", np.array([0]), step=0
+    )

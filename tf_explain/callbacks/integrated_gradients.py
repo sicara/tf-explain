@@ -55,12 +55,11 @@ class IntegratedGradientsCallback(Callback):
         """
         explainer = IntegratedGradients()
         grid = explainer.explain(
-            self.validation_data,
-            self.model,
-            self.class_index,
-            self.n_steps,
+            self.validation_data, self.model, self.class_index, self.n_steps
         )
 
         # Using the file writer, log the reshaped image.
         with self.file_writer.as_default():
-            tf.summary.image("IntegratedGradients", np.expand_dims([grid], axis=-1), step=epoch)
+            tf.summary.image(
+                "IntegratedGradients", np.expand_dims([grid], axis=-1), step=epoch
+            )
