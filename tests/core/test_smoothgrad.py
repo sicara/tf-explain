@@ -1,5 +1,4 @@
 import numpy as np
-import tensorflow as tf
 
 from tf_explain.core.smoothgrad import SmoothGrad
 
@@ -26,15 +25,6 @@ def test_generate_noisy_images(mocker):
     output = SmoothGrad.generate_noisy_images(images, num_samples=num_samples, noise=1)
 
     np.testing.assert_array_equal(output, 2 * np.ones((30, 28, 28, 1)))
-
-
-def test_should_transform_gradients_to_grayscale():
-    gradients = tf.random.uniform((4, 28, 28, 3))
-
-    grayscale_gradients = SmoothGrad.transform_to_grayscale(gradients)
-    expected_output_shape = (4, 28, 28)
-
-    assert grayscale_gradients.shape == expected_output_shape
 
 
 def test_get_averaged_gradients(random_data, convolutional_model):

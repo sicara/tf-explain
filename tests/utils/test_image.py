@@ -1,6 +1,7 @@
 import numpy as np
+import tensorflow as tf
 
-from tf_explain.utils.image import apply_grey_patch
+from tf_explain.utils.image import apply_grey_patch, transform_to_normalized_grayscale
 
 
 def test_should_apply_grey_patch_on_image():
@@ -13,3 +14,12 @@ def test_should_apply_grey_patch_on_image():
     )
 
     np.testing.assert_almost_equal(output, expected_output)
+
+
+def test_should_transform_gradients_to_grayscale():
+    gradients = tf.random.uniform((4, 28, 28, 3))
+
+    grayscale_gradients = transform_to_normalized_grayscale(gradients)
+    expected_output_shape = (4, 28, 28)
+
+    assert grayscale_gradients.shape == expected_output_shape
