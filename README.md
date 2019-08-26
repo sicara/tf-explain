@@ -24,9 +24,9 @@ to let you choose between CPU and GPU versions. Additionally to the previous ins
 
 ```bash
 # For CPU version
-pip install tensorflow==2.0.0-beta1
+pip install tensorflow==2.0.0rc0
 # For GPU version
-pip install tensorflow-gpu==2.0.0-beta1
+pip install tensorflow-gpu==2.0.0rc0
 ```
 
 ## Available Methods
