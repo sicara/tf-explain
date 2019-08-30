@@ -5,12 +5,11 @@ from tf_explain.callbacks.smoothgrad import SmoothGradCallback
 def test_should_call_smoothgrad_callback(
     random_data, convolutional_model, output_dir, mocker
 ):
-    mock_explainer = mocker.MagicMock(explain=mocker.MagicMock(return_value=0))
+    mock_explainer = mocker.MagicMock(
+        explain=mocker.MagicMock(return_value=np.zeros((28, 28)))
+    )
     mocker.patch(
         "tf_explain.callbacks.smoothgrad.SmoothGrad", return_value=mock_explainer
-    )
-    mock_image_summary = mocker.patch(
-        "tf_explain.callbacks.smoothgrad.tf.summary.image"
     )
 
     images, labels = random_data
@@ -30,4 +29,4 @@ def test_should_call_smoothgrad_callback(
     mock_explainer.explain.assert_called_once_with(
         random_data, convolutional_model, 0, 3, 1.2
     )
-    mock_image_summary.assert_called_once_with("SmoothGrad", np.array([0]), step=0)
+    assert len([_ for _ in output_dir.iterdir()]) == 1

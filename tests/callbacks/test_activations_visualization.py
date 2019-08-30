@@ -7,13 +7,12 @@ from tf_explain.callbacks.activations_visualization import (
 def test_should_call_activations_visualization_callback(
     random_data, convolutional_model, output_dir, mocker
 ):
-    mock_explainer = mocker.MagicMock(explain=mocker.MagicMock(return_value=0))
+    mock_explainer = mocker.MagicMock(
+        explain=mocker.MagicMock(return_value=np.zeros((28, 28)))
+    )
     mocker.patch(
         "tf_explain.callbacks.activations_visualization.ExtractActivations",
         return_value=mock_explainer,
-    )
-    mock_image_summary = mocker.patch(
-        "tf_explain.callbacks.occlusion_sensitivity.tf.summary.image"
     )
 
     images, labels = random_data
@@ -31,6 +30,4 @@ def test_should_call_activations_visualization_callback(
     mock_explainer.explain.assert_called_once_with(
         random_data, convolutional_model, ["activation_1"]
     )
-    mock_image_summary.assert_called_once_with(
-        "Activations Visualization", np.array([[0]]), step=0
-    )
+    assert len([_ for _ in output_dir.iterdir()]) == 1
