@@ -3,7 +3,7 @@ import tensorflow as tf
 
 from tf_explain.core.activations import ExtractActivations
 
-layers_name = ['activation_6']
+target_layers = ['activation_6']  # Could be either the output of a Conv2D, or an activation
 IMAGE_PATH = './cat.jpg'
 
 if __name__ == '__main__':
@@ -17,5 +17,5 @@ if __name__ == '__main__':
 
     explainer = ExtractActivations()
     # Compute Activations of layer activation_1
-    grid = explainer.explain(data, model, ['activation_6'])
+    grid = explainer.explain(data, model, target_layers)
     explainer.save(grid, '.', 'activations.png')
