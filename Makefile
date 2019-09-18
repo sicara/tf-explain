@@ -3,3 +3,6 @@ test:
 
 black:
 	black tf_explain/ tests/
+
+lint:
+	pylint tf_explain/

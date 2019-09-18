@@ -21,7 +21,8 @@ def grid_display(array, num_rows=None, num_columns=None):
         if total_grid_size < len(array):
             warnings.warn(
                 Warning(
-                    "Given values for num_rows and num_columns doesn't allow to display all images. Values have been overrided to respect at least num_columns"
+                    "Given values for num_rows and num_columns doesn't allow to display "
+                    "all images. Values have been overrided to respect at least num_columns"
                 )
             )
             num_rows = math.ceil(len(array) / num_columns)
@@ -81,12 +82,12 @@ def heatmap_display(heatmap, original_image, colormap=cv2.COLORMAP_VIRIDIS):
     Returns:
         np.ndarray: Original image with heatmap applied
     """
-    map = cv2.resize(heatmap, original_image.shape[0:2])
+    heatmap = cv2.resize(heatmap, original_image.shape[0:2])
 
-    map = (map - np.min(map)) / (map.max() - map.min())
+    heatmap = (heatmap - np.min(heatmap)) / (heatmap.max() - heatmap.min())
 
     heatmap = cv2.applyColorMap(
-        cv2.cvtColor((map * 255).astype("uint8"), cv2.COLOR_GRAY2BGR), colormap
+        cv2.cvtColor((heatmap * 255).astype("uint8"), cv2.COLOR_GRAY2BGR), colormap
     )
 
     output = cv2.addWeighted(
