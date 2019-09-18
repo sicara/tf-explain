@@ -13,3 +13,4 @@ install:
 script:
   - tox -e $TOXENV
   - black tf_explain tests --check
+  - make lint
