@@ -85,7 +85,7 @@ class SmoothGrad:
         """
         num_classes = model.output.shape[1]
 
-        expected_output = tf.one_hot([class_index] * len(noisy_images), num_classes)
+        expected_output = tf.one_hot([class_index] * noisy_images.shape[0], num_classes)
 
         with tf.GradientTape() as tape:
             inputs = tf.cast(noisy_images, tf.float32)
