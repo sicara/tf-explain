@@ -23,8 +23,8 @@ the training of your models.
    overview
    usage
    methods
+   api
    contribute
-   changes
 
 
 

@@ -10,7 +10,7 @@ There are multiple ways to give a hand on this repo:
 - tackle new features from the roadmap
 - fix typos, improve code quality, code coverage
 
-## Guidelines
+## Guidelines
 
 ### Tests
 
@@ -20,7 +20,7 @@ All the submitted code should be unit tested (we use [`pytest`](https://github.c
 
 To run all the tests, run `tox` in a terminal.
 
-### Code Format
+### Code Format
 
 All code is formatted with [Black](https://www.github.com/psf/black) (available with `pip`). When opening your PR,
 make sure your code is formatted or Travis will fail. To format your code, simply call `make black`.
