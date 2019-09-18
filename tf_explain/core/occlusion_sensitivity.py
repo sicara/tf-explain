@@ -81,14 +81,17 @@ class OcclusionSensitivity:
             )
         )
 
-        patches = []
-        coordinates = []
-        for index_x, top_left_x in enumerate(range(0, image.shape[0], patch_size)):
-            for index_y, top_left_y in enumerate(range(0, image.shape[1], patch_size)):
-                patches.append(
-                    apply_grey_patch(image, top_left_x, top_left_y, patch_size)
-                )
-                coordinates.append((index_y, index_x))
+        patches = [
+            apply_grey_patch(image, top_left_x, top_left_y, patch_size)
+            for index_x, top_left_x in enumerate(range(0, image.shape[0], patch_size))
+            for index_y, top_left_y in enumerate(range(0, image.shape[1], patch_size))
+        ]
+
+        coordinates = [
+            (index_y, index_x)
+            for index_x, _ in enumerate(range(0, image.shape[0], patch_size))
+            for index_y, _ in enumerate(range(0, image.shape[1], patch_size))
+        ]
 
         predictions = model.predict(np.array(patches), batch_size=self.batch_size)
         target_class_predictions = [
