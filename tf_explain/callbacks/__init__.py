@@ -1,3 +1,8 @@
+"""
+Callbacks Module
+
+This module regroups all the methods as tf.keras.Callback.
+"""
 from .activations_visualization import ActivationsVisualizationCallback
 from .grad_cam import GradCAMCallback
 from .integrated_gradients import IntegratedGradientsCallback

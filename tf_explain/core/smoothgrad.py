@@ -75,7 +75,8 @@ class SmoothGrad:
         Compute average of gradients for target class.
 
         Args:
-            noisy_images (tf.Tensor): 4D-Tensor of noisy images with shape (batch_size*num_samples, H, W, 3)
+            noisy_images (tf.Tensor): 4D-Tensor of noisy images with shape
+                (batch_size*num_samples, H, W, 3)
             model (tf.keras.Model): tf.keras model to inspect
             class_index (int): Index of targeted class
             num_samples (int): Number of noisy samples to generate for each input image

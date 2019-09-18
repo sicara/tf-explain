@@ -1,3 +1,8 @@
+"""
+Core Module
+
+This module regroups all the interpretability methods under a common .explain() interface.
+"""
 from .activations import ExtractActivations
 from .grad_cam import GradCAM
 from .integrated_gradients import IntegratedGradients

@@ -12,6 +12,11 @@ from tf_explain.core.occlusion_sensitivity import OcclusionSensitivity
 
 
 class OcclusionSensitivityCallback(Callback):
+
+    """
+    Perform Occlusion Sensitivity for a given input
+    """
+
     def __init__(
         self,
         validation_data,
