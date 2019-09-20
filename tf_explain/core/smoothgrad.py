@@ -1,14 +1,12 @@
 """
 Core Module for SmoothGrad Algorithm
 """
-from pathlib import Path
-
-import cv2
 import numpy as np
 import tensorflow as tf
 
 from tf_explain.utils.display import grid_display
 from tf_explain.utils.image import transform_to_normalized_grayscale
+from tf_explain.utils.saver import save_grayscale
 
 
 class SmoothGrad:
@@ -112,6 +110,4 @@ class SmoothGrad:
             output_dir (str): Output directory path
             output_name (str): Output name
         """
-        Path.mkdir(Path(output_dir), parents=True, exist_ok=True)
-
-        cv2.imwrite(str(Path(output_dir) / output_name), grid)
+        save_grayscale(grid, output_dir, output_name)
