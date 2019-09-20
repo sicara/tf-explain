@@ -1,9 +1,6 @@
 """
 Core Module for Activations Visualizations
 """
-from pathlib import Path
-
-import cv2
 import numpy as np
 import tensorflow as tf
 

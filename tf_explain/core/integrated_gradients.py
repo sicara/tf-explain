@@ -1,9 +1,6 @@
 """
 Core Module for Integrated Gradients Algorithm
 """
-from pathlib import Path
-
-import cv2
 import numpy as np
 import tensorflow as tf
 
