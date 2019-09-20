@@ -16,7 +16,8 @@ class VanillaGradientsCallback(Callback):
     """
     Perform gradients backpropagation for a given input
 
-    Paper: [Deep Inside Convolutional Networks: Visualising Image Classification Models and Saliency Maps](https://arxiv.org/abs/1312.6034)
+    Paper: [Deep Inside Convolutional Networks: Visualising Image Classification
+        Models and Saliency Maps](https://arxiv.org/abs/1312.6034)
     """
 
     def __init__(

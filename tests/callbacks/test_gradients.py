@@ -23,7 +23,5 @@ def test_should_call_vanilla_gradients_callback(
 
     convolutional_model.fit(images, labels, batch_size=2, epochs=1, callbacks=callbacks)
 
-    mock_explainer.explain.assert_called_once_with(
-        random_data, convolutional_model, 0
-    )
+    mock_explainer.explain.assert_called_once_with(random_data, convolutional_model, 0)
     assert len(list(output_dir.iterdir())) == 1
