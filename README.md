@@ -64,6 +64,31 @@ model.fit(x_train, y_train, batch_size=2, epochs=2, callbacks=callbacks)
 </p>
 
 
+### Vanilla Gradients
+
+> Visualize gradients importance on input image
+
+```python
+from tf_explain.callbacks.gradients import VanillaGradientsCallback
+
+model = [...]
+
+callbacks = [
+    VanillaGradientsCallback(
+        validation_data=(x_val, y_val),
+        class_index=0,
+        output_dir=output_dir,
+    ),
+]
+
+model.fit(x_train, y_train, batch_size=2, epochs=2, callbacks=callbacks)
+```
+
+<p align="center">
+    <img src="./docs/assets/vanilla_gradients.png" width="400" />
+</p>
+
+
 ### Occlusion Sensitivity
 
 > Visualize how parts of the image affects neural network's confidence by occluding parts iteratively
