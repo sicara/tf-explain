@@ -86,7 +86,7 @@ model.fit(x_train, y_train, batch_size=2, epochs=2, callbacks=callbacks)
 ```
 
 <p align="center">
-    <img src="./docs/assets/vanilla_gradients.png" width="400" />
+    <img src="./docs/assets/vanilla_gradients.png" width="200" />
 </p>
 
 
