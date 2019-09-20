@@ -34,10 +34,11 @@ pip install tensorflow-gpu==2.0.0rc0
 ## Available Methods
 
 1. [Activations Visualization](#activations-visualization)
-2. [Occlusion Sensitivity](#occlusion-sensitivity)
-3. [Grad CAM (Class Activation Maps)](#grad-cam)
-4. [SmoothGrad](#smoothgrad)
-5. [Integrated Gradients](#integrated-gradients)
+2. [Vanilla Gradients](#vanilla-gradients)
+3. [Occlusion Sensitivity](#occlusion-sensitivity)
+4. [Grad CAM (Class Activation Maps)](#grad-cam)
+5. [SmoothGrad](#smoothgrad)
+6. [Integrated Gradients](#integrated-gradients)
 
 ### Activations Visualization
 
