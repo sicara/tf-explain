@@ -217,3 +217,7 @@ You can see them in Tensorboard with the following command: `tensorboard --logdi
   - [ ] [Guided SmoothGrad](https://arxiv.org/abs/1706.03825)
   - [ ] [LRP](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0130140)
 - [ ] Auto-generated API Documentation & Documentation Testing
+
+## Contributing
+
+To contribute to the project, please read the [dedicated section](./CONTRIBUTING.md).
