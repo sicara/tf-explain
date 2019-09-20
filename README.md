@@ -34,10 +34,11 @@ pip install tensorflow-gpu==2.0.0rc0
 ## Available Methods
 
 1. [Activations Visualization](#activations-visualization)
-2. [Occlusion Sensitivity](#occlusion-sensitivity)
-3. [Grad CAM (Class Activation Maps)](#grad-cam)
-4. [SmoothGrad](#smoothgrad)
-5. [Integrated Gradients](#integrated-gradients)
+2. [Vanilla Gradients](#vanilla-gradients)
+3. [Occlusion Sensitivity](#occlusion-sensitivity)
+4. [Grad CAM (Class Activation Maps)](#grad-cam)
+5. [SmoothGrad](#smoothgrad)
+6. [Integrated Gradients](#integrated-gradients)
 
 ### Activations Visualization
 
@@ -61,6 +62,31 @@ model.fit(x_train, y_train, batch_size=2, epochs=2, callbacks=callbacks)
 
 <p align="center">
     <img src="./docs/assets/activations_visualisation.png" width="400" />
+</p>
+
+
+### Vanilla Gradients
+
+> Visualize gradients importance on input image
+
+```python
+from tf_explain.callbacks.gradients import VanillaGradientsCallback
+
+model = [...]
+
+callbacks = [
+    VanillaGradientsCallback(
+        validation_data=(x_val, y_val),
+        class_index=0,
+        output_dir=output_dir,
+    ),
+]
+
+model.fit(x_train, y_train, batch_size=2, epochs=2, callbacks=callbacks)
+```
+
+<p align="center">
+    <img src="./docs/assets/vanilla_gradients.png" width="200" />
 </p>
 
 

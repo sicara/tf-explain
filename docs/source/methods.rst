@@ -26,6 +26,32 @@ Visualize how a given input comes out of a specific activation layer
    :align: center
 
 
+Vanilla Gradients
+*****************
+
+Visualize gradients on the inputs towards the decision.
+
+From `Deep Inside Convolutional Networks: Visualising Image Classification Models and Saliency Maps <https://arxiv.org/abs/1312.6034)>`_
+::
+    from tf_explain.callbacks.gradients import VanillaGradients
+
+    model = [...]
+    callbacks = [
+        VanillaGradients(
+            validation_data=(x_val, y_val),
+            class_index=0,
+            output_dir=output_dir,
+        )
+    ]
+
+    model.fit(x_train, y_train, batch_size=2, epochs=2, callbacks=callbacks)
+
+.. image:: ../assets/vanilla_gradients.png
+   :alt: VanillaGradients
+   :width: 200px
+   :align: center
+
+
 Occlusion Sensitivity
 *********************
 
