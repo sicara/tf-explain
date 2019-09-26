@@ -17,6 +17,6 @@ tf-explain is compatible with Tensorflow 2. It is not declared as a dependency
 to let you choose between CPU and GPU versions. Additionally to the previous install,
 run::
     # For CPU version
-    pip install tensorflow==2.0.0rc0
+    pip install tensorflow==2.0.0rc2
     # For GPU version
-    pip install tensorflow-gpu==2.0.0rc0
+    pip install tensorflow-gpu==2.0.0rc2
