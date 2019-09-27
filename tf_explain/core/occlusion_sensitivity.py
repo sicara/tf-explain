@@ -2,13 +2,13 @@
 Core Module for Occlusion Sensitivity
 """
 import math
-from pathlib import Path
 
 import cv2
 import numpy as np
 
 from tf_explain.utils.display import grid_display, heatmap_display
 from tf_explain.utils.image import apply_grey_patch
+from tf_explain.utils.saver import save_rgb
 
 
 class OcclusionSensitivity:
@@ -114,8 +114,4 @@ class OcclusionSensitivity:
             output_dir (str): Output directory path
             output_name (str): Output name
         """
-        Path.mkdir(Path(output_dir), parents=True, exist_ok=True)
-
-        cv2.imwrite(
-            str(Path(output_dir) / output_name), cv2.cvtColor(grid, cv2.COLOR_RGB2BGR)
-        )
+        save_rgb(grid, output_dir, output_name)
