@@ -5,7 +5,7 @@ The library implements interpretability methods as Tensorflow 2.0
 callbacks to ease neural network's understanding.
 """
 
-__version__ = "0.0.2-alpha"
+__version__ = "0.1.0"
 
 from . import core
 from . import callbacks

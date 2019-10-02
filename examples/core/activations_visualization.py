@@ -3,7 +3,7 @@ import tensorflow as tf
 
 from tf_explain.core.activations import ExtractActivations
 
-target_layers = ['activation_6']  # Could be either the output of a Conv2D, or an activation
+target_layers = ['conv1_relu']  # Could be either the output of a Conv2D, or an activation
 IMAGE_PATH = './cat.jpg'
 
 if __name__ == '__main__':
