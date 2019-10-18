@@ -20,6 +20,14 @@ tf\_explain.core.grad\_cam module
    :undoc-members:
    :show-inheritance:
 
+tf\_explain.core.gradients\_inputs module
+-----------------------------------------
+
+.. automodule:: tf_explain.core.gradients_inputs
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 tf\_explain.core.integrated\_gradients module
 ---------------------------------------------
 
@@ -40,6 +48,14 @@ tf\_explain.core.smoothgrad module
 ----------------------------------
 
 .. automodule:: tf_explain.core.smoothgrad
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+tf\_explain.core.vanilla\_gradients module
+------------------------------------------
+
+.. automodule:: tf_explain.core.vanilla_gradients
    :members:
    :undoc-members:
    :show-inheritance:
