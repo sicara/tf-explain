@@ -70,7 +70,7 @@ model.fit(x_train, y_train, batch_size=2, epochs=2, callbacks=callbacks)
 > Visualize gradients importance on input image
 
 ```python
-from tf_explain.callbacks.gradients import VanillaGradientsCallback
+from tf_explain.callbacks.vanilla_gradients import VanillaGradientsCallback
 
 model = [...]
 

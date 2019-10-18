@@ -1,6 +1,6 @@
 import numpy as np
 
-from tf_explain.callbacks.gradients import VanillaGradientsCallback
+from tf_explain.callbacks.vanilla_gradients import VanillaGradientsCallback
 
 
 def test_should_call_vanilla_gradients_callback(
@@ -10,7 +10,7 @@ def test_should_call_vanilla_gradients_callback(
         explain=mocker.MagicMock(return_value=np.zeros((28, 28)))
     )
     mocker.patch(
-        "tf_explain.callbacks.gradients.VanillaGradients", return_value=mock_explainer
+        "tf_explain.callbacks.vanilla_gradients.VanillaGradients", return_value=mock_explainer
     )
 
     images, labels = random_data

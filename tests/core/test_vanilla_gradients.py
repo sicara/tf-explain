@@ -1,8 +1,8 @@
-from tf_explain.core.gradients import VanillaGradients
+from tf_explain.core.vanilla_gradients import VanillaGradients
 
 
 def test_should_explain_output(convolutional_model, random_data, mocker):
-    mocker.patch("tf_explain.core.gradients.grid_display", side_effect=lambda x: x)
+    mocker.patch("tf_explain.core.vanilla_gradients.grid_display", side_effect=lambda x: x)
     images, labels = random_data
     explainer = VanillaGradients()
     grid = explainer.explain((images, labels), convolutional_model, 0)

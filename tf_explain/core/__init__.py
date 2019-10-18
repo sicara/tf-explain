@@ -5,7 +5,7 @@ This module regroups all the interpretability methods under a common .explain() 
 """
 from .activations import ExtractActivations
 from .grad_cam import GradCAM
-from .gradients import VanillaGradients
+from .vanilla_gradients import VanillaGradients
 from .integrated_gradients import IntegratedGradients
 from .occlusion_sensitivity import OcclusionSensitivity
 from .smoothgrad import SmoothGrad

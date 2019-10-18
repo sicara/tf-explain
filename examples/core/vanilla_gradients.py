@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow as tf
 
-from tf_explain.core.gradients import VanillaGradients
+from tf_explain.core.vanilla_gradients import VanillaGradients
 
 
 IMAGE_PATH = './cat.jpg'
