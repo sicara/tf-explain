@@ -52,7 +52,7 @@ From `Deep Inside Convolutional Networks: Visualising Image Classification Model
    :align: center
 
 
-Gradients Inputs
+Gradients*Inputs
 *****************
 
 Variant of Vanilla Gradients ponderating gradients with input values.

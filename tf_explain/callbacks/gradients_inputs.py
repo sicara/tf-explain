@@ -8,7 +8,7 @@ from tf_explain.core import GradientsInputs
 class GradientsInputsCallback(VanillaGradientsCallback):
 
     """
-    Tensorflow Callback performing Gradients Inputs algorithm for given input and target class
+    Tensorflow Callback performing Gradients*Inputs algorithm for given input and target class
     """
 
     explainer = GradientsInputs()

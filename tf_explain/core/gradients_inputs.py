@@ -1,5 +1,5 @@
 """
-Core Module for Gradients Inputs
+Core Module for Gradients*Inputs
 """
 import tensorflow as tf
 
@@ -9,7 +9,7 @@ from tf_explain.core.vanilla_gradients import VanillaGradients
 class GradientsInputs(VanillaGradients):
 
     """
-    Perform Gradients Inputs algorithm (gradients ponderated by the input values).
+    Perform Gradients*Inputs algorithm (gradients ponderated by the input values).
     """
 
     @staticmethod

@@ -35,7 +35,7 @@ pip install tensorflow-gpu==2.0.0
 
 1. [Activations Visualization](#activations-visualization)
 1. [Vanilla Gradients](#vanilla-gradients)
-1. [Gradients Inputs](#gradients-inputs)
+1. [Gradients*Inputs](#gradients-inputs)
 1. [Occlusion Sensitivity](#occlusion-sensitivity)
 1. [Grad CAM (Class Activation Maps)](#grad-cam)
 1. [SmoothGrad](#smoothgrad)
@@ -91,7 +91,7 @@ model.fit(x_train, y_train, batch_size=2, epochs=2, callbacks=callbacks)
 </p>
 
 
-### Gradients Inputs
+### Gradients*Inputs
 
 > Variant of [Vanilla Gradients](#vanilla-gradients) ponderating gradients with input values
 
