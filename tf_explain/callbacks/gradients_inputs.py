@@ -1,5 +1,5 @@
 """
-Callback Module for Vanilla Gradients
+Callback Module for Gradients*Inputs algorithm
 """
 from tf_explain.callbacks.vanilla_gradients import VanillaGradientsCallback
 from tf_explain.core import GradientsInputs
