@@ -34,11 +34,12 @@ pip install tensorflow-gpu==2.0.0
 ## Available Methods
 
 1. [Activations Visualization](#activations-visualization)
-2. [Vanilla Gradients](#vanilla-gradients)
-3. [Occlusion Sensitivity](#occlusion-sensitivity)
-4. [Grad CAM (Class Activation Maps)](#grad-cam)
-5. [SmoothGrad](#smoothgrad)
-6. [Integrated Gradients](#integrated-gradients)
+1. [Vanilla Gradients](#vanilla-gradients)
+1. [Gradients*Inputs](#gradients-inputs)
+1. [Occlusion Sensitivity](#occlusion-sensitivity)
+1. [Grad CAM (Class Activation Maps)](#grad-cam)
+1. [SmoothGrad](#smoothgrad)
+1. [Integrated Gradients](#integrated-gradients)
 
 ### Activations Visualization
 
@@ -70,7 +71,7 @@ model.fit(x_train, y_train, batch_size=2, epochs=2, callbacks=callbacks)
 > Visualize gradients importance on input image
 
 ```python
-from tf_explain.callbacks.gradients import VanillaGradientsCallback
+from tf_explain.callbacks.vanilla_gradients import VanillaGradientsCallback
 
 model = [...]
 
@@ -87,6 +88,31 @@ model.fit(x_train, y_train, batch_size=2, epochs=2, callbacks=callbacks)
 
 <p align="center">
     <img src="./docs/assets/vanilla_gradients.png" width="200" />
+</p>
+
+
+### Gradients*Inputs
+
+> Variant of [Vanilla Gradients](#vanilla-gradients) ponderating gradients with input values
+
+```python
+from tf_explain.callbacks.gradients_inputs import GradientsInputsCallback
+
+model = [...]
+
+callbacks = [
+    GradientsInputsCallback(
+        validation_data=(x_val, y_val),
+        class_index=0,
+        output_dir=output_dir,
+    ),
+]
+
+model.fit(x_train, y_train, batch_size=2, epochs=2, callbacks=callbacks)
+```
+
+<p align="center">
+    <img src="./docs/assets/gradients_inputs.png" width="200" />
 </p>
 
 

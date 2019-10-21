@@ -22,7 +22,8 @@ tf-explain is run against Python 3.6 and 3.7, for Tensorflow beta. We use
 `tox <https://github.com/pytest-dev/pytest>`_ (available with :code:`pip`) to perform the tests.
 All the submitted code should be unit tested (we use `pytest <https://github.com/pytest-dev/pytest>`_).
 
-To run all the tests, run :code:`tox` in a terminal.
+To run all the tests, install required packages with :code:`pip install -e .[tests]` and then run :code:`tox` in a
+terminal.
 
 Code Format
 ^^^^^^^^^^^

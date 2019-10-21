@@ -166,6 +166,9 @@ def test_all_keras_api(
         tf_explain.callbacks.VanillaGradientsCallback(
             validation_data, class_index=target_class, output_dir=output_dir
         ),
+        tf_explain.callbacks.GradientsInputsCallback(
+            validation_data, class_index=target_class, output_dir=output_dir
+        ),
     ]
 
     # Start training

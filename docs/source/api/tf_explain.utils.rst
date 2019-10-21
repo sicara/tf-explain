@@ -20,6 +20,14 @@ tf\_explain.utils.image module
    :undoc-members:
    :show-inheritance:
 
+tf\_explain.utils.saver module
+------------------------------
+
+.. automodule:: tf_explain.utils.saver
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 
 Module contents
 ---------------

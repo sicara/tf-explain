@@ -20,6 +20,14 @@ tf\_explain.callbacks.grad\_cam module
    :undoc-members:
    :show-inheritance:
 
+tf\_explain.callbacks.gradients\_inputs module
+----------------------------------------------
+
+.. automodule:: tf_explain.callbacks.gradients_inputs
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 tf\_explain.callbacks.integrated\_gradients module
 --------------------------------------------------
 
@@ -40,6 +48,14 @@ tf\_explain.callbacks.smoothgrad module
 ---------------------------------------
 
 .. automodule:: tf_explain.callbacks.smoothgrad
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+tf\_explain.callbacks.vanilla\_gradients module
+-----------------------------------------------
+
+.. automodule:: tf_explain.callbacks.vanilla_gradients
    :members:
    :undoc-members:
    :show-inheritance:

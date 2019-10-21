@@ -8,7 +8,7 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras.callbacks import Callback
 
-from tf_explain.core.gradients import VanillaGradients
+from tf_explain.core.vanilla_gradients import VanillaGradients
 
 
 class VanillaGradientsCallback(Callback):
@@ -20,9 +20,10 @@ class VanillaGradientsCallback(Callback):
         Models and Saliency Maps](https://arxiv.org/abs/1312.6034)
     """
 
-    def __init__(
-        self, validation_data, class_index, output_dir=Path("./logs/vanilla_gradients")
-    ):
+    explainer = VanillaGradients()
+    default_output_subdir = "vanilla_gradients"
+
+    def __init__(self, validation_data, class_index, output_dir=None):
         """
         Constructor.
 
@@ -35,6 +36,8 @@ class VanillaGradientsCallback(Callback):
         super(VanillaGradientsCallback, self).__init__()
         self.validation_data = validation_data
         self.class_index = class_index
+        if not output_dir:
+            output_dir = Path("./logs") / self.default_output_subdir
         self.output_dir = Path(output_dir) / datetime.now().strftime("%Y%m%d-%H%M%S.%f")
         Path.mkdir(Path(self.output_dir), parents=True, exist_ok=True)
 
@@ -48,11 +51,14 @@ class VanillaGradientsCallback(Callback):
             epoch (int): Epoch index
             logs (dict): Additional information on epoch
         """
-        explainer = VanillaGradients()
-        grid = explainer.explain(self.validation_data, self.model, self.class_index)
+        grid = self.explainer.explain(
+            self.validation_data, self.model, self.class_index
+        )
 
         # Using the file writer, log the reshaped image.
         with self.file_writer.as_default():
             tf.summary.image(
-                "VanillaGradients", np.expand_dims([grid], axis=-1), step=epoch
+                self.explainer.__class__.__name__,
+                np.expand_dims([grid], axis=-1),
+                step=epoch,
             )
