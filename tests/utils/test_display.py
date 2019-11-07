@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from tf_explain.utils.display import grid_display, heatmap_display
+from tf_explain.utils.display import grid_display, heatmap_display, image_to_uint_255
 
 
 @pytest.fixture(scope="session")
@@ -42,6 +42,23 @@ def test_should_fill_with_zeros_if_missing_elements(array_to_display):
 
     assert grid.shape == (28 * 3, 28 * 3, 3)
     np.testing.assert_equal(grid[56:, 28:, :], np.zeros((28, 56, 3)))
+
+
+@pytest.mark.parametrize(
+    "input_image,expected_output",
+    [
+        (np.ones((28, 28)) / 255.0, np.ones((28, 28)).astype("uint8")),
+        (-np.ones((28, 28)) / 255.0, 127 * np.ones((28, 28)).astype("uint8")),
+        (
+            10 * np.ones((28, 28)).astype("uint8"),
+            10 * np.ones((28, 28)).astype("uint8"),
+        ),
+    ],
+)
+def test_should_transform_to_uint_255_image(input_image, expected_output):
+    output = image_to_uint_255(input_image)
+
+    np.testing.assert_almost_equal(output, expected_output)
 
 
 def test_should_display_heatmap(mocker):
