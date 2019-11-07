@@ -70,6 +70,27 @@ def filter_display(array, num_rows=None, num_columns=None):
     )
 
 
+def image_to_uint_255(image):
+    """
+    Convert float images to int 0-255 images.
+
+    Args:
+        image (numpy.ndarray): Input image. Can be either [0, 255], [0, 1], [-1, 1]
+
+    Returns:
+        numpy.ndarray:
+    """
+    dtype, min_value, max_value = image.dtype, image.min(), image.max()
+
+    if dtype == np.uint8:
+        return image
+
+    if image.min() < 0:
+        image = (image + 1.0) / 2.0
+
+    return (image * 255).astype("uint8")
+
+
 def heatmap_display(heatmap, original_image, colormap=cv2.COLORMAP_VIRIDIS):
     """
     Apply a heatmap (as an np.ndarray) on top of an original image.
@@ -84,6 +105,8 @@ def heatmap_display(heatmap, original_image, colormap=cv2.COLORMAP_VIRIDIS):
     """
     heatmap = cv2.resize(heatmap, original_image.shape[0:2])
 
+    image = image_to_uint_255(original_image)
+
     heatmap = (heatmap - np.min(heatmap)) / (heatmap.max() - heatmap.min())
 
     heatmap = cv2.applyColorMap(
@@ -91,7 +114,7 @@ def heatmap_display(heatmap, original_image, colormap=cv2.COLORMAP_VIRIDIS):
     )
 
     output = cv2.addWeighted(
-        cv2.cvtColor(original_image.astype("uint8"), cv2.COLOR_RGB2BGR),
+        cv2.cvtColor(image, cv2.COLOR_RGB2BGR),
         0.7,
         heatmap,
         1,
