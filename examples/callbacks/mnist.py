@@ -44,25 +44,25 @@ model = tf.keras.Model(img_input, x)
 model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
 
 # Select a subset of the validation data to examine
-# Here, we choose 5 elements with label "0" == [1, 0, 0, .., 0]
+# Here, we choose 5 elements with one hot encoded label "0" == [1, 0, 0, .., 0]
 validation_class_zero = (
     np.array(
         [
             el
             for el, label in zip(test_images, test_labels)
-            if np.all(label == np.array([1] + [0] * 9))
+            if np.all(np.argmax(label) == 0)
         ][0:5]
     ),
     None,
 )
 # Select a subset of the validation data to examine
-# Here, we choose 5 elements with label "4" == [0, 0, 0, 0, 1, 0, 0, 0, 0, 0]
+# Here, we choose 5 elements with one hot encoded label "4" == [0, 0, 0, 0, 1, 0, 0, 0, 0, 0]
 validation_class_four = (
     np.array(
         [
             el
             for el, label in zip(test_images, test_labels)
-            if np.all(label == np.array([0] * 4 + [1] + [0] * 5))
+            if np.all(np.argmax(label) == 4)
         ][0:5]
     ),
     None,
