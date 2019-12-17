@@ -45,7 +45,7 @@ def grid_display(array, num_rows=None, num_columns=None):
     grid = np.concatenate(
         [
             np.concatenate(
-                array[index * num_columns : (index + 1) * num_columns], axis=1
+                array[index * num_columns: (index + 1) * num_columns], axis=1
             )
             for index in range(num_rows)
         ],
@@ -89,7 +89,7 @@ def image_to_uint_255(image):
     return (image * 255).astype("uint8")
 
 
-def heatmap_display(heatmap, original_image, colormap=cv2.COLORMAP_VIRIDIS):
+def heatmap_display(heatmap, original_image, colormap=cv2.COLORMAP_VIRIDIS, image_weight=0.7):
     """
     Apply a heatmap (as an np.ndarray) on top of an original image.
 
@@ -111,6 +111,6 @@ def heatmap_display(heatmap, original_image, colormap=cv2.COLORMAP_VIRIDIS):
         cv2.cvtColor((heatmap * 255).astype("uint8"), cv2.COLOR_GRAY2BGR), colormap
     )
 
-    output = cv2.addWeighted(cv2.cvtColor(image, cv2.COLOR_RGB2BGR), 0.7, heatmap, 1, 0)
+    output = cv2.addWeighted(cv2.cvtColor(image, cv2.COLOR_RGB2BGR), image_weight, heatmap, 1, 0)
 
     return cv2.cvtColor(output, cv2.COLOR_BGR2RGB)
