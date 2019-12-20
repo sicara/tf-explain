@@ -149,7 +149,7 @@ def test_all_keras_api(
     callbacks = [
         tf_explain.callbacks.GradCAMCallback(
             validation_data,
-            "grad_cam_target",
+            layer_name="grad_cam_target",
             class_index=target_class,
             output_dir=output_dir,
         ),

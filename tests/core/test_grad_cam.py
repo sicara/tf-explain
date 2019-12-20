@@ -1,4 +1,6 @@
 import numpy as np
+import pytest
+import tensorflow as tf
 
 from tf_explain.core.grad_cam import GradCAM
 
@@ -75,8 +77,8 @@ def test_should_explain_output(mocker):
     grid = explainer.explain(
         data,
         mocker.sentinel.model,
-        mocker.sentinel.layer_name,
         mocker.sentinel.class_index,
+        mocker.sentinel.layer_name,
     )
 
     for heatmap, expected_heatmap in zip(
@@ -94,3 +96,67 @@ def test_should_explain_output(mocker):
         [mocker.sentinel.conv_output_1, mocker.sentinel.conv_output_2],
         [mocker.sentinel.guided_grads_1, mocker.sentinel.guided_grads_2],
     )
+
+
+@pytest.mark.parametrize(
+    "model,expected_layer_name",
+    [
+        (
+            tf.keras.Sequential(
+                [
+                    tf.keras.layers.Conv2D(
+                        3, 3, input_shape=(28, 28, 1), name="conv_1"
+                    ),
+                    tf.keras.layers.MaxPooling2D(name="maxpool_1"),
+                    tf.keras.layers.Conv2D(3, 3, name="conv_2"),
+                    tf.keras.layers.Flatten(name="flatten"),
+                    tf.keras.layers.Dense(1, name="dense"),
+                ]
+            ),
+            "conv_2",
+        ),
+        (
+            tf.keras.Sequential(
+                [
+                    tf.keras.layers.Conv2D(
+                        3, 3, input_shape=(28, 28, 1), name="conv_1"
+                    ),
+                    tf.keras.layers.MaxPooling2D(name="maxpool_1"),
+                    tf.keras.layers.Conv2D(3, 3, name="conv_2"),
+                    tf.keras.layers.GlobalAveragePooling2D(name="gap"),
+                    tf.keras.layers.Dense(1, name="dense"),
+                ]
+            ),
+            "conv_2",
+        ),
+        (
+            tf.keras.Sequential(
+                [
+                    tf.keras.layers.Conv2D(
+                        3, 3, input_shape=(28, 28, 1), name="conv_1"
+                    ),
+                    tf.keras.layers.MaxPooling2D(name="maxpool_1"),
+                    tf.keras.layers.Flatten(name="flatten"),
+                    tf.keras.layers.Dense(1, name="dense"),
+                ]
+            ),
+            "maxpool_1",
+        ),
+    ],
+)
+def test_should_infer_layer_name_for_grad_cam(model, expected_layer_name):
+    layer_name = GradCAM.infer_grad_cam_target_layer(model)
+
+    assert layer_name == expected_layer_name
+
+
+def test_should_raise_error_if_grad_cam_layer_cannot_be_found():
+    model = tf.keras.Sequential(
+        [
+            tf.keras.layers.Dense(10, input_shape=(10,), name="dense_1"),
+            tf.keras.layers.Dense(1, name="dense_2"),
+        ]
+    )
+
+    with pytest.raises(ValueError):
+        layer_name = GradCAM.infer_grad_cam_target_layer(model)

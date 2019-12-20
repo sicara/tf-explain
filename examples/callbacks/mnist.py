@@ -16,8 +16,8 @@ dataset = AVAILABLE_DATASETS[DATASET_NAME]
 (train_images, train_labels), (test_images, test_labels) = dataset.load_data()
 
 # Convert from (28, 28) images to (28, 28, 1)
-train_images = train_images[..., tf.newaxis].astype("float32") / 255.
-test_images = test_images[..., tf.newaxis].astype("float32") / 255.
+train_images = train_images[..., tf.newaxis].astype("float32") / 255.0
+test_images = test_images[..., tf.newaxis].astype("float32") / 255.0
 
 # One hot encore labels 0, 1, .., 9 to [0, 0, .., 1, 0, 0]
 train_labels = tf.keras.utils.to_categorical(train_labels, num_classes=NUM_CLASSES)
@@ -72,10 +72,10 @@ validation_class_four = (
 # class_index value should match the validation_data selected above
 callbacks = [
     tf_explain.callbacks.GradCAMCallback(
-        validation_class_zero, "target_layer", class_index=0
+        validation_class_zero, class_index=0, layer_name="target_layer"
     ),
     tf_explain.callbacks.GradCAMCallback(
-        validation_class_four, "target_layer", class_index=4
+        validation_class_four, class_index=4, layer_name="target_layer"
     ),
     tf_explain.callbacks.ActivationsVisualizationCallback(
         validation_class_zero, layers_name=["target_layer"]

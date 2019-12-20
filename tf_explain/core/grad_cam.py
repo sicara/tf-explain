@@ -22,8 +22,8 @@ class GradCAM:
         self,
         validation_data,
         model,
-        layer_name,
         class_index,
+        layer_name=None,
         colormap=cv2.COLORMAP_VIRIDIS,
     ):
         """
@@ -33,14 +33,18 @@ class GradCAM:
             validation_data (Tuple[np.ndarray, Optional[np.ndarray]]): Validation data
                 to perform the method on. Tuple containing (x, y).
             model (tf.keras.Model): tf.keras model to inspect
-            layer_name (str): Targeted layer for GradCAM
             class_index (int): Index of targeted class
+            layer_name (str): Targeted layer for GradCAM. If no layer is provided, it is
+                automatically infered from the model architecture.
             colormap (int): OpenCV Colormap to use for heatmap visualization
 
         Returns:
             numpy.ndarray: Grid of all the GradCAM
         """
         images, _ = validation_data
+
+        if layer_name is None:
+            layer_name = self.infer_grad_cam_target_layer(model)
 
         outputs, guided_grads = GradCAM.get_gradients_and_filters(
             model, images, layer_name, class_index
@@ -58,6 +62,27 @@ class GradCAM:
         grid = grid_display(heatmaps)
 
         return grid
+
+    @staticmethod
+    def infer_grad_cam_target_layer(model):
+        """
+        Search for the last convolutional layer to perform Grad CAM, as stated
+        in the original paper.
+
+        Args:
+            model (tf.keras.Model): tf.keras model to inspect
+
+        Returns:
+            str: Name of the target layer
+        """
+        for layer in reversed(model.layers):
+            # Select closest 4D layer to the end of the network.
+            if len(layer.output_shape) == 4:
+                return layer.name
+
+        raise ValueError(
+            "Model does not seem to contain 4D layer. Grad CAM cannot be applied."
+        )
 
     @staticmethod
     @tf.function

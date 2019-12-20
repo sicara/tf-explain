@@ -24,6 +24,6 @@ def test_should_call_grad_cam_callback(
     convolutional_model.fit(images, labels, batch_size=2, epochs=1, callbacks=callbacks)
 
     mock_explainer.explain.assert_called_once_with(
-        random_data, convolutional_model, "activation_1", 0
+        random_data, convolutional_model, class_index=0, layer_name="activation_1"
     )
     assert len([_ for _ in output_dir.iterdir()]) == 1
