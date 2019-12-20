@@ -25,6 +25,7 @@ class GradCAM:
         layer_name,
         class_index,
         colormap=cv2.COLORMAP_VIRIDIS,
+        image_weight=0.7,
     ):
         """
         Compute GradCAM for a specific class index.
@@ -51,7 +52,7 @@ class GradCAM:
         heatmaps = np.array(
             [
                 # not showing the actual image if image_weight=0
-                heatmap_display(cam.numpy(), image, colormap, image_weight=0)
+                heatmap_display(cam.numpy(), image, colormap, image_weight)
                 for cam, image in zip(cams, images)
             ]
         )
