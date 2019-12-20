@@ -56,7 +56,10 @@ class GradCAMCallback(Callback):
         """
         explainer = GradCAM()
         heatmap = explainer.explain(
-            self.validation_data, self.model, class_index=self.class_index, layer_name=self.layer_name,
+            self.validation_data,
+            self.model,
+            class_index=self.class_index,
+            layer_name=self.layer_name,
         )
 
         # Using the file writer, log the reshaped image.
