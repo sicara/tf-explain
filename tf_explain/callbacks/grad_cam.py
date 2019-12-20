@@ -24,7 +24,7 @@ class GradCAMCallback(Callback):
         self,
         validation_data,
         class_index,
-        layer_name,
+        layer_name=None,
         output_dir=Path("./logs/grad_cam"),
     ):
         """

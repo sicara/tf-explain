@@ -77,8 +77,8 @@ def test_should_explain_output(mocker):
     grid = explainer.explain(
         data,
         mocker.sentinel.model,
-        mocker.sentinel.layer_name,
         mocker.sentinel.class_index,
+        mocker.sentinel.layer_name,
     )
 
     for heatmap, expected_heatmap in zip(
