@@ -157,7 +157,6 @@ model = [...]
 callbacks = [
     GradCAMCallback(
         validation_data=(x_val, y_val),
-        layer_name="activation_1",
         class_index=0,
         output_dir=output_dir,
     )

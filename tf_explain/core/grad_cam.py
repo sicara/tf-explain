@@ -34,7 +34,8 @@ class GradCAM:
                 to perform the method on. Tuple containing (x, y).
             model (tf.keras.Model): tf.keras model to inspect
             class_index (int): Index of targeted class
-            layer_name (str): Targeted layer for GradCAM
+            layer_name (str): Targeted layer for GradCAM. If no layer is provided, it is
+                automatically infered from the model architecture.
             colormap (int): OpenCV Colormap to use for heatmap visualization
 
         Returns:
