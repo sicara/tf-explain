@@ -33,8 +33,8 @@ class GradCAM:
             validation_data (Tuple[np.ndarray, Optional[np.ndarray]]): Validation data
                 to perform the method on. Tuple containing (x, y).
             model (tf.keras.Model): tf.keras model to inspect
-            layer_name (str): Targeted layer for GradCAM
             class_index (int): Index of targeted class
+            layer_name (str): Targeted layer for GradCAM
             colormap (int): OpenCV Colormap to use for heatmap visualization
 
         Returns:

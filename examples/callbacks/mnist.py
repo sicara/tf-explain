@@ -72,10 +72,10 @@ validation_class_four = (
 # class_index value should match the validation_data selected above
 callbacks = [
     tf_explain.callbacks.GradCAMCallback(
-        validation_class_zero, "target_layer", class_index=0
+        validation_class_zero, class_index=0, layer_name="target_layer",
     ),
     tf_explain.callbacks.GradCAMCallback(
-        validation_class_four, "target_layer", class_index=4
+        validation_class_four, class_index=4, layer_name="target_layer",
     ),
     tf_explain.callbacks.ActivationsVisualizationCallback(
         validation_class_zero, layers_name=["target_layer"]

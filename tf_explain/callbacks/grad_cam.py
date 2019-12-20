@@ -23,8 +23,8 @@ class GradCAMCallback(Callback):
     def __init__(
         self,
         validation_data,
-        layer_name,
         class_index,
+        layer_name,
         output_dir=Path("./logs/grad_cam"),
     ):
         """
@@ -33,8 +33,8 @@ class GradCAMCallback(Callback):
         Args:
             validation_data (Tuple[np.ndarray, Optional[np.ndarray]]): Validation data
                 to perform the method on. Tuple containing (x, y).
-            layer_name (str): Targeted layer for GradCAM
             class_index (int): Index of targeted class
+            layer_name (str): Targeted layer for GradCAM
             output_dir (str): Output directory path
         """
         super(GradCAMCallback, self).__init__()
@@ -56,7 +56,7 @@ class GradCAMCallback(Callback):
         """
         explainer = GradCAM()
         heatmap = explainer.explain(
-            self.validation_data, self.model, self.layer_name, self.class_index
+            self.validation_data, self.model, class_index=self.class_index, layer_name=self.layer_name,
         )
 
         # Using the file writer, log the reshaped image.
