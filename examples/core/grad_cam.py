@@ -16,5 +16,7 @@ if __name__ == "__main__":
     tabby_cat_class_index = 281
     explainer = GradCAM()
     # Compute GradCAM on VGG16
-    grid = explainer.explain(data, model, class_index=tabby_cat_class_index, layer_name="block5_conv3")
+    grid = explainer.explain(
+        data, model, class_index=tabby_cat_class_index, layer_name="block5_conv3"
+    )
     explainer.save(grid, ".", "grad_cam.png")
