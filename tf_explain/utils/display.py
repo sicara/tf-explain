@@ -99,6 +99,8 @@ def heatmap_display(
         heatmap (numpy.ndarray): Array corresponding to the heatmap
         original_image (numpy.ndarray): Image on which we apply the heatmap
         colormap (int): OpenCV Colormap to use for heatmap visualization
+        image_weight (float): An optional `float` value in range [0,1] indicating the weight of
+            the input image to be overlaying the calculated attribution maps. Defaults to `0.7`
 
     Returns:
         np.ndarray: Original image with heatmap applied

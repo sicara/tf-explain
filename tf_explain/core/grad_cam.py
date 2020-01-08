@@ -37,6 +37,8 @@ class GradCAM:
             layer_name (str): Targeted layer for GradCAM
             class_index (int): Index of targeted class
             colormap (int): OpenCV Colormap to use for heatmap visualization
+            image_weight (float): An optional `float` value in range [0,1] indicating the weight of
+                the input image to be overlaying the calculated attribution maps. Defaults to `0.7`.
 
         Returns:
             numpy.ndarray: Grid of all the GradCAM
