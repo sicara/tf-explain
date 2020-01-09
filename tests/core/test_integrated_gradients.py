@@ -35,6 +35,6 @@ def test_get_integrated_gradients(random_data, convolutional_model):
         images, convolutional_model, 0, n_steps=n_steps
     )
 
-    expected_output_shape = (images.shape[0] / n_steps, *images.shape[1:])
+    expected_output_shape = (int(images.shape[0] / n_steps), *images.shape[1:])
 
     assert gradients.shape == expected_output_shape
