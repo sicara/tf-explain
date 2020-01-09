@@ -25,6 +25,7 @@ class GradCAM:
         class_index,
         layer_name=None,
         colormap=cv2.COLORMAP_VIRIDIS,
+        image_weight=0.7,
     ):
         """
         Compute GradCAM for a specific class index.
@@ -37,6 +38,8 @@ class GradCAM:
             layer_name (str): Targeted layer for GradCAM. If no layer is provided, it is
                 automatically infered from the model architecture.
             colormap (int): OpenCV Colormap to use for heatmap visualization
+            image_weight (float): An optional `float` value in range [0,1] indicating the weight of
+                the input image to be overlaying the calculated attribution maps. Defaults to `0.7`.
 
         Returns:
             numpy.ndarray: Grid of all the GradCAM
@@ -54,7 +57,8 @@ class GradCAM:
 
         heatmaps = np.array(
             [
-                heatmap_display(cam.numpy(), image, colormap)
+                # not showing the actual image if image_weight=0
+                heatmap_display(cam.numpy(), image, colormap, image_weight)
                 for cam, image in zip(cams, images)
             ]
         )
