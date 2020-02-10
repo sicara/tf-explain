@@ -105,8 +105,7 @@ def heatmap_display(
     Returns:
         np.ndarray: Original image with heatmap applied
     """
-    heatmap = cv2.resize(heatmap, (original_image.shape[1],
-                                   original_image.shape[0]))
+    heatmap = cv2.resize(heatmap, (original_image.shape[1], original_image.shape[0]))
 
     image = image_to_uint_255(original_image)
 
@@ -116,6 +115,8 @@ def heatmap_display(
         cv2.cvtColor((heatmap * 255).astype("uint8"), cv2.COLOR_GRAY2BGR), colormap
     )
 
-    output = cv2.addWeighted(cv2.cvtColor(image, cv2.COLOR_RGB2BGR), image_weight, heatmap, 1, 0)
+    output = cv2.addWeighted(
+        cv2.cvtColor(image, cv2.COLOR_RGB2BGR), image_weight, heatmap, 1, 0
+    )
 
     return cv2.cvtColor(output, cv2.COLOR_BGR2RGB)
