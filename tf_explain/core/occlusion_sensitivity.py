@@ -89,8 +89,8 @@ class OcclusionSensitivity:
 
         coordinates = [
             (index_y, index_x)
-            for index_x in range(sensitivity_map.shape[1])
-            for index_y in range(sensitivity_map.shape[0])
+            for index_x in range(sensitivity_map.shape[1]) # pylint: disable=unsubscriptable-object
+            for index_y in range(sensitivity_map.shape[0]) # pylint: disable=unsubscriptable-object
         ]
 
         predictions = model.predict(np.array(patches), batch_size=self.batch_size)
