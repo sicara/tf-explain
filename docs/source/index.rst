@@ -9,7 +9,7 @@ tf-explain
 .. image:: https://img.shields.io/badge/python-3.6%20|%203.7-%23EBBD68.svg
    :alt: Python Versions
 
-.. image:: https://img.shields.io/badge/tensorflow-2.0.0--beta1-blue.svg
+.. image:: https://img.shields.io/badge/tensorflow-2.0.0%20|%202.1.0-blue.svg
    :target: https://www.tensorflow.org/
    :alt: Tensorflow Versions
 
