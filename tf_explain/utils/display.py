@@ -105,7 +105,7 @@ def heatmap_display(
     Returns:
         np.ndarray: Original image with heatmap applied
     """
-    heatmap = cv2.resize(heatmap, original_image.shape[0:2])
+    heatmap = cv2.resize(heatmap, (original_image.shape[1], original_image.shape[0]))
 
     image = image_to_uint_255(original_image)
 
