@@ -22,12 +22,58 @@ pip install tf-explain
 ```
 
 tf-explain is compatible with Tensorflow 2. It is not declared as a dependency
-to let you choose between CPU and GPU versions. Additionally to the previous install, run:
+to let you choose between full and standalone-CPU versions. Additionally to the previous install, run:
 
 ```bash
 # For CPU or GPU
 pip install tensorflow==2.1.0
 ```
+
+## Quickstart
+
+tf-explain offers 2 ways to apply interpretability methods. The full list of methods is the [Available Methods](#available-methods) section.
+
+### On trained model
+
+The best option is probably to load a trained model and apply the methods on it.
+
+```python
+# Load pretrained model or your own
+model = tf.keras.applications.vgg16.VGG16(weights="imagenet", include_top=True)
+
+# Load a sample image (or multiple ones)
+img = tf.keras.preprocessing.image.load_img(IMAGE_PATH, target_size=(224, 224))
+img = tf.keras.preprocessing.image.img_to_array(img)
+data = ([img], None)
+
+# Start explainer
+explainer = GradCAM()
+grid = explainer.explain(data, model, class_index=281)  # 281 is the tabby cat index in ImageNet
+
+explainer.save(grid, ".", "grad_cam.png")
+```
+
+### During training
+
+If you want to follow your model during the training, you can also use it as a Keras Callback,
+and see the results directly in [TensorBoard](https://www.tensorflow.org/tensorboard/).
+
+```python
+from tf_explain.callbacks.grad_cam import GradCAMCallback
+
+model = [...]
+
+callbacks = [
+    GradCAMCallback(
+        validation_data=(x_val, y_val),
+        class_index=0,
+        output_dir=output_dir,
+    )
+]
+
+model.fit(x_train, y_train, batch_size=2, epochs=2, callbacks=callbacks)
+```
+
 
 ## Available Methods
 
@@ -222,13 +268,6 @@ model.fit(x_train, y_train, batch_size=2, epochs=2, callbacks=callbacks)
 <p align="center">
     <img src="./docs/assets/integrated_gradients.png" width="200" />
 </p>
-
-
-## Visualizing the results
-
-When you use the callbacks, the output files are created in the `logs` directory.
-
-You can see them in Tensorboard with the following command: `tensorboard --logdir logs`
 
 
 ## Roadmap
