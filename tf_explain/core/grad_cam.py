@@ -101,6 +101,7 @@ class GradCAM:
             images (numpy.ndarray): 4D-Tensor with shape (batch_size, H, W, 3)
             layer_name (str): Targeted layer for GradCAM
             class_index (int): Index of targeted class
+            use_guided_grads (boolean): Whether to use guided grads or raw gradients
 
         Returns:
             Tuple[tf.Tensor, tf.Tensor]: (Target layer outputs, Guided gradients)

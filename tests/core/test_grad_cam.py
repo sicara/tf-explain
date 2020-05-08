@@ -42,8 +42,9 @@ def test_should_ponderate_output():
 def test_should_produce_gradients_and_filters(convolutional_model, random_data):
     images, _ = random_data
     layer_name = "activation_1"
+    use_guided_grads=True
     output, grads = GradCAM.get_gradients_and_filters(
-        convolutional_model, images, layer_name, 0
+        convolutional_model, images, layer_name, 0, use_guided_grads
     )
 
     assert output.shape == [len(images)] + list(
@@ -79,6 +80,7 @@ def test_should_explain_output(mocker):
         mocker.sentinel.model,
         mocker.sentinel.class_index,
         mocker.sentinel.layer_name,
+        mocker.sentinel.use_guided_grads
     )
 
     for heatmap, expected_heatmap in zip(
@@ -91,6 +93,7 @@ def test_should_explain_output(mocker):
         [mocker.sentinel.image_1, mocker.sentinel.image_2],
         mocker.sentinel.layer_name,
         mocker.sentinel.class_index,
+        True
     )
     mock_generate_output.assert_called_once_with(
         [mocker.sentinel.conv_output_1, mocker.sentinel.conv_output_2],

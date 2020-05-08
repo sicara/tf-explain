@@ -152,6 +152,7 @@ def test_all_keras_api(
             layer_name="grad_cam_target",
             class_index=target_class,
             output_dir=output_dir,
+            use_guided_grads=True
         ),
         tf_explain.callbacks.ActivationsVisualizationCallback(
             validation_data, "grad_cam_target", output_dir=output_dir
