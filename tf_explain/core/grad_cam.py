@@ -26,6 +26,7 @@ class GradCAM:
         layer_name=None,
         colormap=cv2.COLORMAP_VIRIDIS,
         image_weight=0.7,
+        use_guided_grads=True
     ):
         """
         Compute GradCAM for a specific class index.
@@ -40,6 +41,7 @@ class GradCAM:
             colormap (int): OpenCV Colormap to use for heatmap visualization
             image_weight (float): An optional `float` value in range [0,1] indicating the weight of
                 the input image to be overlaying the calculated attribution maps. Defaults to `0.7`.
+            use_guided_grads (boolean): Whether to use guided grads or raw gradients
 
         Returns:
             numpy.ndarray: Grid of all the GradCAM
@@ -49,11 +51,11 @@ class GradCAM:
         if layer_name is None:
             layer_name = self.infer_grad_cam_target_layer(model)
 
-        outputs, guided_grads = GradCAM.get_gradients_and_filters(
-            model, images, layer_name, class_index
+        outputs, grads = GradCAM.get_gradients_and_filters(
+            model, images, layer_name, class_index, use_guided_grads
         )
 
-        cams = GradCAM.generate_ponderated_output(outputs, guided_grads)
+        cams = GradCAM.generate_ponderated_output(outputs, grads)
 
         heatmaps = np.array(
             [
@@ -90,7 +92,7 @@ class GradCAM:
 
     @staticmethod
     @tf.function
-    def get_gradients_and_filters(model, images, layer_name, class_index):
+    def get_gradients_and_filters(model, images, layer_name, class_index, use_guided_grads):
         """
         Generate guided gradients and convolutional outputs with an inference.
 
@@ -114,11 +116,11 @@ class GradCAM:
 
         grads = tape.gradient(loss, conv_outputs)
 
-        guided_grads = (
-            tf.cast(conv_outputs > 0, "float32") * tf.cast(grads > 0, "float32") * grads
-        )
+        if use_guided_grads:
+            grads = (tf.cast(conv_outputs > 0, "float32") *
+                     tf.cast(grads > 0, "float32") * grads)
 
-        return conv_outputs, guided_grads
+        return conv_outputs, grads
 
     @staticmethod
     def generate_ponderated_output(outputs, grads):
