@@ -26,7 +26,7 @@ class GradCAM:
         layer_name=None,
         colormap=cv2.COLORMAP_VIRIDIS,
         image_weight=0.7,
-        use_guided_grads=True
+        use_guided_grads=True,
     ):
         """
         Compute GradCAM for a specific class index.
@@ -92,7 +92,9 @@ class GradCAM:
 
     @staticmethod
     @tf.function
-    def get_gradients_and_filters(model, images, layer_name, class_index, use_guided_grads):
+    def get_gradients_and_filters(
+        model, images, layer_name, class_index, use_guided_grads
+    ):
         """
         Generate guided gradients and convolutional outputs with an inference.
 
@@ -118,8 +120,11 @@ class GradCAM:
         grads = tape.gradient(loss, conv_outputs)
 
         if use_guided_grads:
-            grads = (tf.cast(conv_outputs > 0, "float32") *
-                     tf.cast(grads > 0, "float32") * grads)
+            grads = (
+                tf.cast(conv_outputs > 0, "float32")
+                * tf.cast(grads > 0, "float32")
+                * grads
+            )
 
         return conv_outputs, grads
 

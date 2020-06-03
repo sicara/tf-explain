@@ -62,7 +62,7 @@ class GradCAMCallback(Callback):
             self.model,
             class_index=self.class_index,
             layer_name=self.layer_name,
-            use_guided_grads=self.use_guided_grads
+            use_guided_grads=self.use_guided_grads,
         )
 
         # Using the file writer, log the reshaped image.
