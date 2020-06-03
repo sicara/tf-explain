@@ -24,9 +24,9 @@ class GradCAM:
         model,
         class_index,
         layer_name=None,
+        use_guided_grads=True,
         colormap=cv2.COLORMAP_VIRIDIS,
         image_weight=0.7,
-        use_guided_grads=True,
     ):
         """
         Compute GradCAM for a specific class index.

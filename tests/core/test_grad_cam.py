@@ -93,8 +93,9 @@ def test_should_explain_output(mocker):
         [mocker.sentinel.image_1, mocker.sentinel.image_2],
         mocker.sentinel.layer_name,
         mocker.sentinel.class_index,
-        True,
+        mocker.sentinel.use_guided_grads,
     )
+
     mock_generate_output.assert_called_once_with(
         [mocker.sentinel.conv_output_1, mocker.sentinel.conv_output_2],
         [mocker.sentinel.guided_grads_1, mocker.sentinel.guided_grads_2],
