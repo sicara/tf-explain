@@ -26,6 +26,7 @@ class GradCAMCallback(Callback):
         class_index,
         layer_name=None,
         output_dir=Path("./logs/grad_cam"),
+        use_guided_grads=True,
     ):
         """
         Constructor.
@@ -42,6 +43,7 @@ class GradCAMCallback(Callback):
         self.layer_name = layer_name
         self.class_index = class_index
         self.output_dir = Path(output_dir) / datetime.now().strftime("%Y%m%d-%H%M%S.%f")
+        self.use_guided_grads = use_guided_grads
         Path.mkdir(Path(self.output_dir), parents=True, exist_ok=True)
 
         self.file_writer = tf.summary.create_file_writer(str(self.output_dir))
@@ -60,6 +62,7 @@ class GradCAMCallback(Callback):
             self.model,
             class_index=self.class_index,
             layer_name=self.layer_name,
+            use_guided_grads=self.use_guided_grads,
         )
 
         # Using the file writer, log the reshaped image.
