@@ -3,11 +3,11 @@
 [![Pypi Version](https://img.shields.io/pypi/v/tf-explain.svg)](https://pypi.org/project/tf-explain/)
 [![Build Status](https://api.travis-ci.org/sicara/tf-explain.svg?branch=master)](https://travis-ci.org/sicara/tf-explain)
 [![Documentation Status](https://readthedocs.org/projects/tf-explain/badge/?version=latest)](https://tf-explain.readthedocs.io/en/latest/?badge=latest)
-![Python Versions](https://img.shields.io/badge/python-3.6%20|%203.7-%23EBBD68.svg)
-![Tensorflow Versions](https://img.shields.io/badge/tensorflow-2.0.0%20|%202.1.0-blue.svg)
+![Python Versions](https://img.shields.io/badge/python-3.6%20%7C%203.7%20%7C%203.8-%23EBBD68.svg)
+![Tensorflow Versions](https://img.shields.io/badge/tensorflow-2.x-blue.svg)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/python/black)
 
-__tf-explain__ implements interpretability methods as Tensorflow 2.0 callbacks to __ease neural network's understanding__.  
+__tf-explain__ implements interpretability methods as Tensorflow 2.x callbacks to __ease neural network's understanding__.
 See [Introducing tf-explain, Interpretability for Tensorflow 2.0](https://blog.sicara.com/tf-explain-interpretability-tensorflow-2-9438b5846e35)
 
 __Documentation__: https://tf-explain.readthedocs.io
@@ -21,12 +21,12 @@ virtualenv venv -p python3.6
 pip install tf-explain
 ```
 
-tf-explain is compatible with Tensorflow 2. It is not declared as a dependency
+tf-explain is compatible with Tensorflow 2.x. It is not declared as a dependency
 to let you choose between full and standalone-CPU versions. Additionally to the previous install, run:
 
 ```bash
 # For CPU or GPU
-pip install tensorflow==2.1.0
+pip install tensorflow==2.2.0
 ```
 
 ## Quickstart
