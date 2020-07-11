@@ -2,8 +2,8 @@
 import math
 import warnings
 
-import cv2
 import numpy as np
+import cv2
 
 
 def grid_display(array, num_rows=None, num_columns=None):
