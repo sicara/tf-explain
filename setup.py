@@ -15,7 +15,7 @@ setup(
     author_email="raphaelm@sicara.com",
     url="https://github.com/sicara/tf-explain",
     license="MIT",
-    install_requires=["opencv-python>=4.1.0.25"],
+    install_requires=[],
     extras_require={
         "tests": [
             "black>=19.3b0",
