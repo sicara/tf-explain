@@ -28,7 +28,7 @@ to let you choose between full and standalone-CPU versions. Additionally to the 
 # For CPU or GPU
 pip install tensorflow==2.2.0
 ```
-Opencv is also a dependency to install it run
+Opencv is also a dependency. To install it, run:
 ```bash
 # For CPU or GPU
 pip install opencv-python
