@@ -3,8 +3,8 @@ Core Module for Occlusion Sensitivity
 """
 import math
 
-import cv2
 import numpy as np
+import cv2
 
 from tf_explain.utils.display import grid_display, heatmap_display
 from tf_explain.utils.image import apply_grey_patch
