@@ -135,6 +135,7 @@ class GradCAM:
 
         Inputs are the convolutional outputs (shape WxHxN) and gradients (shape WxHxN).
         From there:
+
             - we compute the spatial average of the gradients
             - we build a ponderated sum of the convolutional outputs based on those averaged weights
 

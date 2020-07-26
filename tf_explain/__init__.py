@@ -9,7 +9,7 @@ __version__ = "0.2.1"
 
 try:
     import cv2
-except:
+except ImportError:
     raise ImportError(
         "TF-explain requires Opencv. " "Install Opencv via `pip install opencv-python`"
     ) from None
@@ -23,3 +23,5 @@ except ImportError:
 from . import core
 from . import callbacks
 from . import utils
+
+__all__ = ["cv2", "tf", "core", "callbacks", "utils"]
