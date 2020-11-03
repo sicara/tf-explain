@@ -9,13 +9,16 @@ def test_should_get_sensitivity_map(convolutional_model, random_data, mocker):
     x, y = random_data
     patch_size = 4
 
-    predict_return_value = np.ones(
-        (
-            math.ceil(x[0].shape[0] / patch_size)
-            * math.ceil(x[0].shape[1] / patch_size),
-            1,
+    predict_return_value = (
+        np.ones(
+            (
+                math.ceil(x[0].shape[0] / patch_size)
+                * math.ceil(x[0].shape[1] / patch_size),
+                1,
+            )
         )
-    ) * np.expand_dims([0.6, 0.4], axis=0)
+        * np.expand_dims([0.6, 0.4], axis=0)
+    )
     convolutional_model.predict = mocker.MagicMock(return_value=predict_return_value)
     mocker.patch(
         "tf_explain.core.occlusion_sensitivity.apply_grey_patch",
