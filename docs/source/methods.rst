@@ -33,11 +33,11 @@ Visualize gradients on the inputs towards the decision.
 
 From `Deep Inside Convolutional Networks: Visualising Image Classification Models and Saliency Maps <https://arxiv.org/abs/1312.6034)>`_
 ::
-    from tf_explain.callbacks.vanilla_gradients import VanillaGradients
+    from tf_explain.callbacks.vanilla_gradients import VanillaGradientsCallback
 
     model = [...]
     callbacks = [
-        VanillaGradients(
+        VanillaGradientsCallback(
             validation_data=(x_val, y_val),
             class_index=0,
             output_dir=output_dir,
