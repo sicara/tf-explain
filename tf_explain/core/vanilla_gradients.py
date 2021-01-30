@@ -24,7 +24,9 @@ class VanillaGradients:
         Args:
             validation_data (Tuple[np.ndarray, Optional[np.ndarray]]): Validation data
                 to perform the method on. Tuple containing (x, y).
-            model (tf.keras.Model): tf.keras model to inspect
+            model (tf.keras.Model): tf.keras model to inspect. The last two layers of the
+                model should be: a Dense layer with no activation, followed by a Softmax
+                layer.
             class_index (int): Index of targeted class
 
         Returns:
@@ -32,7 +34,8 @@ class VanillaGradients:
         """
         images, _ = validation_data
 
-        gradients = self.compute_gradients(images, model, class_index)
+        score_model = self._get_score_model(model)
+        gradients = self.compute_gradients(images, score_model, class_index)
 
         grayscale_gradients = transform_to_normalized_grayscale(
             tf.abs(gradients)
@@ -41,6 +44,20 @@ class VanillaGradients:
         grid = grid_display(grayscale_gradients)
 
         return grid
+
+    @staticmethod
+    def _get_score_model(model):
+        """
+        Create a new model that excludes the final Softmax layer from the given model.
+
+        Args:
+            model (tf.keras.Model): tf.keras model to base the new model on
+
+        Returns:
+            tf.keras.Model: A new model which excludes the last layer
+        """
+        output = model.layers[-1].input
+        return tf.keras.Model(inputs=model.inputs, outputs=output)
 
     @staticmethod
     @tf.function
@@ -56,24 +73,13 @@ class VanillaGradients:
         Returns:
             tf.Tensor: 4D-Tensor
         """
-        num_classes = model.output.shape[1]
-
-        expected_output = tf.one_hot(
-            [class_index] * images.shape[0],
-            num_classes,
-            on_value=None,
-            off_value=None,
-        )
-
         with tf.GradientTape() as tape:
             inputs = tf.cast(images, tf.float32)
             tape.watch(inputs)
-            predictions = model(inputs)
-            loss = tf.keras.losses.categorical_crossentropy(
-                expected_output, predictions
-            )
+            scores = model(inputs)
+            scores_for_class = scores[:, class_index:class_index+1]
 
-        return tape.gradient(loss, inputs)
+        return tape.gradient(scores, inputs)
 
     def save(self, grid, output_dir, output_name):
         """
