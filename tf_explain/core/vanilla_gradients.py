@@ -61,8 +61,7 @@ class VanillaGradients:
 
         return grid
 
-    @staticmethod
-    def _get_score_model(model):
+    def _get_score_model(self, model):
         """
         Create a new model that excludes the final Softmax layer from the given model.
 
@@ -80,8 +79,7 @@ class VanillaGradients:
 
         return tf.keras.Model(inputs=model.inputs, outputs=output)
 
-    @staticmethod
-    def _is_activation_layer(layer):
+    def _is_activation_layer(self, layer):
         """
         Check whether the given layer is an activation layer.
 
