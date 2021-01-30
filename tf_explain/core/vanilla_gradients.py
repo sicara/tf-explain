@@ -2,10 +2,26 @@
 Core Module for Vanilla Gradients
 """
 import tensorflow as tf
+from warnings import warn
 
 from tf_explain.utils.display import grid_display
 from tf_explain.utils.image import transform_to_normalized_grayscale
 from tf_explain.utils.saver import save_grayscale
+
+
+_unsupported_architecture_warning = "\
+Unsupported model architecture for VanillaGradients. The last two layers of \
+the model should be: a layer which computes class scores with no activation, \
+followed by an activation layer."
+
+_activation_layer_classes = (
+    tf.keras.layers.Activation,
+    tf.keras.layers.LeakyReLU,
+    tf.keras.layers.PReLU,
+    tf.keras.layers.ReLU,
+    tf.keras.layers.Softmax,
+    tf.keras.layers.ThresholdedReLU
+)
 
 
 class VanillaGradients:
@@ -24,9 +40,9 @@ class VanillaGradients:
         Args:
             validation_data (Tuple[np.ndarray, Optional[np.ndarray]]): Validation data
                 to perform the method on. Tuple containing (x, y).
-            model (tf.keras.Model): tf.keras model to inspect. The last two layers of the
-                model should be: a Dense layer with no activation, followed by a Softmax
-                layer.
+            model (tf.keras.Model): tf.keras model to inspect. The last two layers of
+                the model should be: a layer which computes class scores with no
+                activation, followed by an activation layer.
             class_index (int): Index of targeted class
 
         Returns:
@@ -56,8 +72,26 @@ class VanillaGradients:
         Returns:
             tf.keras.Model: A new model which excludes the last layer
         """
-        output = model.layers[-1].input
+        activation_layer = model.layers[-1]
+        if not self._is_activation_layer(activation_layer):
+            warn(_unsupported_architecture_warning, stacklevel=2)
+
+        output = activation_layer.input
+
         return tf.keras.Model(inputs=model.inputs, outputs=output)
+
+    @staticmethod
+    def _is_activation_layer(layer):
+        """
+        Check whether the given layer is an activation layer.
+
+        Args:
+            layer (tf.keras.layers.Layer): The layer to check
+
+        Returns:
+            Whether the layer is an activation layer
+        """
+        return isinstance(layer, _activation_layer_classes)
 
     @staticmethod
     @tf.function
