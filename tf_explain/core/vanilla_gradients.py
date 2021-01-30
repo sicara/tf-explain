@@ -48,22 +48,12 @@ class VanillaGradients:
         Returns:
             numpy.ndarray: Grid of all the gradients
         """
-        images, _ = validation_data
-
         score_model = self._get_score_model(model)
-        gradients = self.compute_gradients(images, score_model, class_index)
-
-        grayscale_gradients = transform_to_normalized_grayscale(
-            tf.abs(gradients)
-        ).numpy()
-
-        grid = grid_display(grayscale_gradients)
-
-        return grid
+        return self._explain_score_model(validation_data, score_model, class_index)
 
     def _get_score_model(self, model):
         """
-        Create a new model that excludes the final Softmax layer from the given model.
+        Create a new model that excludes the final Softmax layer from the given model
 
         Args:
             model (tf.keras.Model): tf.keras model to base the new model on
@@ -78,11 +68,12 @@ class VanillaGradients:
 
         output = activation_layer.input
 
-        return tf.keras.Model(inputs=model.inputs, outputs=output)
+        score_model = tf.keras.Model(inputs=model.inputs, outputs=output)
+        return score_model
 
     def _is_activation_layer(self, layer):
         """
-        Check whether the given layer is an activation layer.
+        Check whether the given layer is an activation layer
 
         Args:
             layer (tf.keras.layers.Layer): The layer to check
@@ -91,6 +82,32 @@ class VanillaGradients:
             Whether the layer is an activation layer
         """
         return isinstance(layer, _activation_layer_classes)
+
+    def _explain_score_model(self, validation_data, score_model, class_index):
+        """
+        Perform gradients backpropagation for a given input
+
+        Args:
+            validation_data (Tuple[np.ndarray, Optional[np.ndarray]]): Validation data
+                to perform the method on. Tuple containing (x, y).
+            score_model (tf.keras.Model): tf.keras model to inspect. The last layer
+            should not have any activation function.
+            class_index (int): Index of targeted class
+
+        Returns:
+            numpy.ndarray: Grid of all the gradients
+        """
+        images, _ = validation_data
+
+        gradients = self.compute_gradients(images, score_model, class_index)
+
+        grayscale_gradients = transform_to_normalized_grayscale(
+            tf.abs(gradients)
+        ).numpy()
+
+        grid = grid_display(grayscale_gradients)
+
+        return grid
 
     @staticmethod
     @tf.function

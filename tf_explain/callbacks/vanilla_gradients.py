@@ -43,6 +43,10 @@ class VanillaGradientsCallback(Callback):
 
         self.file_writer = tf.summary.create_file_writer(str(self.output_dir))
 
+    def set_model(self, model):
+        super().set_model(model)
+        self.score_model = self.explainer._get_score_model(model)
+
     def on_epoch_end(self, epoch, logs=None):
         """
         Draw VanillaGradients outputs at each epoch end to Tensorboard.
@@ -51,8 +55,8 @@ class VanillaGradientsCallback(Callback):
             epoch (int): Epoch index
             logs (dict): Additional information on epoch
         """
-        grid = self.explainer.explain(
-            self.validation_data, self.model, self.class_index
+        grid = self.explainer._explain_score_model(
+            self.validation_data, self.score_model, self.class_index
         )
 
         # Using the file writer, log the reshaped image.
