@@ -73,7 +73,7 @@ class VanillaGradients:
         """
         activation_layer = model.layers[-1]
         if not self._is_activation_layer(activation_layer):
-            warn(_unsupported_architecture_warning, stacklevel=2)
+            warn(_unsupported_architecture_warning, stacklevel=3)
 
         output = activation_layer.input
 
