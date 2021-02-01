@@ -73,7 +73,7 @@ def convolutional_model_for_vanilla_gradients(random_data):
             tf.keras.layers.Flatten(),
             # Dense layer and Softmax are separate
             tf.keras.layers.Dense(2),
-            tf.keras.layers.Softmax()
+            tf.keras.layers.Softmax(),
         ]
     )
 

@@ -15,7 +15,7 @@ def test_should_call_vanilla_gradients_callback(
 
     mock_explainer = mocker.MagicMock(
         _get_score_model=mocker.MagicMock(return_value=score_model),
-        _explain_score_model=mocker.MagicMock(return_value=np.zeros((28, 28)))
+        _explain_score_model=mocker.MagicMock(return_value=np.zeros((28, 28))),
     )
 
     vanilla_gradient_callback.explainer = mock_explainer
@@ -23,9 +23,11 @@ def test_should_call_vanilla_gradients_callback(
     callbacks = [vanilla_gradient_callback]
 
     convolutional_model.fit(images, labels, batch_size=2, epochs=1, callbacks=callbacks)
-    
+
     mock_explainer._get_score_model.assert_called_once()
-    mock_explainer._explain_score_model.assert_called_once_with(random_data, score_model, 0)
+    mock_explainer._explain_score_model.assert_called_once_with(
+        random_data, score_model, 0
+    )
     assert len(list(output_dir.iterdir())) == 1
 
 
@@ -47,7 +49,7 @@ def test_should_only_compute_score_model_once(
 
     mock_explainer = mocker.MagicMock(
         _get_score_model=mocker.MagicMock(return_value=score_model),
-        _explain_score_model=mocker.MagicMock(return_value=np.zeros((28, 28)))
+        _explain_score_model=mocker.MagicMock(return_value=np.zeros((28, 28))),
     )
 
     vanilla_gradient_callback.explainer = mock_explainer
@@ -56,6 +58,6 @@ def test_should_only_compute_score_model_once(
 
     # Two epochs
     convolutional_model.fit(images, labels, batch_size=2, epochs=2, callbacks=callbacks)
-    
+
     # Score model only computed once
     mock_explainer._get_score_model.assert_called_once()

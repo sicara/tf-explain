@@ -20,7 +20,7 @@ _activation_layer_classes = (
     tf.keras.layers.PReLU,
     tf.keras.layers.ReLU,
     tf.keras.layers.Softmax,
-    tf.keras.layers.ThresholdedReLU
+    tf.keras.layers.ThresholdedReLU,
 )
 
 
@@ -127,7 +127,7 @@ class VanillaGradients:
             inputs = tf.cast(images, tf.float32)
             tape.watch(inputs)
             scores = model(inputs)
-            scores_for_class = scores[:, class_index:class_index+1]
+            scores_for_class = scores[:, class_index : class_index + 1]
 
         return tape.gradient(scores, inputs)
 
