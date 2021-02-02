@@ -58,7 +58,12 @@ class VanillaGradients:
         """
         num_classes = model.output.shape[1]
 
-        expected_output = tf.one_hot([class_index] * images.shape[0], num_classes)
+        expected_output = tf.one_hot(
+            [class_index] * images.shape[0],
+            num_classes,
+            on_value=None,
+            off_value=None,
+        )
 
         with tf.GradientTape() as tape:
             inputs = tf.cast(images, tf.float32)

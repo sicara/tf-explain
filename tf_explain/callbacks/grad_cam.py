@@ -38,7 +38,7 @@ class GradCAMCallback(Callback):
             layer_name (str): Targeted layer for GradCAM
             output_dir (str): Output directory path
         """
-        super(GradCAMCallback, self).__init__()
+        super().__init__()
         self.validation_data = validation_data
         self.layer_name = layer_name
         self.class_index = class_index

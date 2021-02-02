@@ -36,7 +36,7 @@ class IntegratedGradientsCallback(Callback):
             n_steps (int): Number of steps in the path
             output_dir (str): Output directory path
         """
-        super(IntegratedGradientsCallback, self).__init__()
+        super().__init__()
         self.validation_data = validation_data
         self.class_index = class_index
         self.n_steps = n_steps

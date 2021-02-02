@@ -34,7 +34,7 @@ class OcclusionSensitivityCallback(Callback):
             patch_size (int): Size of patch to apply on the image
             output_dir (str): Output directory path
         """
-        super(OcclusionSensitivityCallback, self).__init__()
+        super().__init__()
         self.validation_data = validation_data
         self.class_index = class_index
         self.patch_size = patch_size

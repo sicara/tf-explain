@@ -30,7 +30,7 @@ class ActivationsVisualizationCallback(Callback):
             layers_name (List[str]): List of layer names to inspect
             output_dir (str): Output directory path
         """
-        super(ActivationsVisualizationCallback, self).__init__()
+        super().__init__()
         self.validation_data = validation_data
         self.layers_name = layers_name
         self.output_dir = Path(output_dir) / datetime.now().strftime("%Y%m%d-%H%M%S.%f")
