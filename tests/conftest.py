@@ -58,7 +58,7 @@ def convolutional_model(random_data):
 
 
 @pytest.fixture()
-def convolutional_model_for_vanilla_gradients(random_data):
+def convolutional_model_with_separate_activation_layer(random_data):
     x, y = random_data
     model = tf.keras.Sequential(
         [
@@ -83,7 +83,7 @@ def convolutional_model_for_vanilla_gradients(random_data):
 
 
 @pytest.fixture()
-def score_model_for_vanilla_gradients(random_data):
+def convolutional_model_without_final_activation(random_data):
     x, y = random_data
     model = tf.keras.Sequential(
         [
