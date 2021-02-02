@@ -1,0 +1,63 @@
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Python package
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  lint:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+      - name: Update pip
+        run: python -m pip install --upgrade pip
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-3.7-${{ hashFiles('setup.py') }}-2.2.0
+      - name: Install dependencies
+        run: pip install -e ".[tests]" && pip install tensorflow==2.2.0
+      - name: Lint with pylint and black
+        run: make lint
+      - name: Check black
+        run: black tf_explain tests --check
+
+  tests:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.6, 3.7, 3.8]
+        tensorflow-version: [2.1.0, 2.2.0, 2.3.0, 2.4.0]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Update pip
+        run: python -m pip install --upgrade pip
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('setup.py') }}-${{ matrix.tensorflow-version }}
+      - name: Install dependencies
+        run: pip install -e ".[tests]" && pip install tensorflow==${{ matrix.tensorflow-version }}
+      - name: Test with pytest
+        run: make test
