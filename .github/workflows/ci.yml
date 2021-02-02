@@ -61,6 +61,6 @@ jobs:
           path: ~/.cache/pip
           key: ${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('setup.py') }}-${{ matrix.tensorflow-version }}
       - name: Install dependencies
-        run: pip install -e ".[tests]" && pip install tensorflow==${{ matrix.tensorflow-version }}
+        run: pip install -e ".[tests]" && pip install opencv-python && pip install tensorflow==${{ matrix.tensorflow-version }}
       - name: Test with pytest
         run: make test
