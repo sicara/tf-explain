@@ -127,7 +127,7 @@ class VanillaGradients:
             inputs = tf.cast(images, tf.float32)
             tape.watch(inputs)
             scores = model(inputs)
-            scores_for_class = scores[:, class_index : class_index + 1]
+            scores_for_class = scores[:, class_index]
 
         return tape.gradient(scores_for_class, inputs)
 
