@@ -38,7 +38,7 @@ class SmoothGradCallback(Callback):
             noise (float): Standard deviation for noise normal distribution
             output_dir (str): Output directory path
         """
-        super(SmoothGradCallback, self).__init__()
+        super().__init__()
         self.validation_data = validation_data
         self.class_index = class_index
         self.num_samples = num_samples

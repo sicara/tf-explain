@@ -33,7 +33,7 @@ class VanillaGradientsCallback(Callback):
             class_index (int): Index of targeted class
             num_samples (int): Number of noisy samples to generate for each input image
         """
-        super(VanillaGradientsCallback, self).__init__()
+        super().__init__()
         self.validation_data = validation_data
         self.class_index = class_index
         if not output_dir:
