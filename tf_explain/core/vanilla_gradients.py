@@ -42,7 +42,9 @@ class VanillaGradients:
                 to perform the method on. Tuple containing (x, y).
             model (tf.keras.Model): tf.keras model to inspect. The last two layers of
                 the model should be: a layer which computes class scores with no
-                activation, followed by an activation layer.
+                activation, followed by an activation layer. This is to enable the
+                gradient calculation to bypass the final activation and calculate
+                the gradient of the score instead.
             class_index (int): Index of targeted class
 
         Returns:
