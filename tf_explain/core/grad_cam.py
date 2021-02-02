@@ -91,7 +91,6 @@ class GradCAM:
         )
 
     @staticmethod
-    @tf.function
     def get_gradients_and_filters(
         model, images, layer_name, class_index, use_guided_grads
     ):
