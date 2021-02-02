@@ -1,15 +1,15 @@
 """
 Core Module for Vanilla Gradients
 """
-import tensorflow as tf
 from warnings import warn
+import tensorflow as tf
 
 from tf_explain.utils.display import grid_display
 from tf_explain.utils.image import transform_to_normalized_grayscale
 from tf_explain.utils.saver import save_grayscale
 
 
-_unsupported_architecture_warning = "\
+UNSUPPORTED_ARCHITECTURE_WARNING = "\
 Unsupported model architecture for VanillaGradients. The last two layers of \
 the model should be: a layer which computes class scores with no activation, \
 followed by an activation layer."
@@ -48,10 +48,10 @@ class VanillaGradients:
         Returns:
             numpy.ndarray: Grid of all the gradients
         """
-        score_model = self._get_score_model(model)
-        return self._explain_score_model(validation_data, score_model, class_index)
+        score_model = self.get_score_model(model)
+        return self.explain_score_model(validation_data, score_model, class_index)
 
-    def _get_score_model(self, model):
+    def get_score_model(self, model):
         """
         Create a new model that excludes the final Softmax layer from the given model
 
@@ -63,7 +63,7 @@ class VanillaGradients:
         """
         activation_layer = model.layers[-1]
         if not self._is_activation_layer(activation_layer):
-            warn(_unsupported_architecture_warning, stacklevel=3)
+            warn(UNSUPPORTED_ARCHITECTURE_WARNING, stacklevel=3)
             return model
 
         output = activation_layer.input
@@ -83,7 +83,7 @@ class VanillaGradients:
         """
         return isinstance(layer, _activation_layer_classes)
 
-    def _explain_score_model(self, validation_data, score_model, class_index):
+    def explain_score_model(self, validation_data, score_model, class_index):
         """
         Perform gradients backpropagation for a given input
 
@@ -129,7 +129,7 @@ class VanillaGradients:
             scores = model(inputs)
             scores_for_class = scores[:, class_index : class_index + 1]
 
-        return tape.gradient(scores, inputs)
+        return tape.gradient(scores_for_class, inputs)
 
     def save(self, grid, output_dir, output_name):
         """

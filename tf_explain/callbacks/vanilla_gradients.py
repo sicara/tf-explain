@@ -42,10 +42,11 @@ class VanillaGradientsCallback(Callback):
         Path.mkdir(Path(self.output_dir), parents=True, exist_ok=True)
 
         self.file_writer = tf.summary.create_file_writer(str(self.output_dir))
+        self.score_model = None
 
     def set_model(self, model):
         super().set_model(model)
-        self.score_model = self.explainer._get_score_model(model)
+        self.score_model = self.explainer.get_score_model(model)
 
     def on_epoch_end(self, epoch, logs=None):
         """
@@ -55,7 +56,7 @@ class VanillaGradientsCallback(Callback):
             epoch (int): Epoch index
             logs (dict): Additional information on epoch
         """
-        grid = self.explainer._explain_score_model(
+        grid = self.explainer.explain_score_model(
             self.validation_data, self.score_model, self.class_index
         )
 
