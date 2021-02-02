@@ -1,5 +1,8 @@
 import pytest
-from tf_explain.core.vanilla_gradients import VanillaGradients
+from tf_explain.core.vanilla_gradients import (
+    VanillaGradients,
+    UNSUPPORTED_ARCHITECTURE_WARNING,
+)
 
 
 def test_should_explain_output(
@@ -47,5 +50,5 @@ def test_get_score_model_returns_suitable_model(
 
 def test_get_score_model_logs_warnings_when_model_not_suitable(convolutional_model):
     explainer = VanillaGradients()
-    with pytest.warns(UserWarning, match=r"^Unsupported model architecture"):
+    with pytest.warns(UserWarning, match=UNSUPPORTED_ARCHITECTURE_WARNING):
         explainer.get_score_model(convolutional_model)

@@ -9,12 +9,13 @@ from tf_explain.utils.image import transform_to_normalized_grayscale
 from tf_explain.utils.saver import save_grayscale
 
 
-UNSUPPORTED_ARCHITECTURE_WARNING = "\
-Unsupported model architecture for VanillaGradients. The last two layers of \
-the model should be: a layer which computes class scores with no activation, \
-followed by an activation layer."
+UNSUPPORTED_ARCHITECTURE_WARNING = (
+    "Unsupported model architecture for VanillaGradients. The last two layers of "
+    "the model should be: a layer which computes class scores with no activation, "
+    "followed by an activation layer."
+)
 
-_activation_layer_classes = (
+ACTIVATION_LAYER_CLASSES = (
     tf.keras.layers.Activation,
     tf.keras.layers.LeakyReLU,
     tf.keras.layers.PReLU,
@@ -83,7 +84,7 @@ class VanillaGradients:
         Returns:
             Whether the layer is an activation layer
         """
-        return isinstance(layer, _activation_layer_classes)
+        return isinstance(layer, ACTIVATION_LAYER_CLASSES)
 
     def explain_score_model(self, validation_data, score_model, class_index):
         """
