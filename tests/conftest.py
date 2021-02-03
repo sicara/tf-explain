@@ -55,3 +55,52 @@ def convolutional_model(random_data):
     model.compile(optimizer="adam", loss="categorical_crossentropy")
 
     return model
+
+
+@pytest.fixture()
+def convolutional_model_with_separate_activation_layer(random_data):
+    x, y = random_data
+    model = tf.keras.Sequential(
+        [
+            tf.keras.layers.Conv2D(
+                16,
+                (3, 3),
+                activation=None,
+                name="conv_1",
+                input_shape=list(x.shape[1:]),
+            ),
+            tf.keras.layers.ReLU(name="activation_1"),
+            tf.keras.layers.Flatten(),
+            # Dense layer and Softmax are separate
+            tf.keras.layers.Dense(2),
+            tf.keras.layers.Softmax(),
+        ]
+    )
+
+    model.compile(optimizer="adam", loss="categorical_crossentropy")
+
+    return model
+
+
+@pytest.fixture()
+def convolutional_model_without_final_activation(random_data):
+    x, y = random_data
+    model = tf.keras.Sequential(
+        [
+            tf.keras.layers.Conv2D(
+                16,
+                (3, 3),
+                activation=None,
+                name="conv_1",
+                input_shape=list(x.shape[1:]),
+            ),
+            tf.keras.layers.ReLU(name="activation_1"),
+            tf.keras.layers.Flatten(),
+            tf.keras.layers.Dense(2)
+            # No final Softmax layer
+        ]
+    )
+
+    model.compile(optimizer="adam", loss="categorical_crossentropy")
+
+    return model
