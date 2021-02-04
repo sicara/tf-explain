@@ -7,7 +7,7 @@ with open("README.md", "r") as f:
 
 setup(
     name="tf-explain",
-    version="0.2.1",
+    version="0.3.0",
     description="Interpretability Callbacks for Tensorflow 2.0",
     long_description=long_description,
     long_description_content_type="text/markdown",

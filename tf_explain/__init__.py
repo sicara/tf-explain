@@ -5,7 +5,7 @@ The library implements interpretability methods as Tensorflow 2.0
 callbacks to ease neural network's understanding.
 """
 
-__version__ = "0.2.1"
+__version__ = "0.3.0"
 
 try:
     import cv2
