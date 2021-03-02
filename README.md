@@ -288,3 +288,4 @@ model.fit(x_train, y_train, batch_size=2, epochs=2, callbacks=callbacks)
 ## Contributing
 
 To contribute to the project, please read the [dedicated section](./CONTRIBUTING.md).
+# TestConflictPyCharm
