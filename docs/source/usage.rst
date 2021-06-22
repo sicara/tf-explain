@@ -14,7 +14,7 @@ Core API
 
 All methods implemented in tf-explain keep the same interface:
 
-* a :code:`explain` method which outputs the explaination (for instance, a heatmap)
+* a :code:`explain` method which outputs the explanation (for instance, a heatmap)
 * a :code:`save` method compatible with its output
 
 Usage of the core API should be the following:
@@ -40,7 +40,7 @@ All methods are kept inside :code:`tf_explain.core`.
 Callbacks
 *********
 
-To use those methods during trainings and inspect evolutions over the epochs, each one of them
+To use those methods during training and inspect evolutions over the epochs, each one of them
 has its corresponding :code:`tf.keras.Callback`.
 
 Callback usage is coherent with Keras Callbacks:
