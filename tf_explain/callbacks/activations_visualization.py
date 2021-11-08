@@ -13,7 +13,7 @@ from tf_explain.core.activations import ExtractActivations
 
 class ActivationsVisualizationCallback(Callback):
 
-    """ Draw activations of a specific layer for a given input """
+    """Draw activations of a specific layer for a given input"""
 
     def __init__(
         self,

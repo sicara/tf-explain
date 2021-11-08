@@ -10,7 +10,7 @@ from tf_explain.utils.saver import save_grayscale
 
 class ExtractActivations:
 
-    """ Draw activations of a specific layer for a given input """
+    """Draw activations of a specific layer for a given input"""
 
     def __init__(self, batch_size=None):
         self.batch_size = batch_size
