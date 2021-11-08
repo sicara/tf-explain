@@ -1,7 +1,7 @@
 # tf-explain
 
 [![Pypi Version](https://img.shields.io/pypi/v/tf-explain.svg)](https://pypi.org/project/tf-explain/)
-[![Build Status](https://api.travis-ci.org/sicara/tf-explain.svg?branch=master)](https://travis-ci.org/sicara/tf-explain)
+[![Build Status](https://github.com/sicara/tf-explain/actions/workflows/ci.yml/badge.svg)](https://github.com/sicara/tf-explain/actions)
 [![Documentation Status](https://readthedocs.org/projects/tf-explain/badge/?version=latest)](https://tf-explain.readthedocs.io/en/latest/?badge=latest)
 ![Python Versions](https://img.shields.io/badge/python-3.6%20%7C%203.7%20%7C%203.8-%23EBBD68.svg)
 ![Tensorflow Versions](https://img.shields.io/badge/tensorflow-2.x-blue.svg)
@@ -17,7 +17,7 @@ __Documentation__: https://tf-explain.readthedocs.io
 __tf-explain__ is available on PyPi as an alpha release. To install it:
 
 ```bash
-virtualenv venv -p python3.6
+virtualenv venv -p python3.8
 pip install tf-explain
 ```
 
@@ -26,7 +26,7 @@ to let you choose between full and standalone-CPU versions. Additionally to the 
 
 ```bash
 # For CPU or GPU
-pip install tensorflow==2.2.0
+pip install tensorflow==2.6.0
 ```
 Opencv is also a dependency. To install it, run:
 ```bash
@@ -281,7 +281,7 @@ model.fit(x_train, y_train, batch_size=2, epochs=2, callbacks=callbacks)
 - [ ] Additional Methods
   - [ ] [GradCAM++](https://arxiv.org/abs/1710.11063)
   - [x] [Integrated Gradients](https://arxiv.org/abs/1703.01365)
-  - [ ] [Guided SmoothGrad](https://arxiv.org/abs/1706.03825)
+  - [x] [Guided SmoothGrad](https://arxiv.org/abs/1706.03825)
   - [ ] [LRP](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0130140)
 - [ ] Auto-generated API Documentation & Documentation Testing
 

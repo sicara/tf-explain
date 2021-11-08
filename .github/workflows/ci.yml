@@ -41,7 +41,7 @@ jobs:
     strategy:
       matrix:
         python-version: [3.6, 3.7, 3.8]
-        tensorflow-version: [2.1.0, 2.2.0, 2.3.0, 2.4.0, 2.5.0, 2.6.0]
+        tensorflow-version: [2.1.0, 2.2.0, 2.3.0, 2.4.0, 2.5.0]
         exclude:
           - tensorflow-version: 2.1.0
             python-version: 3.8
@@ -62,5 +62,35 @@ jobs:
           key: ${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('setup.py') }}-${{ matrix.tensorflow-version }}
       - name: Install dependencies
         run: pip install -e ".[tests]" && pip install opencv-python && pip install tensorflow==${{ matrix.tensorflow-version }}
+      - name: Test with pytest
+        run: make test
+
+  tests-with-standalone-keras:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.6, 3.7, 3.8]
+        tensorflow-version: [2.6.0]
+        keras-version: [2.6.0]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Update pip
+        run: python -m pip install --upgrade pip
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('setup.py') }}-${{ matrix.tensorflow-version }}-${{ matrix.keras-version }}
+      - name: Install dependencies
+        run: pip install -e ".[tests]" && pip install opencv-python
+      - name: Install TensorFlow and Keras
+        run: pip install tensorflow==${{ matrix.tensorflow-version}} keras==${{ matrix.keras-version }}
       - name: Test with pytest
         run: make test
