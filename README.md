@@ -291,4 +291,4 @@ To contribute to the project, please read the [dedicated section](./CONTRIBUTING
 
 ## Citation
 
-A [citation file](./CITATION.cff) is available for citing this work.
+A [citation file](./CITATION.cff) is available for citing this work. Click the "Cite this repository" button on the right-side panel of Github to get a BibTeX-ready citation.
