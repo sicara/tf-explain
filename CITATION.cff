@@ -4,6 +4,7 @@
 cff-version: 1.2.0
 title: tf-explain
 abstract: Interpretability Methods for tf.keras models with TensorFlow 2.x
+doi: 10.5281/zenodo.5711704
 version: 0.3.1
 date-released: 2021-02-04
 message: "If you use tf-explain in your research, please cite it using these metadata."
