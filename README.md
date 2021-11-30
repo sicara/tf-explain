@@ -14,7 +14,7 @@ __Documentation__: https://tf-explain.readthedocs.io
 
 ## Installation
 
-__tf-explain__ is available on PyPi as an alpha release. To install it:
+__tf-explain__ is available on PyPi. To install it:
 
 ```bash
 virtualenv venv -p python3.8
