@@ -41,10 +41,7 @@ jobs:
     strategy:
       matrix:
         python-version: [3.6, 3.7, 3.8]
-        tensorflow-version: [2.1.0, 2.2.0, 2.3.0, 2.4.0, 2.5.0]
-        exclude:
-          - tensorflow-version: 2.1.0
-            python-version: 3.8
+        tensorflow-version: [2.3.0, 2.4.0, 2.5.0]
 
     steps:
       - uses: actions/checkout@v2
@@ -70,9 +67,15 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.6, 3.7, 3.8]
-        tensorflow-version: [2.6.0]
-        keras-version: [2.6.0]
+        python-version: [3.7, 3.8]
+        tensorflow-version: [2.6.0, 2.7.0, 2.8.0]
+        include:
+          - tensorflow-version: 2.6.0
+            keras-version: 2.6.0
+          - tensorflow-version: 2.7.0
+            keras-version: 2.7.0
+          - tensorflow-version: 2.8.0
+            keras-version: 2.8.0
 
     steps:
       - uses: actions/checkout@v2
