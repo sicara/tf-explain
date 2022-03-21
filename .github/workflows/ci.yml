@@ -39,6 +39,7 @@ jobs:
 
     runs-on: ubuntu-latest
     strategy:
+      max-parallel: 1
       matrix:
         python-version: [3.6, 3.7, 3.8]
         tensorflow-version: [2.3.0, 2.4.0, 2.5.0]
