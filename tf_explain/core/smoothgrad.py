@@ -6,7 +6,7 @@ import numpy as np
 import tensorflow as tf
 
 from tf_explain.utils.display import grid_display
-from tf_explain.utils.image import transform_to_normalized_grayscale
+from tf_explain.utils.image import transform_to_normalized_grayscale, normalize_min_max
 from tf_explain.utils.saver import save_grayscale
 
 
@@ -18,7 +18,7 @@ class SmoothGrad:
     Paper: [SmoothGrad: removing noise by adding noise](https://arxiv.org/abs/1706.03825)
     """
 
-    def explain(self, validation_data, model, class_index, num_samples=5, noise=1.0):
+    def explain(self, validation_data, model, class_index, num_samples=5, noise=1.0, norm = "std"):
         """
         Compute SmoothGrad for a specific class index
 
@@ -29,6 +29,7 @@ class SmoothGrad:
             class_index (int): Index of targeted class
             num_samples (int): Number of noisy samples to generate for each input image
             noise (float): Standard deviation for noise normal distribution
+            norm (str): Normalization technique. Can be chosen from *std* and *min_max*. Defaults to "std".
 
         Returns:
             np.ndarray: Grid of all the smoothed gradients
@@ -41,11 +42,15 @@ class SmoothGrad:
             noisy_images, model, class_index, num_samples
         )
 
-        grayscale_gradients = transform_to_normalized_grayscale(
-            tf.abs(smoothed_gradients)
-        ).numpy()
+        if not norm in ["std", "min_max"]:
+            raise KeyError("Normalization method can only be chosen from 'std' and 'min_max'.")
 
-        grid = grid_display(grayscale_gradients)
+        elif norm == "std":
+            grayscale_integrated_gradients = transform_to_normalized_grayscale(tf.abs(smoothed_gradients)).numpy()
+            grid = grid_display(grayscale_integrated_gradients)
+
+        else: # min_max
+            grid = normalize_min_max(smoothed_gradients).numpy()
 
         return grid
 

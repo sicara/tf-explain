@@ -5,7 +5,7 @@ import numpy as np
 import tensorflow as tf
 
 from tf_explain.utils.display import grid_display
-from tf_explain.utils.image import transform_to_normalized_grayscale
+from tf_explain.utils.image import transform_to_normalized_grayscale, normalize_min_max
 from tf_explain.utils.saver import save_grayscale
 
 
@@ -17,7 +17,7 @@ class IntegratedGradients:
     Paper: [Axiomatic Attribution for Deep Networks](https://arxiv.org/pdf/1703.01365.pdf)
     """
 
-    def explain(self, validation_data, model, class_index, n_steps=10):
+    def explain(self, validation_data, model, class_index, n_steps=10, norm = "std"):
         """
         Compute Integrated Gradients for a specific class index
 
@@ -27,6 +27,7 @@ class IntegratedGradients:
             model (tf.keras.Model): tf.keras model to inspect
             class_index (int): Index of targeted class
             n_steps (int): Number of steps in the path
+            norm (str): Normalization technique. Can be chosen from *std* and *min_max*.
 
         Returns:
             np.ndarray: Grid of all the integrated gradients
@@ -41,11 +42,15 @@ class IntegratedGradients:
             interpolated_images, model, class_index, n_steps
         )
 
-        grayscale_integrated_gradients = transform_to_normalized_grayscale(
-            tf.abs(integrated_gradients)
-        ).numpy()
+        if not norm in ["std", "min_max"]:
+            raise KeyError("Normalization method can only be chosen from 'std' and 'min_max'.")
 
-        grid = grid_display(grayscale_integrated_gradients)
+        elif norm == "std":
+            grayscale_integrated_gradients = transform_to_normalized_grayscale(tf.abs(integrated_gradients)).numpy()
+            grid = grid_display(grayscale_integrated_gradients)
+
+        else: # min_max
+            grid = normalize_min_max(integrated_gradients).numpy()
 
         return grid
 
