@@ -43,7 +43,6 @@ def transform_to_normalized_grayscale(tensor):
 
     return normalized_tensor
 
-@tf.function
 def normalize_min_max(tensor):
     """
     Normalize tensor over RGB axis by subtracting min from maximum absolute values and dividing them by range.

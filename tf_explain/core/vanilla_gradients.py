@@ -119,7 +119,6 @@ class VanillaGradients:
         return grid
 
     @staticmethod
-    @tf.function
     def compute_gradients(images, model, class_index):
         """
         Compute gradients for target class.

@@ -55,7 +55,6 @@ class IntegratedGradients:
         return grid
 
     @staticmethod
-    @tf.function
     def get_integrated_gradients(interpolated_images, model, class_index, n_steps):
         """
         Perform backpropagation to compute integrated gradients.
