@@ -42,7 +42,7 @@ class IntegratedGradients:
         )
 
         grayscale_integrated_gradients = transform_to_normalized_grayscale(
-            tf.abs(integrated_gradients)
+            tf.abs(images*integrated_gradients)
         ).numpy()
 
         grid = grid_display(grayscale_integrated_gradients)
