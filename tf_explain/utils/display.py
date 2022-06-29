@@ -91,7 +91,7 @@ def image_to_uint_255(image):
 
 def heatmap_display(heatmap, original_image, colormap=cv2.COLORMAP_VIRIDIS, image_weight=0.7):
     """
-    Apply a heatmap (as an np.ndarray) on top of an original image.
+    Apply a heatmap (numpy.ndarray) on top of an original image.
 
     Args:
         heatmap (numpy.ndarray): Array corresponding to the heatmap
@@ -101,7 +101,7 @@ def heatmap_display(heatmap, original_image, colormap=cv2.COLORMAP_VIRIDIS, imag
             the input image to be overlaying the calculated attribution maps. Defaults to `0.7`
 
     Returns:
-        np.ndarray: Original image with heatmap applied
+        numpy.ndarray: Original image with heatmap applied
     """
     image = image_to_uint_255(original_image)
 
