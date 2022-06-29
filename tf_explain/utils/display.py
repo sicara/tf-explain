@@ -93,7 +93,7 @@ def heatmap_display(
     heatmap, original_image, colormap=cv2.COLORMAP_VIRIDIS, image_weight=0.7
 ):
     """
-    Apply a heatmap (as an np.ndarray) on top of an original image.
+    Apply a heatmap (numpy.ndarray) on top of an original image.
 
     Args:
         heatmap (numpy.ndarray): Array corresponding to the heatmap
@@ -103,20 +103,25 @@ def heatmap_display(
             the input image to be overlaying the calculated attribution maps. Defaults to `0.7`
 
     Returns:
-        np.ndarray: Original image with heatmap applied
+        numpy.ndarray: Original image with heatmap applied
     """
-    heatmap = cv2.resize(heatmap, (original_image.shape[1], original_image.shape[0]))
-
     image = image_to_uint_255(original_image)
 
-    heatmap = (heatmap - np.min(heatmap)) / (heatmap.max() - heatmap.min())
+    heatmap = cv2.resize(heatmap, (original_image.shape[1], original_image.shape[0]))
+
+    if (heatmap.max() - heatmap.min()) != 0:
+        heatmap = (heatmap - heatmap.min()) / (heatmap.max() - heatmap.min())
 
     heatmap = cv2.applyColorMap(
         cv2.cvtColor((heatmap * 255).astype("uint8"), cv2.COLOR_GRAY2BGR), colormap
     )
 
     output = cv2.addWeighted(
-        cv2.cvtColor(image, cv2.COLOR_RGB2BGR), image_weight, heatmap, 1, 0
+        cv2.cvtColor(image, cv2.COLOR_RGB2BGR),
+        image_weight,
+        heatmap,
+        1 - image_weight,
+        0,
     )
 
     return cv2.cvtColor(output, cv2.COLOR_BGR2RGB)
