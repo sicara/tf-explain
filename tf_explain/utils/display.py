@@ -89,9 +89,7 @@ def image_to_uint_255(image):
     return (image * 255).astype("uint8")
 
 
-def heatmap_display(
-    heatmap, original_image, colormap=cv2.COLORMAP_VIRIDIS, image_weight=0.7
-):
+def heatmap_display(heatmap, original_image, colormap=cv2.COLORMAP_VIRIDIS, image_weight=0.7):
     """
     Apply a heatmap (as an np.ndarray) on top of an original image.
 
@@ -105,18 +103,12 @@ def heatmap_display(
     Returns:
         np.ndarray: Original image with heatmap applied
     """
-    heatmap = cv2.resize(heatmap, (original_image.shape[1], original_image.shape[0]))
-
     image = image_to_uint_255(original_image)
 
-    heatmap = (heatmap - np.min(heatmap)) / (heatmap.max() - heatmap.min())
+    heatmap = cv2.resize(heatmap, (original_image.shape[1], original_image.shape[0]))
+    heatmap = (heatmap - heatmap.min()) / (heatmap.max() - heatmap.min())
+    heatmap = cv2.applyColorMap(cv2.cvtColor((heatmap*255).astype("uint8"), cv2.COLOR_GRAY2BGR), colormap)
 
-    heatmap = cv2.applyColorMap(
-        cv2.cvtColor((heatmap * 255).astype("uint8"), cv2.COLOR_GRAY2BGR), colormap
-    )
-
-    output = cv2.addWeighted(
-        cv2.cvtColor(image, cv2.COLOR_RGB2BGR), image_weight, heatmap, 1, 0
-    )
+    output = cv2.addWeighted(cv2.cvtColor(image, cv2.COLOR_RGB2BGR), image_weight, heatmap, 1, 0)
 
     return cv2.cvtColor(output, cv2.COLOR_BGR2RGB)
