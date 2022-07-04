@@ -173,4 +173,4 @@ def test_all_keras_api(
     ]
 
     # Start training
-    model.fit(train_images, train_labels, epochs=3, callbacks=callbacks)
+    model.fit(train_images, train_labels, epochs=2, callbacks=callbacks)

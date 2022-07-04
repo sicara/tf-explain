@@ -23,10 +23,10 @@ def mnist_dataset(num_classes):
     test_labels = tf.keras.utils.to_categorical(test_labels, num_classes=num_classes)
 
     return (
-        train_images[0:500],
-        train_labels[0:500],
-        test_images[0:300],
-        test_labels[0:300],
+        train_images[0:100],
+        train_labels[0:100],
+        test_images[0:50],
+        test_labels[0:50],
     )
 
 
