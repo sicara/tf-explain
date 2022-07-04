@@ -5,7 +5,7 @@ from warnings import warn
 import tensorflow as tf
 
 from tf_explain.utils.display import grid_display
-from tf_explain.utils.image import transform_to_normalized_grayscale
+from tf_explain.utils.image import transform_to_normalized_grayscale, normalize_min_max
 from tf_explain.utils.saver import save_grayscale
 
 
@@ -34,7 +34,7 @@ class VanillaGradients:
         Models and Saliency Maps](https://arxiv.org/abs/1312.6034)
     """
 
-    def explain(self, validation_data, model, class_index):
+    def explain(self, validation_data, model, class_index, norm = "std"):
         """
         Perform gradients backpropagation for a given input
 
@@ -47,12 +47,13 @@ class VanillaGradients:
                 gradient calculation to bypass the final activation and calculate
                 the gradient of the score instead.
             class_index (int): Index of targeted class
+            norm (str): Normalization technique. Can be chosen from *std* and *min_max*. Defaults to *std*.
 
         Returns:
             numpy.ndarray: Grid of all the gradients
         """
         score_model = self.get_score_model(model)
-        return self.explain_score_model(validation_data, score_model, class_index)
+        return self.explain_score_model(validation_data, score_model, class_index, norm)
 
     def get_score_model(self, model):
         """
@@ -86,7 +87,7 @@ class VanillaGradients:
         """
         return isinstance(layer, ACTIVATION_LAYER_CLASSES)
 
-    def explain_score_model(self, validation_data, score_model, class_index):
+    def explain_score_model(self, validation_data, score_model, class_index, norm):
         """
         Perform gradients backpropagation for a given input
 
@@ -96,24 +97,28 @@ class VanillaGradients:
             score_model (tf.keras.Model): tf.keras model to inspect. The last layer
             should not have any activation function.
             class_index (int): Index of targeted class
+            norm (str): Normalization technique. Can be chosen from *std* and *min_max*.
 
         Returns:
             numpy.ndarray: Grid of all the gradients
         """
-        images, _ = validation_data
 
+        images, _ = validation_data
         gradients = self.compute_gradients(images, score_model, class_index)
 
-        grayscale_gradients = transform_to_normalized_grayscale(
-            tf.abs(gradients)
-        ).numpy()
+        if not norm in ["std", "min_max"]:
+            raise KeyError("Normalization method can only be chosen from 'std' and 'min_max'.")
 
-        grid = grid_display(grayscale_gradients)
+        elif norm == "std":
+            grayscale_gradients = transform_to_normalized_grayscale(tf.abs(gradients)).numpy()
+            grid = grid_display(grayscale_gradients)
+
+        else: # min_max
+            grid = normalize_min_max(gradients).numpy()
 
         return grid
 
     @staticmethod
-    @tf.function
     def compute_gradients(images, model, class_index):
         """
         Compute gradients for target class.

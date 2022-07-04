@@ -42,3 +42,24 @@ def transform_to_normalized_grayscale(tensor):
     )
 
     return normalized_tensor
+
+def normalize_min_max(tensor):
+    """
+    Normalize tensor over RGB axis by subtracting min from maximum absolute values and dividing them by range.
+
+    Args:
+        tf.tensor: 4D-Tensor with shape (batch_size, H, W, 3)
+
+    Returns:
+        tf.Tensor: 2D-Tensor with shape (H, W)
+    """
+
+    normalized_tensor = tf.math.abs(tensor)
+    normalized_tensor = tf.math.reduce_max(normalized_tensor, axis=-1)  # max along channels
+
+    # Normalize to range between 0 and 1
+    arr_min, arr_max = tf.math.reduce_min(normalized_tensor, axis=None), tf.math.reduce_max(normalized_tensor, axis=None)
+    normalized_tensor = (normalized_tensor - arr_min) / (arr_max - arr_min + tf.constant(1e-16))
+    normalized_tensor = tf.cast(255 * normalized_tensor, tf.uint8)[0]
+
+    return normalized_tensor

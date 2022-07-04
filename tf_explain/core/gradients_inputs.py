@@ -13,7 +13,6 @@ class GradientsInputs(VanillaGradients):
     """
 
     @staticmethod
-    @tf.function
     def compute_gradients(images, model, class_index):
         """
         Compute gradients ponderated by input values for target class.
